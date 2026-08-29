@@ -8,6 +8,7 @@
     :root {
       --bg-color: #0f172a;
       --card-bg: #1e293b;
+      --panel-bg: #0f172a;
       --gold: #f59e0b;
       --gold-light: #fbbf24;
       --blue: #3b82f6;
@@ -27,19 +28,39 @@
       align-items: center;
       padding: 16px;
     }
-    .app-container {
+    .main-wrapper {
       width: 100%;
-      max-width: 680px;
+      max-width: 980px;
+    }
+    .app-layout {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .app-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .quiz-card {
       background: var(--card-bg);
       border-radius: 20px;
-      padding: 28px;
+      padding: 24px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       border: 1px solid #334155;
       position: relative;
     }
+    .scorecard-panel {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
     .sound-toggle {
       position: absolute;
-      top: 18px;
+      top: 20px;
       right: 20px;
       background: #334155;
       border: 1px solid #475569;
@@ -57,16 +78,16 @@
     .header {
       text-align: center;
       margin-bottom: 20px;
-      margin-top: 10px;
+      margin-top: 6px;
     }
     .badge {
       display: inline-block;
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 9999px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 0.5px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .badge-admin { background: rgba(139, 92, 246, 0.25); color: #c4b5fd; border: 1px solid #8b5cf6; }
     .badge-user { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid #3b82f6; }
@@ -74,76 +95,53 @@
     .badge-stage2 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
     .badge-stage3 { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
     .title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--gold-light);
     }
     
-    /* Login Screen */
+    /* Login Box */
     .login-box {
+      max-width: 540px;
+      margin: 0 auto;
       text-align: center;
-      padding: 10px 0;
+      padding: 20px 0;
     }
-    .login-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
-    }
-    .login-desc {
-      color: var(--text-dim);
-      font-size: 15px;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-    .form-group {
-      text-align: left;
-      margin-bottom: 16px;
-    }
-    .form-label {
-      display: block;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
+    .login-icon { font-size: 44px; margin-bottom: 8px; }
+    .login-desc { color: var(--text-dim); font-size: 14px; margin-bottom: 20px; }
+    .form-group { text-align: left; margin-bottom: 14px; }
+    .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
     .login-input {
       width: 100%;
       background: #0f172a;
       border: 2px solid #475569;
       color: var(--text);
-      padding: 14px 16px;
-      font-size: 16px;
-      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      border-radius: 10px;
       outline: none;
-      transition: border-color 0.2s;
     }
-    .login-input:focus {
-      border-color: var(--gold);
-    }
+    .login-input:focus { border-color: var(--gold); }
     .start-btn {
       width: 100%;
       background: linear-gradient(135deg, var(--gold), #d97706);
       color: #0f172a;
       border: none;
-      padding: 16px;
+      padding: 15px;
       border-radius: 12px;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 10px;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-      transition: transform 0.15s;
-    }
-    .start-btn:hover {
-      transform: translateY(-2px);
+      margin-top: 8px;
     }
 
     /* Progress Bar */
     .progress-bar-container {
       background: #334155;
-      height: 8px;
+      height: 7px;
       border-radius: 999px;
       overflow: hidden;
-      margin: 16px 0;
+      margin: 12px 0;
     }
     .progress-bar {
       height: 100%;
@@ -156,83 +154,52 @@
     .question-box {
       background: #0f172a;
       border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
       border: 1px solid #334155;
     }
-    .q-number {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 6px;
-    }
-    .q-text {
-      font-size: 17px;
-      line-height: 1.5;
-      font-weight: 600;
-      word-break: keep-all;
-    }
+    .q-number { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+    .q-text { font-size: 16px; line-height: 1.5; font-weight: 600; word-break: keep-all; }
     
     /* Choice Buttons */
-    .btn-grid {
-      display: grid;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .ox-grid {
-      grid-template-columns: 1fr 1fr;
-    }
+    .btn-grid { display: grid; gap: 10px; margin-bottom: 14px; }
+    .ox-grid { grid-template-columns: 1fr 1fr; }
     .choice-btn {
       background: #334155;
       color: var(--text);
       border: 2px solid transparent;
-      border-radius: 12px;
-      padding: 16px;
-      font-size: 16px;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.15s ease;
       text-align: left;
     }
-    .choice-btn:hover {
-      background: #475569;
-      transform: translateY(-2px);
-    }
-    .ox-btn {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 900;
-      padding: 20px;
-    }
+    .choice-btn:hover { background: #475569; }
+    .ox-btn { text-align: center; font-size: 28px; font-weight: 900; padding: 16px; }
     .btn-o { color: #34d399; border-color: rgba(52, 211, 153, 0.4); }
     .btn-x { color: #f87171; border-color: rgba(248, 113, 113, 0.4); }
     
-    /* Short Answer Input */
-    .input-group {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
+    /* Short Answer */
+    .input-group { display: flex; gap: 8px; margin-bottom: 14px; }
     .text-input {
       flex: 1;
       background: #0f172a;
       border: 2px solid #475569;
       color: var(--text);
-      padding: 14px 16px;
-      font-size: 16px;
-      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      border-radius: 10px;
       outline: none;
     }
-    .text-input:focus {
-      border-color: var(--gold);
-    }
+    .text-input:focus { border-color: var(--gold); }
     .submit-btn {
       background: var(--gold);
       color: #0f172a;
       border: none;
-      border-radius: 12px;
-      padding: 0 20px;
-      font-size: 16px;
+      border-radius: 10px;
+      padding: 0 18px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
     }
@@ -240,37 +207,106 @@
     /* Feedback */
     .feedback-box {
       display: none;
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      font-size: 15px;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      font-size: 14px;
       line-height: 1.5;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: popIn 0.25s ease;
     }
     @keyframes popIn {
-      0% { transform: scale(0.95); opacity: 0; }
+      0% { transform: scale(0.96); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
     .feedback-correct { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; }
     .feedback-wrong { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; }
-    .explanation {
-      margin-top: 6px;
-      color: var(--text-dim);
-      font-size: 13px;
-    }
+    .explanation { margin-top: 4px; color: var(--text-dim); font-size: 13px; }
     .next-btn {
       display: none;
       width: 100%;
       background: var(--blue);
       color: white;
       border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 16px;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
     }
     .next-btn:hover { background: #2563eb; }
+
+    /* Scorecard Panel (Right Side) */
+    .panel-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #334155;
+    }
+    .score-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      text-align: center;
+      background: #0f172a;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #334155;
+    }
+    .summary-item .num { font-size: 18px; font-weight: 900; }
+    .summary-item .lbl { font-size: 11px; color: var(--text-dim); }
+    .color-correct { color: #34d399; }
+    .color-wrong { color: #f87171; }
+    .color-total { color: var(--gold-light); }
+
+    .stage-section {
+      margin-bottom: 14px;
+    }
+    .stage-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .omr-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+    .omr-cell {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 6px 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-dim);
+      transition: all 0.2s;
+    }
+    .omr-cell.current {
+      border-color: var(--gold);
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--gold-light);
+      box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+    }
+    .omr-cell.correct {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+    .omr-cell.wrong {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
 
     /* Result Screen */
     .result-screen {
@@ -278,15 +314,10 @@
       text-align: center;
       padding: 10px 0;
     }
-    .user-result-badge {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
+    .user-result-badge { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
     .score-circle {
-      width: 130px;
-      height: 130px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), #d97706);
       color: #0f172a;
@@ -294,57 +325,51 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 0 auto 20px;
-      font-size: 32px;
+      margin: 0 auto 16px;
+      font-size: 28px;
       font-weight: 900;
       box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
     }
-    .score-circle span { font-size: 13px; font-weight: 700; }
+    .score-circle span { font-size: 12px; font-weight: 700; }
     .restart-btn {
       background: var(--gold);
       color: #0f172a;
       border: none;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 16px;
+      padding: 13px 26px;
+      border-radius: 10px;
+      font-size: 15px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 16px;
+      margin-top: 14px;
     }
 
-    /* Admin Dashboard Screen */
-    .admin-panel {
-      display: none;
-    }
+    /* Admin Panel */
+    .admin-panel { display: none; }
     .admin-header {
       background: #0f172a;
       border: 1px solid #8b5cf6;
       border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 20px;
+      padding: 14px;
+      margin-bottom: 16px;
       text-align: center;
     }
-    .admin-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: #c4b5fd;
-    }
+    .admin-title { font-size: 18px; font-weight: 800; color: #c4b5fd; }
     .answer-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      max-height: 480px;
+      gap: 10px;
+      max-height: 420px;
       overflow-y: auto;
-      padding-right: 6px;
-      margin-bottom: 20px;
+      padding-right: 4px;
+      margin-bottom: 16px;
     }
     .answer-item {
       background: #0f172a;
       border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 14px;
-      font-size: 14px;
-      line-height: 1.5;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.4;
     }
     .answer-item b { color: var(--gold); }
     .answer-item .ans-badge {
@@ -352,38 +377,26 @@
       background: rgba(16, 185, 129, 0.2);
       color: #34d399;
       border: 1px solid #10b981;
-      padding: 2px 8px;
-      border-radius: 6px;
+      padding: 2px 6px;
+      border-radius: 5px;
       font-weight: 700;
       margin-top: 4px;
     }
-    .admin-actions {
-      display: flex;
-      gap: 10px;
-    }
-    .admin-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 10px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-    }
+    .admin-actions { display: flex; gap: 10px; }
+    .admin-btn { flex: 1; padding: 12px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; font-size: 14px; }
     .btn-test { background: var(--blue); color: white; }
     .btn-logout { background: #475569; color: white; }
   </style>
 </head>
 <body>
 
-<div class="app-container">
-  <!-- Sound Toggle Button -->
-  <button id="sound-btn" class="sound-toggle" onclick="toggleSound()">🔊 사운드 ON</button>
+<div class="main-wrapper">
   
   <!-- 0. Login Screen -->
-  <div id="login-area" class="login-box">
+  <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
-    <h2 class="title" style="margin-bottom: 8px;">서울지역 직업계고 안전골든벨</h2>
-    <p class="login-desc">학번과 이름을 입력하고 골든벨에 도전하세요!</p>
+    <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
+    <p class="login-desc">학번과 이름을 입력하고 실시간 성적표와 함께 도전하세요!</p>
 
     <div class="form-group">
       <label class="form-label" for="user-id">📌 학번 (학생: 2503 등 / 관리자: 2500)</label>
@@ -399,11 +412,11 @@
   </div>
 
   <!-- Admin Dashboard Screen -->
-  <div id="admin-area" class="admin-panel">
+  <div id="admin-area" class="quiz-card admin-panel">
     <div class="admin-header">
       <div class="badge badge-admin">👑 최고 관리자 모드 (인증됨)</div>
       <div class="admin-title">안전골든벨 20문항 전체 정답 족보</div>
-      <div style="font-size: 13px; color: var(--text-dim); margin-top: 4px;">관리자 계정: 2500 (변귀섭 선생님)</div>
+      <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">관리자 계정: 2500 (변귀섭 선생님)</div>
     </div>
 
     <div class="answer-list" id="admin-answers-list"></div>
@@ -414,57 +427,114 @@
     </div>
   </div>
 
-  <!-- Main Quiz Area -->
+  <!-- Main Quiz Area with Split Screen Layout -->
   <div id="main-area" style="display: none;">
-    <!-- Header -->
-    <div class="header">
-      <div id="user-display-badge" class="badge badge-user" style="margin-right: 4px;">도전자: 홍길동 (2522)</div>
-      <div id="stage-badge" class="badge badge-stage1">1단계: 예선전 (O/X 퀴즈)</div>
-      <div class="title" style="font-size: 19px; margin-top: 4px;">🔔 안전골든벨 실전 테스트</div>
-      <div class="progress-bar-container">
-        <div id="progress-bar" class="progress-bar"></div>
-      </div>
-    </div>
-
-    <!-- Quiz Box -->
-    <div id="quiz-area">
-      <div class="question-box">
-        <div id="q-number" class="q-number">문제 1 / 20</div>
-        <div id="q-text" class="q-text">문제가 여기에 표시됩니다.</div>
-      </div>
-
-      <!-- Interactive Answer Area -->
-      <div id="answers-container"></div>
-
-      <!-- Feedback -->
-      <div id="feedback-box" class="feedback-box">
-        <div id="feedback-title" style="font-weight:700;"></div>
-        <div id="feedback-desc" class="explanation"></div>
-      </div>
-
-      <button id="next-btn" class="next-btn" onclick="nextQuestion()">다음 문제로 ➔</button>
-    </div>
-
-    <!-- Result Box -->
-    <div id="result-area" class="result-screen">
-      <h2 style="font-size: 24px; color: var(--gold-light); margin-bottom: 6px;">🎉 골든벨 도전 완료!</h2>
-      <div id="result-user-info" class="user-result-badge">2522 홍길동 도전자</div>
+    <div class="app-layout">
       
-      <div class="score-circle">
-        <div id="final-score">100</div>
-        <span>/ 100점</span>
+      <!-- Left: Quiz Card -->
+      <div class="quiz-card">
+        <button id="sound-btn" class="sound-toggle" onclick="toggleSound()">🔊 사운드 ON</button>
+        
+        <div class="header">
+          <div id="user-display-badge" class="badge badge-user" style="margin-right: 4px;">도전자: 홍길동 (2522)</div>
+          <div id="stage-badge" class="badge badge-stage1">1단계: OX 퀴즈</div>
+          <div class="title" style="font-size: 18px; margin-top: 2px;">🔔 안전골든벨 실전 테스트</div>
+          <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="question-box">
+            <div id="q-number" class="q-number">문제 1 / 20</div>
+            <div id="q-text" class="q-text">문제가 여기에 표시됩니다.</div>
+          </div>
+
+          <div id="answers-container"></div>
+
+          <div id="feedback-box" class="feedback-box">
+            <div id="feedback-title" style="font-weight:700;"></div>
+            <div id="feedback-desc" class="explanation"></div>
+          </div>
+
+          <button id="next-btn" class="next-btn" onclick="nextQuestion()">다음 문제로 ➔</button>
+        </div>
+
+        <!-- Result Box -->
+        <div id="result-area" class="result-screen">
+          <h2 style="font-size: 22px; color: var(--gold-light); margin-bottom: 6px;">🎉 골든벨 도전 완료!</h2>
+          <div id="result-user-info" class="user-result-badge">2522 홍길동 도전자</div>
+          
+          <div class="score-circle">
+            <div id="final-score">100</div>
+            <span>/ 100점</span>
+          </div>
+
+          <div id="result-msg" style="font-size: 15px; font-weight: 600; margin-bottom: 16px; line-height: 1.5;"></div>
+          
+          <button class="restart-btn" onclick="restartQuiz()">🔄 처음부터 다시 풀기</button>
+        </div>
       </div>
 
-      <div id="result-msg" style="font-size: 16px; font-weight: 600; margin-bottom: 20px; line-height: 1.6;"></div>
-      
-      <button class="restart-btn" onclick="restartQuiz()">🔄 처음부터 다시 풀기</button>
+      <!-- Right: Real-time Scorecard Panel -->
+      <div class="scorecard-panel">
+        <div class="panel-title">
+          <span>📊 실시간 OMR 성적표</span>
+          <span id="card-user-name" style="font-size:12px; color:var(--text-dim);">홍길동</span>
+        </div>
+
+        <!-- Summary -->
+        <div class="score-summary">
+          <div class="summary-item">
+            <div id="sum-correct" class="num color-correct">0</div>
+            <div class="lbl">정답 (⭕)</div>
+          </div>
+          <div class="summary-item">
+            <div id="sum-wrong" class="num color-wrong">0</div>
+            <div class="lbl">오답 (❌)</div>
+          </div>
+          <div class="summary-item">
+            <div id="sum-score" class="num color-total">0</div>
+            <div class="lbl">현재 점수</div>
+          </div>
+        </div>
+
+        <!-- Stage 1: OX -->
+        <div class="stage-section">
+          <div class="stage-label">
+            <span>1️⃣ 예선전: OX 퀴즈</span>
+            <span>(1~5번)</span>
+          </div>
+          <div class="omr-grid" id="omr-stage1"></div>
+        </div>
+
+        <!-- Stage 2: Choice -->
+        <div class="stage-section">
+          <div class="stage-label">
+            <span>2️⃣ 본선전: 4지선다형</span>
+            <span>(6~10번)</span>
+          </div>
+          <div class="omr-grid" id="omr-stage2"></div>
+        </div>
+
+        <!-- Stage 3: Text -->
+        <div class="stage-section">
+          <div class="stage-label">
+            <span>3️⃣ 결선전: 주관식 단답형</span>
+            <span>(11~20번)</span>
+          </div>
+          <div class="omr-grid" id="omr-stage3" style="grid-template-columns: repeat(5, 1fr);"></div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
 </div>
 
 <script>
-// Web Audio API Sound Synthesizer (무설치 실시간 사운드 재생)
+// Web Audio API Sound Synthesizer
 let audioCtx = null;
 let soundEnabled = true;
 
@@ -490,239 +560,96 @@ function toggleSound() {
   }
 }
 
-// 1. 맞출 때: 경쾌하고 신나는 골든벨 딩동댕 멜로디 (도-미-솔-높은도)
+// 1. 맞출 때: 딩동댕 멜로디 (도-미-솔-도)
 function playCorrectSound() {
   if (!soundEnabled) return;
   initAudio();
-
-  const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+  const notes = [523.25, 659.25, 783.99, 1046.50];
   notes.forEach((freq, idx) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.1));
-
     gain.gain.setValueAtTime(0, audioCtx.currentTime + (idx * 0.1));
     gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + (idx * 0.1) + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (idx * 0.1) + 0.35);
-
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-
     osc.start(audioCtx.currentTime + (idx * 0.1));
     osc.stop(audioCtx.currentTime + (idx * 0.1) + 0.4);
   });
 }
 
-// 2. 틀릴 때: 우당탕탕 접시/유리 깨지는 파열음 (Glass Shatter Crash)
+// 2. 틀릴 때: 와장창 접시 깨지는 파열음
 function playWrongSound() {
   if (!soundEnabled) return;
   initAudio();
-
   const now = audioCtx.currentTime;
-
-  // A. 금속/유리 깨지는 고주파 불협화음
   [2400, 3100, 4800, 6200].forEach((freq) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(freq, now);
     osc.frequency.exponentialRampToValueAtTime(freq * 0.4, now + 0.35);
-
     gain.gain.setValueAtTime(0.2, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
     osc.stop(now + 0.4);
   });
-
-  // B. 와장창 파편 튀는 화이트 노이즈
   const bufferSize = audioCtx.sampleRate * 0.4;
   const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   const data = buffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    data[i] = Math.random() * 2 - 1;
-  }
-
+  for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
   const noise = audioCtx.createBufferSource();
   noise.buffer = buffer;
-
   const filter = audioCtx.createBiquadFilter();
   filter.type = 'highpass';
   filter.frequency.setValueAtTime(1500, now);
-
   const noiseGain = audioCtx.createGain();
   noiseGain.gain.setValueAtTime(0.4, now);
   noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-
   noise.connect(filter);
   filter.connect(noiseGain);
   noiseGain.connect(audioCtx.destination);
-
   noise.start(now);
   noise.stop(now + 0.45);
 }
 
 const quizData = [
-  // 1단계: 예선전 OX (1~5)
-  {
-    stage: 1,
-    type: "ox",
-    q: "소화기를 사용할 때는 바람을 마주 보고(맞바람) 뿌려야 한다?",
-    answer: "X",
-    exp: "소화기는 반드시 바람을 등지고 비로 쓸듯이 골고루 방사해야 합니다."
-  },
-  {
-    stage: 1,
-    type: "ox",
-    q: "성인 심폐소생술(CPR) 시 인공호흡이 어렵거나 꺼려지면 가슴압박만 지속해도 된다?",
-    answer: "O",
-    exp: "인공호흡을 못 하더라도 119가 올 때까지 가슴압박만 지속(Hands-Only CPR)하는 것이 매우 효과적입니다."
-  },
-  {
-    stage: 1,
-    type: "ox",
-    q: "회전하는 기계(밀링, 선반, 드릴 등)를 다룰 때는 손 보호를 위해 면장갑을 착용해야 한다?",
-    answer: "X",
-    exp: "장갑이 회전체에 말려 들어가는 '끼임(협착) 사고'가 발생하므로 회전체 작업 시 장갑 착용은 절대 금지(맨손 작업)입니다."
-  },
-  {
-    stage: 1,
-    type: "ox",
-    q: "산업안전보건표지 중 '파란색 원형'은 특정 행동을 지시하는 지시표지(보호구 착용 등)이다?",
-    answer: "O",
-    exp: "파란색 원형은 보안경, 안전모, 안전화 등 '보호구 착용 지시표지'를 나타냅니다."
-  },
-  {
-    stage: 1,
-    type: "ox",
-    q: "전기가 흐르고 있는 전기 화재(C급 화재) 진압 시 물을 뿌려서 진화한다?",
-    answer: "X",
-    exp: "물을 뿌리면 감전 위험이 있으므로, 분말 소화기(ABC 소화기)나 이산화탄소(CO2) 소화기를 써야 합니다."
-  },
+  // 1단계: OX (1~5)
+  { stage: 1, type: "ox", q: "소화기를 사용할 때는 바람을 마주 보고(맞바람) 뿌려야 한다?", answer: "X", exp: "소화기는 반드시 바람을 등지고 비로 쓸듯이 골고루 방사해야 합니다." },
+  { stage: 1, type: "ox", q: "성인 심폐소생술(CPR) 시 인공호흡이 어렵거나 꺼려지면 가슴압박만 지속해도 된다?", answer: "O", exp: "인공호흡을 못 하더라도 119가 올 때까지 가슴압박만 지속(Hands-Only CPR)하는 것이 매우 효과적입니다." },
+  { stage: 1, type: "ox", q: "회전하는 기계(밀링, 선반, 드릴 등)를 다룰 때는 손 보호를 위해 면장갑을 착용해야 한다?", answer: "X", exp: "장갑이 회전체에 말려 들어가는 '끼임(협착) 사고'가 발생하므로 회전체 작업 시 장갑 착용은 절대 금지(맨손 작업)입니다." },
+  { stage: 1, type: "ox", q: "산업안전보건표지 중 '파란색 원형'은 특정 행동을 지시하는 지시표지(보호구 착용 등)이다?", answer: "O", exp: "파란색 원형은 보안경, 안전모, 안전화 등 '보호구 착용 지시표지'를 나타냅니다." },
+  { stage: 1, type: "ox", q: "전기가 흐르고 있는 전기 화재(C급 화재) 진압 시 물을 뿌려서 진화한다?", answer: "X", exp: "물을 뿌리면 감전 위험이 있으므로, 분말 소화기(ABC 소화기)나 이산화탄소(CO2) 소화기를 써야 합니다." },
 
-  // 2단계: 본선전 4지선다 (6~10)
-  {
-    stage: 2,
-    type: "choice",
-    q: "화학물질의 명칭, 유해성, 취급 주의사항, 응급조치 요령이 적힌 '화학물질 설명서'의 영문 약칭은?",
-    choices: ["KOSHA", "ISO", "MSDS", "OSHA"],
-    answer: 2,
-    exp: "정답은 MSDS(물질안전보건자료, Material Safety Data Sheet)입니다."
-  },
-  {
-    stage: 2,
-    type: "choice",
-    q: "화재의 종류 중 '주방(식용유 등) 화재'를 분류하는 등급 기호는?",
-    choices: ["A급 화재", "B급 화재", "C급 화재", "K급 화재"],
-    answer: 3,
-    exp: "주방 화재는 Kitchen의 앞 글자를 딴 K급 화재입니다. (A급:일반, B급:유류·가스, C급:전기)"
-  },
-  {
-    stage: 2,
-    type: "choice",
-    q: "인간의 부주의 현상 중 '다른 생각이나 걱정에 정신이 팔려 현재 작업을 놓치는 현상'은?",
-    choices: ["의식의 단절", "의식의 우회", "의식의 협착", "의식의 과잉"],
-    answer: 1,
-    exp: "다른 일에 마음이 쏠려 주의가 벗어나는 현상을 '의식의 우회'라고 합니다."
-  },
-  {
-    stage: 2,
-    type: "choice",
-    q: "산업안전보건법상 밀폐공간의 '적정 산소농도 기준 범위'로 올바른 것은?",
-    choices: ["10% ~ 15%", "15% ~ 20%", "18% 이상 ~ 23.5% 미만", "25% 이상"],
-    answer: 2,
-    exp: "밀폐공간의 적정 산소 농도는 18% 이상 23.5% 미만입니다. 18% 미만은 산소결핍증 위험이 있습니다."
-  },
-  {
-    stage: 2,
-    type: "choice",
-    q: "높이 몇 미터 이상의 추락 위험 장소에서 작업 시 안전대(추락방지대)를 의무 착용해야 하는가?",
-    choices: ["1m 이상", "2m 이상", "3m 이상", "4m 이상"],
-    answer: 1,
-    exp: "산업안전보건기준에 관한 규칙상 높이 2m 이상 고소작업 시 안전대 착용이 의무입니다."
-  },
+  // 2단계: 4지선다 (6~10)
+  { stage: 2, type: "choice", q: "화학물질의 명칭, 유해성, 취급 주의사항, 응급조치 요령이 적힌 '화학물질 설명서'의 영문 약칭은?", choices: ["KOSHA", "ISO", "MSDS", "OSHA"], answer: 2, exp: "정답은 MSDS(물질안전보건자료, Material Safety Data Sheet)입니다." },
+  { stage: 2, type: "choice", q: "화재의 종류 중 '주방(식용유 등) 화재'를 분류하는 등급 기호는?", choices: ["A급 화재", "B급 화재", "C급 화재", "K급 화재"], answer: 3, exp: "주방 화재는 Kitchen의 앞 글자를 딴 K급 화재입니다. (A급:일반, B급:유류·가스, C급:전기)" },
+  { stage: 2, type: "choice", q: "인간의 부주의 현상 중 '다른 생각이나 걱정에 정신이 팔려 현재 작업을 놓치는 현상'은?", choices: ["의식의 단절", "의식의 우회", "의식의 협착", "의식의 과잉"], answer: 1, exp: "다른 일에 마음이 쏠려 주의가 벗어나는 현상을 '의식의 우회'라고 합니다." },
+  { stage: 2, type: "choice", q: "산업안전보건법상 밀폐공간의 '적정 산소농도 기준 범위'로 올바른 것은?", choices: ["10% ~ 15%", "15% ~ 20%", "18% 이상 ~ 23.5% 미만", "25% 이상"], answer: 2, exp: "밀폐공간의 적정 산소 농도는 18% 이상 23.5% 미만입니다. 18% 미만은 산소결핍증 위험이 있습니다." },
+  { stage: 2, type: "choice", q: "높이 몇 미터 이상의 추락 위험 장소에서 작업 시 안전대(추락방지대)를 의무 착용해야 하는가?", choices: ["1m 이상", "2m 이상", "3m 이상", "4m 이상"], answer: 1, exp: "산업안전보건기준에 관한 규칙상 높이 2m 이상 고소작업 시 안전대 착용이 의무입니다." },
 
-  // 3단계: 결선전 주관식 단답형 (11~20)
-  {
-    stage: 3,
-    type: "text",
-    q: "1건의 대형사고(중대재해) 전에 29건의 경상해와 300건의 무상해 사고(아차사고)가 발생한다는 통계 법칙은?",
-    answers: ["하인리히", "하인리히법칙", "하인리히 법칙"],
-    exp: "정답은 '하인리히 법칙(1:29:300 법칙)'입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "성인 심폐소생술(CPR) 시 '가슴압박'과 '인공호흡'의 공식 비율은? (예: OO : O)",
-    answers: ["30:2", "30 : 2", "30대2", "30 대 2"],
-    exp: "정답은 가슴압박 30회 : 인공호흡 2회인 '30:2'입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "심정지 환자 발생 시 뇌손상을 막기 위한 응급처치 골든타임은 몇 분 이내인가? (숫자만 입력)",
-    answers: ["4", "4분"],
-    exp: "심정지 후 4분이 지나면 뇌세포 괴사가 시작되므로 골든타임은 4분입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "성인 심폐소생술 시 1분당 가슴압박 권장 횟수는 몇 회에서 몇 회 사이인가? (예: 100~120)",
-    answers: ["100~120", "100-120", "100~120회", "100-120회", "100에서120"],
-    exp: "정답은 분당 '100~120회' 속도입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "심정지 환자에게 전기 충격을 주어 심장 박동을 회복시키는 장비(자동심장충격기)의 영문 약어는?",
-    answers: ["AED", "aed"],
-    exp: "정답은 'AED(Automated External Defibrillator)'입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "산업재해 발생의 급박한 위험이 있을 때, 근로자 스스로 작업을 중단하고 대피할 수 있는 권리는?",
-    answers: ["작업중지권", "작업 중지권"],
-    exp: "정답은 근로자의 정당한 권리인 '작업중지권'입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "분진을 막는 것은 방진마스크이다. 유독가스나 유기용제 증기를 차단하기 위해 착용하는 마스크는?",
-    answers: ["방독마스크", "방독 마스크"],
-    exp: "정답은 '방독마스크'입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "낙하·비래(A), 추락(B)뿐만 아니라 '전기 감전(E)'까지 방지할 수 있는 안전모의 기호 등급은? (알파벳 조합)",
-    answers: ["ABE", "abe", "ABE형", "abe형"],
-    exp: "전기 절연 성능을 가진 안전모 등급은 'ABE형'입니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "불이 났을 때 공기 중의 '산소를 차단'하여 불을 끄는 소화 원리를 무엇이라 하는가? (O O 소화)",
-    answers: ["질식소화", "질식 소화"],
-    exp: "산소 공급을 막아 불을 끄는 것을 '질식소화'라고 합니다."
-  },
-  {
-    stage: 3,
-    type: "text",
-    q: "사업장에서 중대재해 발생 시 사업주 및 경영책임자의 안전의무 위반을 처벌하기 위해 제정된 법률은?",
-    answers: ["중대재해처벌법", "중대재해 처벌법", "중대재해처벌 등에 관한 법률"],
-    exp: "정답은 '중대재해처벌법'입니다."
-  }
+  // 3단계: 주관식 단답형 (11~20)
+  { stage: 3, type: "text", q: "1건의 대형사고(중대재해) 전에 29건의 경상해와 300건의 무상해 사고(아차사고)가 발생한다는 통계 법칙은?", answers: ["하인리히", "하인리히법칙", "하인리히 법칙"], exp: "정답은 '하인리히 법칙(1:29:300 법칙)'입니다." },
+  { stage: 3, type: "text", q: "성인 심폐소생술(CPR) 시 '가슴압박'과 '인공호흡'의 공식 비율은? (예: OO : O)", answers: ["30:2", "30 : 2", "30대2", "30 대 2"], exp: "정답은 가슴압박 30회 : 인공호흡 2회인 '30:2'입니다." },
+  { stage: 3, type: "text", q: "심정지 환자 발생 시 뇌손상을 막기 위한 응급처치 골든타임은 몇 분 이내인가? (숫자만 입력)", answers: ["4", "4분"], exp: "심정지 후 4분이 지나면 뇌세포 괴사가 시작되므로 골든타임은 4분입니다." },
+  { stage: 3, type: "text", q: "성인 심폐소생술 시 1분당 가슴압박 권장 횟수는 몇 회에서 몇 회 사이인가? (예: 100~120)", answers: ["100~120", "100-120", "100~120회", "100-120회", "100에서120"], exp: "정답은 분당 '100~120회' 속도입니다." },
+  { stage: 3, type: "text", q: "심정지 환자에게 전기 충격을 주어 심장 박동을 회복시키는 장비(자동심장충격기)의 영문 약어는?", answers: ["AED", "aed"], exp: "정답은 'AED(Automated External Defibrillator)'입니다." },
+  { stage: 3, type: "text", q: "산업재해 발생의 급박한 위험이 있을 때, 근로자 스스로 작업을 중단하고 대피할 수 있는 권리는?", answers: ["작업중지권", "작업 중지권"], exp: "정답은 근로자의 정당한 권리인 '작업중지권'입니다." },
+  { stage: 3, type: "text", q: "분진을 막는 것은 방진마스크이다. 유독가스나 유기용제 증기를 차단하기 위해 착용하는 마스크는?", answers: ["방독마스크", "방독 마스크"], exp: "정답은 '방독마스크'입니다." },
+  { stage: 3, type: "text", q: "낙하·비래(A), 추락(B)뿐만 아니라 '전기 감전(E)'까지 방지할 수 있는 안전모의 기호 등급은? (알파벳 조합)", answers: ["ABE", "abe", "ABE형", "abe형"], exp: "전기 절연 성능을 가진 안전모 등급은 'ABE형'입니다." },
+  { stage: 3, type: "text", q: "불이 났을 때 공기 중의 '산소를 차단'하여 불을 끄는 소화 원리를 무엇이라 하는가? (O O 소화)", answers: ["질식소화", "질식 소화"], exp: "산소 공급을 막아 불을 끄는 것을 '질식소화'라고 합니다." },
+  { stage: 3, type: "text", q: "사업장에서 중대재해 발생 시 사업주 및 경영책임자의 안전의무 위반을 처벌하기 위해 제정된 법률은?", answers: ["중대재해처벌법", "중대재해 처벌법", "중대재해처벌 등에 관한 법률"], exp: "정답은 '중대재해처벌법'입니다." }
 ];
 
 let currentUser = { id: "", name: "", isAdmin: false };
 let currentIdx = 0;
 let score = 0;
 let answered = false;
+let userResults = new Array(quizData.length).fill(null); // null: 미풀이, true: 정답, false: 오답
 
 function startQuiz() {
   initAudio();
@@ -734,7 +661,7 @@ function startQuiz() {
     return;
   }
 
-  // 관리자 인증 체크 (학번: 2500, 암호: cntfed)
+  // 관리자 인증 체크 (2500 / cntfed)
   if (idInput === "2500" && nameInput === "cntfed") {
     currentUser.id = "2500";
     currentUser.name = "변귀섭 관리자";
@@ -743,7 +670,6 @@ function startQuiz() {
     return;
   }
 
-  // 일반 학생 로그인
   currentUser.id = idInput;
   currentUser.name = nameInput;
   currentUser.isAdmin = false;
@@ -751,6 +677,7 @@ function startQuiz() {
   document.getElementById('login-area').style.display = 'none';
   document.getElementById('main-area').style.display = 'block';
   document.getElementById('user-display-badge').innerText = `도전자: ${currentUser.name} (${currentUser.id})`;
+  document.getElementById('card-user-name').innerText = `${currentUser.name} (${currentUser.id})`;
 
   initQuiz();
 }
@@ -784,6 +711,7 @@ function enterQuizAsAdmin() {
   document.getElementById('main-area').style.display = 'block';
   document.getElementById('user-display-badge').className = 'badge badge-admin';
   document.getElementById('user-display-badge').innerText = `👑 관리자: 변귀섭 (2500)`;
+  document.getElementById('card-user-name').innerText = `변귀섭 관리자`;
   initQuiz();
 }
 
@@ -800,41 +728,86 @@ function initQuiz() {
   currentIdx = 0;
   score = 0;
   answered = false;
+  userResults = new Array(quizData.length).fill(null);
   document.getElementById('quiz-area').style.display = 'block';
   document.getElementById('result-area').style.display = 'none';
+  renderScorecardGrids();
+  updateScorecard();
   loadQuestion();
+}
+
+function renderScorecardGrids() {
+  const g1 = document.getElementById('omr-stage1');
+  const g2 = document.getElementById('omr-stage2');
+  const g3 = document.getElementById('omr-stage3');
+  g1.innerHTML = ''; g2.innerHTML = ''; g3.innerHTML = '';
+
+  for (let i = 0; i < 5; i++) {
+    g1.innerHTML += `<div id="omr-cell-${i}" class="omr-cell">Q${i+1}</div>`;
+  }
+  for (let i = 5; i < 10; i++) {
+    g2.innerHTML += `<div id="omr-cell-${i}" class="omr-cell">Q${i+1}</div>`;
+  }
+  for (let i = 10; i < 20; i++) {
+    g3.innerHTML += `<div id="omr-cell-${i}" class="omr-cell">Q${i+1}</div>`;
+  }
+}
+
+function updateScorecard() {
+  let correctCount = 0;
+  let wrongCount = 0;
+
+  userResults.forEach((res, idx) => {
+    const cell = document.getElementById(`omr-cell-${idx}`);
+    if (!cell) return;
+
+    if (idx === currentIdx && res === null) {
+      cell.className = "omr-cell current";
+      cell.innerText = `Q${idx+1} ⏳`;
+    } else if (res === true) {
+      correctCount++;
+      cell.className = "omr-cell correct";
+      cell.innerText = `Q${idx+1} ⭕`;
+    } else if (res === false) {
+      wrongCount++;
+      cell.className = "omr-cell wrong";
+      cell.innerText = `Q${idx+1} ❌`;
+    } else {
+      cell.className = "omr-cell";
+      cell.innerText = `Q${idx+1}`;
+    }
+  });
+
+  document.getElementById('sum-correct').innerText = correctCount;
+  document.getElementById('sum-wrong').innerText = wrongCount;
+  document.getElementById('sum-score').innerText = score;
 }
 
 function loadQuestion() {
   answered = false;
   const q = quizData[currentIdx];
   
-  // Progress Bar
   const progressPercent = ((currentIdx) / quizData.length) * 100;
   document.getElementById('progress-bar').style.width = progressPercent + '%';
 
-  // Badge & Stage Update
   const badge = document.getElementById('stage-badge');
   if (q.stage === 1) {
     badge.className = 'badge badge-stage1';
-    badge.innerText = '1단계: 예선전 (O / X 퀴즈)';
+    badge.innerText = '1단계: 예선전 (OX 퀴즈)';
   } else if (q.stage === 2) {
     badge.className = 'badge badge-stage2';
-    badge.innerText = '2단계: 본선전 (4지선다 객관식)';
+    badge.innerText = '2단계: 본선전 (4지선다형)';
   } else {
     badge.className = 'badge badge-stage3';
-    badge.innerText = '3단계: 결선전 (주관식 골든벨)';
+    badge.innerText = '3단계: 결선전 (주관식 단답형)';
   }
 
-  // Question Info
   document.getElementById('q-number').innerText = `문제 ${currentIdx + 1} / ${quizData.length}`;
   document.getElementById('q-text').innerText = q.q;
 
-  // Reset Feedback & Next Button
   document.getElementById('feedback-box').style.display = 'none';
   document.getElementById('next-btn').style.display = 'none';
 
-  // Render Answers Area
   const container = document.getElementById('answers-container');
   container.innerHTML = '';
 
@@ -867,6 +840,8 @@ function loadQuestion() {
     container.appendChild(group);
     setTimeout(() => document.getElementById('text-ans').focus(), 100);
   }
+
+  updateScorecard();
 }
 
 function submitTextAnswer() {
@@ -895,17 +870,19 @@ function checkAnswer(userAns) {
     isCorrect = q.answers.some(a => a.replace(/\s+/g, '').toLowerCase() === cleanUser);
   }
 
+  userResults[currentIdx] = isCorrect;
+
   const feedbackBox = document.getElementById('feedback-box');
   const feedbackTitle = document.getElementById('feedback-title');
   const feedbackDesc = document.getElementById('feedback-desc');
 
   if (isCorrect) {
-    score += 5; // 20문항 * 5점 = 100점
-    playCorrectSound(); // 🔔 딩동댕 멜로디 소리 재생!
+    score += 5;
+    playCorrectSound();
     feedbackBox.className = 'feedback-box feedback-correct';
     feedbackTitle.innerHTML = '🎉 정답입니다! 딩동댕 🔔';
   } else {
-    playWrongSound(); // 💥 와장창 접시 깨지는 파열음 재생!
+    playWrongSound();
     feedbackBox.className = 'feedback-box feedback-wrong';
     feedbackTitle.innerHTML = `❌ 아쉽습니다! 땡 (접시 와장창!) 💥`;
   }
@@ -913,6 +890,8 @@ function checkAnswer(userAns) {
   feedbackDesc.innerHTML = `<b>[정답 해설]</b> ${q.exp}`;
   feedbackBox.style.display = 'block';
   document.getElementById('next-btn').style.display = 'block';
+
+  updateScorecard();
 }
 
 function nextQuestion() {
@@ -941,12 +920,14 @@ function showResult() {
     msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
-    msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>틀린 문제 해설을 한 번 더 복습하고 실전에 도전하세요!`;
+    msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>오른쪽 성적표에서 ❌표시된 문제를 복습하세요!`;
     msg.style.color = "#fbbf24";
   } else {
-    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 다시 풀기 버튼을 눌러 핵심 개념을 완벽히 마스터하세요.`;
+    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 다시 풀기 버튼을 눌러 만점에 도전하세요.`;
     msg.style.color = "#f87171";
   }
+
+  updateScorecard();
 }
 
 function restartQuiz() {
