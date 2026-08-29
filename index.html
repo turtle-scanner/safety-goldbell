@@ -35,10 +35,29 @@
       padding: 28px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       border: 1px solid #334155;
+      position: relative;
     }
+    .sound-toggle {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: #334155;
+      border: 1px solid #475569;
+      color: var(--gold);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sound-toggle:hover { background: #475569; }
     .header {
       text-align: center;
       margin-bottom: 20px;
+      margin-top: 10px;
     }
     .badge {
       display: inline-block;
@@ -226,6 +245,11 @@
       margin-bottom: 16px;
       font-size: 15px;
       line-height: 1.5;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
     .feedback-correct { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; }
     .feedback-wrong { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; }
@@ -352,6 +376,8 @@
 <body>
 
 <div class="app-container">
+  <!-- Sound Toggle Button -->
+  <button id="sound-btn" class="sound-toggle" onclick="toggleSound()">🔊 사운드 ON</button>
   
   <!-- 0. Login Screen -->
   <div id="login-area" class="login-box">
@@ -438,6 +464,108 @@
 </div>
 
 <script>
+// Web Audio API Sound Synthesizer (무설치 실시간 사운드 재생)
+let audioCtx = null;
+let soundEnabled = true;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const btn = document.getElementById('sound-btn');
+  if (soundEnabled) {
+    btn.innerText = "🔊 사운드 ON";
+    btn.style.color = "var(--gold)";
+    playCorrectSound();
+  } else {
+    btn.innerText = "🔇 사운드 OFF";
+    btn.style.color = "var(--text-dim)";
+  }
+}
+
+// 1. 맞출 때: 경쾌하고 신나는 골든벨 딩동댕 멜로디 (도-미-솔-높은도)
+function playCorrectSound() {
+  if (!soundEnabled) return;
+  initAudio();
+
+  const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+  notes.forEach((freq, idx) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.1));
+
+    gain.gain.setValueAtTime(0, audioCtx.currentTime + (idx * 0.1));
+    gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + (idx * 0.1) + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (idx * 0.1) + 0.35);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(audioCtx.currentTime + (idx * 0.1));
+    osc.stop(audioCtx.currentTime + (idx * 0.1) + 0.4);
+  });
+}
+
+// 2. 틀릴 때: 우당탕탕 접시/유리 깨지는 파열음 (Glass Shatter Crash)
+function playWrongSound() {
+  if (!soundEnabled) return;
+  initAudio();
+
+  const now = audioCtx.currentTime;
+
+  // A. 금속/유리 깨지는 고주파 불협화음
+  [2400, 3100, 4800, 6200].forEach((freq) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(freq, now);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.4, now + 0.35);
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.4);
+  });
+
+  // B. 와장창 파편 튀는 화이트 노이즈
+  const bufferSize = audioCtx.sampleRate * 0.4;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = Math.random() * 2 - 1;
+  }
+
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = buffer;
+
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'highpass';
+  filter.frequency.setValueAtTime(1500, now);
+
+  const noiseGain = audioCtx.createGain();
+  noiseGain.gain.setValueAtTime(0.4, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+  noise.connect(filter);
+  filter.connect(noiseGain);
+  noiseGain.connect(audioCtx.destination);
+
+  noise.start(now);
+  noise.stop(now + 0.45);
+}
+
 const quizData = [
   // 1단계: 예선전 OX (1~5)
   {
@@ -597,6 +725,7 @@ let score = 0;
 let answered = false;
 
 function startQuiz() {
+  initAudio();
   const idInput = document.getElementById('user-id').value.trim();
   const nameInput = document.getElementById('user-name').value.trim();
 
@@ -772,11 +901,13 @@ function checkAnswer(userAns) {
 
   if (isCorrect) {
     score += 5; // 20문항 * 5점 = 100점
+    playCorrectSound(); // 🔔 딩동댕 멜로디 소리 재생!
     feedbackBox.className = 'feedback-box feedback-correct';
     feedbackTitle.innerHTML = '🎉 정답입니다! 딩동댕 🔔';
   } else {
+    playWrongSound(); // 💥 와장창 접시 깨지는 파열음 재생!
     feedbackBox.className = 'feedback-box feedback-wrong';
-    feedbackTitle.innerHTML = `❌ 아쉽습니다! 오답입니다.`;
+    feedbackTitle.innerHTML = `❌ 아쉽습니다! 땡 (접시 와장창!) 💥`;
   }
 
   feedbackDesc.innerHTML = `<b>[정답 해설]</b> ${q.exp}`;
@@ -806,6 +937,7 @@ function showResult() {
   const msg = document.getElementById('result-msg');
   
   if (score >= 90) {
+    playCorrectSound();
     msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
