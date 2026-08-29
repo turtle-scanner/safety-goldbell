@@ -255,6 +255,13 @@
     .rank-3 { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
     .rank-user { font-weight: 700; flex: 1; margin-left: 8px; }
     .rank-score { font-weight: 900; color: var(--gold-light); }
+    .rank-empty {
+      text-align: center;
+      padding: 18px;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
 
     /* Question Box */
     .question-box {
@@ -591,7 +598,7 @@
 
 <div class="main-wrapper">
   
-  <!-- 0. Login Screen with Real-Time TOP 5 Leaderboard -->
+  <!-- 0. Login Screen with Fresh Real-Time Leaderboard -->
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
@@ -615,7 +622,9 @@
         <span>🏆 실시간 명예의 전당 (1위 ~ 5위)</span>
         <span style="font-size:12px; color:var(--text-dim);">실시간 순위</span>
       </div>
-      <div class="rank-list" id="login-ranking-list"></div>
+      <div class="rank-list" id="login-ranking-list">
+        <div class="rank-empty">아직 응시자가 없습니다. 1위의 주인공이 되어보세요! 🏆</div>
+      </div>
     </div>
   </div>
 
@@ -796,7 +805,9 @@
           <div class="ranking-title" style="font-size:13px; margin-bottom:8px;">
             <span>🏆 실시간 순위 TOP 5</span>
           </div>
-          <div class="rank-list" id="sidebar-ranking-list" style="gap:6px;"></div>
+          <div class="rank-list" id="sidebar-ranking-list" style="gap:6px;">
+            <div class="rank-empty" style="padding:10px;">기록 없음</div>
+          </div>
         </div>
 
       </div>
@@ -882,7 +893,6 @@ function playApplauseAndChime() {
 
   const now = audioCtx.currentTime;
 
-  // A. 승리의 골든벨 멜로디 (도-미-솔-도)
   const melody = [523.25, 659.25, 783.99, 1046.50];
   melody.forEach((freq, i) => {
     const osc = audioCtx.createOscillator();
@@ -900,7 +910,6 @@ function playApplauseAndChime() {
     osc.stop(now + (i * 0.08) + 0.4);
   });
 
-  // B. 우렁찬 박수갈채 사운드
   for (let i = 0; i < 45; i++) {
     const clapDelay = now + 0.1 + (Math.random() * 1.2);
     const clapDuration = 0.04 + (Math.random() * 0.04);
@@ -1082,31 +1091,21 @@ let wrongQuestions = [];
 let timerInterval = null;
 let timeLeft = 30;
 
-// Leaderboard Initialization with Demo Data if empty
-function initLeaderboardData() {
-  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
-  if (records.length === 0) {
-    records = [
-      { id: "2501", name: "김찬영", score: 100, wrongCount: 0, date: "2026.8.29 09:30" },
-      { id: "2599", name: "홍길동", score: 95, wrongCount: 1, date: "2026.8.29 09:40" },
-      { id: "2512", name: "이순신", score: 90, wrongCount: 2, date: "2026.8.29 09:45" },
-      { id: "2508", name: "강감찬", score: 85, wrongCount: 3, date: "2026.8.29 09:50" },
-      { id: "2520", name: "유관순", score: 80, wrongCount: 4, date: "2026.8.29 09:55" }
-    ];
-    localStorage.setItem('goldbell_students', JSON.stringify(records));
-  }
-  renderAllLeaderboards();
-}
-
+// Leaderboard: Clean zero-state with NO mock data
 function renderAllLeaderboards() {
   let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
-  // Sort by Score DESC, then wrongCount ASC
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
-
-  const top5 = records.slice(0, 5);
 
   const loginList = document.getElementById('login-ranking-list');
   const sideList = document.getElementById('sidebar-ranking-list');
+
+  if (records.length === 0) {
+    if (loginList) loginList.innerHTML = `<div class="rank-empty">아직 응시자가 없습니다. 1위의 주인공이 되어보세요! 🏆</div>`;
+    if (sideList) sideList.innerHTML = `<div class="rank-empty" style="padding:10px;">기록 없음</div>`;
+    return;
+  }
+
+  const top5 = records.slice(0, 5);
   if (loginList) loginList.innerHTML = '';
   if (sideList) sideList.innerHTML = '';
 
@@ -1142,7 +1141,6 @@ function startQuiz() {
     return;
   }
 
-  // 관리자 모드
   if (idInput === "2500" && nameInput === "cntfed") {
     currentUser.id = "2500";
     currentUser.name = "변귀섭 관리자";
@@ -1439,7 +1437,6 @@ function showResult() {
     document.getElementById('cert-score').innerText = `${score}점 (${score === 100 ? '만점' : '우수'})`;
   }
 
-  // Save student record & Update Rank
   if (!currentUser.isAdmin) {
     saveStudentRecord(currentUser.id, currentUser.name, score, wrongQuestions.length);
   }
@@ -1456,7 +1453,6 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
   const now = new Date();
   const dateStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
   
-  // Update or insert
   const existingIdx = records.findIndex(r => r.id === id && r.name === name);
   if (existingIdx >= 0) {
     if (finalScore > records[existingIdx].score) {
@@ -1471,7 +1467,6 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
   localStorage.setItem('goldbell_students', JSON.stringify(records));
   renderAllLeaderboards();
 
-  // Calculate Rank
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
   const myRank = records.findIndex(r => r.id === id && r.name === name) + 1;
   const rankBadge = document.getElementById('result-rank-badge');
@@ -1568,7 +1563,7 @@ function exportToCSV() {
 function clearStudentRecords() {
   if (confirm("정말로 모든 학생 응시 기록을 초기화하시겠습니까?")) {
     localStorage.removeItem('goldbell_students');
-    initLeaderboardData();
+    renderAllLeaderboards();
     renderStudentTable();
   }
 }
@@ -1655,12 +1650,10 @@ function downloadCertificate() {
   link.click();
 }
 
-// Window load init
 window.addEventListener('DOMContentLoaded', () => {
-  initLeaderboardData();
+  // Clear any existing dummy records from local storage if needed
+  renderAllLeaderboards();
 });
 </script>
 </body>
 </html>
-
-<!-- Build Version: 20260829-100657 -->
