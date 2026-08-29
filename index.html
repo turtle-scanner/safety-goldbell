@@ -36,7 +36,7 @@
     }
     .main-wrapper {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1020px;
       position: relative;
       z-index: 10;
     }
@@ -56,12 +56,11 @@
       box-shadow: 0 15px 40px rgba(0,0,0,0.7), 0 0 20px rgba(59, 130, 246, 0.1);
       border: 1px solid #1e293b;
       position: relative;
-      backdrop-filter: blur(10px);
     }
     .scorecard-panel {
       background: var(--panel-bg);
       border-radius: 24px;
-      padding: 22px;
+      padding: 20px;
       border: 1px solid #1e293b;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
@@ -165,27 +164,27 @@
     
     /* Login Box */
     .login-box {
-      max-width: 560px;
+      max-width: 580px;
       margin: 0 auto;
       text-align: center;
-      padding: 24px 0;
+      padding: 20px 0;
     }
-    .login-icon { font-size: 52px; margin-bottom: 10px; animation: ring 2s infinite ease-in-out; }
+    .login-icon { font-size: 50px; margin-bottom: 8px; animation: ring 2s infinite ease-in-out; }
     @keyframes ring {
       0%, 100% { transform: rotate(0); }
       10%, 30% { transform: rotate(-12deg); }
       20%, 40% { transform: rotate(12deg); }
     }
-    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 22px; line-height: 1.5; }
-    .form-group { text-align: left; margin-bottom: 16px; }
+    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 20px; line-height: 1.5; }
+    .form-group { text-align: left; margin-bottom: 14px; }
     .form-label { display: block; font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 6px; }
     .login-input {
       width: 100%;
       background: #090d16;
       border: 2px solid #334155;
       color: var(--text);
-      padding: 14px 16px;
-      font-size: 16px;
+      padding: 13px 16px;
+      font-size: 15px;
       border-radius: 12px;
       outline: none;
       transition: border-color 0.2s;
@@ -196,16 +195,66 @@
       background: linear-gradient(135deg, var(--gold), #d97706);
       color: #070b14;
       border: none;
-      padding: 17px;
+      padding: 16px;
       border-radius: 14px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 900;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 8px;
       box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
       transition: all 0.2s;
     }
     .start-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.6); }
+
+    /* Leaderboard Box */
+    .ranking-box {
+      margin-top: 24px;
+      background: #090d16;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 16px;
+      text-align: left;
+    }
+    .ranking-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rank-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #131d31;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      border: 1px solid #1e293b;
+      transition: transform 0.2s;
+    }
+    .rank-item:hover { transform: translateX(4px); }
+    .rank-pos {
+      font-weight: 900;
+      min-width: 32px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .rank-1 { color: #fbbf24; border-color: rgba(245, 158, 11, 0.5); background: rgba(245, 158, 11, 0.1); }
+    .rank-2 { color: #e2e8f0; border-color: rgba(226, 232, 240, 0.4); }
+    .rank-3 { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
+    .rank-user { font-weight: 700; flex: 1; margin-left: 8px; }
+    .rank-score { font-weight: 900; color: var(--gold-light); }
 
     /* Question Box */
     .question-box {
@@ -297,14 +346,14 @@
 
     /* Scorecard Panel */
     .panel-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--gold-light);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
       border-bottom: 1px solid #1e293b;
     }
     .score-summary {
@@ -313,38 +362,38 @@
       gap: 6px;
       text-align: center;
       background: #090d16;
-      padding: 12px 8px;
+      padding: 10px 6px;
       border-radius: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       border: 1px solid #1e293b;
     }
-    .summary-item .num { font-size: 20px; font-weight: 900; }
+    .summary-item .num { font-size: 18px; font-weight: 900; }
     .summary-item .lbl { font-size: 11px; color: var(--text-dim); }
     .color-correct { color: #34d399; }
     .color-wrong { color: #f87171; }
     .color-total { color: var(--gold-light); }
 
-    .stage-section { margin-bottom: 14px; }
+    .stage-section { margin-bottom: 12px; }
     .stage-label {
       font-size: 12px;
       font-weight: 700;
       color: var(--text-dim);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
       display: flex;
       justify-content: space-between;
     }
     .omr-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
+      gap: 5px;
     }
     .omr-cell {
       background: #090d16;
       border: 1px solid #1e293b;
       border-radius: 8px;
-      padding: 6px 0;
+      padding: 5px 0;
       text-align: center;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--text-dim);
       transition: all 0.2s;
@@ -364,7 +413,18 @@
       text-align: center;
       padding: 10px 0;
     }
-    .user-result-badge { font-size: 16px; font-weight: 800; color: var(--gold); margin-bottom: 12px; }
+    .user-result-badge { font-size: 16px; font-weight: 800; color: var(--gold); margin-bottom: 8px; }
+    .rank-alert-banner {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
     .score-circle {
       width: 120px;
       height: 120px;
@@ -375,7 +435,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 0 auto 16px;
+      margin: 0 auto 14px;
       font-size: 28px;
       font-weight: 900;
       box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
@@ -531,7 +591,7 @@
 
 <div class="main-wrapper">
   
-  <!-- 0. Login Screen -->
+  <!-- 0. Login Screen with Real-Time TOP 5 Leaderboard -->
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
@@ -548,6 +608,15 @@
     </div>
 
     <button class="start-btn" onclick="startQuiz()">🏆 긴장감 100% 골든벨 시작하기 ➔</button>
+
+    <!-- Top 5 Leaderboard (Login Screen) -->
+    <div class="ranking-box">
+      <div class="ranking-title">
+        <span>🏆 실시간 명예의 전당 (1위 ~ 5위)</span>
+        <span style="font-size:12px; color:var(--text-dim);">실시간 순위</span>
+      </div>
+      <div class="rank-list" id="login-ranking-list"></div>
+    </div>
   </div>
 
   <!-- Admin Dashboard Screen -->
@@ -638,10 +707,11 @@
           <button id="next-btn" class="next-btn" onclick="nextQuestion()">다음 문제로 ➔</button>
         </div>
 
-        <!-- Result Box & Certificate -->
+        <!-- Result Box & Certificate & Rank Badge -->
         <div id="result-area" class="result-screen">
           <h2 style="font-size: 22px; color: var(--gold-light); margin-bottom: 4px;">🎉 골든벨 도전 완료!</h2>
           <div id="result-user-info" class="user-result-badge">2599 홍길동 도전자</div>
+          <div id="result-rank-badge" class="rank-alert-banner">👑 현재 랭킹 1위 달성!</div>
           
           <div class="score-circle">
             <div id="final-score">100</div>
@@ -675,7 +745,7 @@
         </div>
       </div>
 
-      <!-- Right: Real-time Scorecard Panel -->
+      <!-- Right: Real-time Scorecard Panel & Top 5 Board -->
       <div class="scorecard-panel">
         <div class="panel-title">
           <span>📊 실시간 OMR 성적표</span>
@@ -721,6 +791,14 @@
           <div class="omr-grid" id="omr-stage3"></div>
         </div>
 
+        <!-- Right Side Top 5 Mini Leaderboard -->
+        <div class="ranking-box" style="margin-top:14px; padding:12px;">
+          <div class="ranking-title" style="font-size:13px; margin-bottom:8px;">
+            <span>🏆 실시간 순위 TOP 5</span>
+          </div>
+          <div class="rank-list" id="sidebar-ranking-list" style="gap:6px;"></div>
+        </div>
+
       </div>
 
     </div>
@@ -731,7 +809,7 @@
 <canvas id="cert-canvas" width="700" height="480" style="display:none;"></canvas>
 
 <script>
-// High-Impact Web Audio Engine (브라우저 정책 100% 해제)
+// High-Impact Web Audio Engine
 let audioCtx = null;
 let soundEnabled = true;
 let isShuffle = false;
@@ -822,7 +900,7 @@ function playApplauseAndChime() {
     osc.stop(now + (i * 0.08) + 0.4);
   });
 
-  // B. 우렁찬 박수갈채 사운드 (45개 이상의 개별 박수 버스트 합성)
+  // B. 우렁찬 박수갈채 사운드
   for (let i = 0; i < 45; i++) {
     const clapDelay = now + 0.1 + (Math.random() * 1.2);
     const clapDuration = 0.04 + (Math.random() * 0.04);
@@ -1004,6 +1082,56 @@ let wrongQuestions = [];
 let timerInterval = null;
 let timeLeft = 30;
 
+// Leaderboard Initialization with Demo Data if empty
+function initLeaderboardData() {
+  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  if (records.length === 0) {
+    records = [
+      { id: "2501", name: "김찬영", score: 100, wrongCount: 0, date: "2026.8.29 09:30" },
+      { id: "2599", name: "홍길동", score: 95, wrongCount: 1, date: "2026.8.29 09:40" },
+      { id: "2512", name: "이순신", score: 90, wrongCount: 2, date: "2026.8.29 09:45" },
+      { id: "2508", name: "강감찬", score: 85, wrongCount: 3, date: "2026.8.29 09:50" },
+      { id: "2520", name: "유관순", score: 80, wrongCount: 4, date: "2026.8.29 09:55" }
+    ];
+    localStorage.setItem('goldbell_students', JSON.stringify(records));
+  }
+  renderAllLeaderboards();
+}
+
+function renderAllLeaderboards() {
+  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  // Sort by Score DESC, then wrongCount ASC
+  records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
+
+  const top5 = records.slice(0, 5);
+
+  const loginList = document.getElementById('login-ranking-list');
+  const sideList = document.getElementById('sidebar-ranking-list');
+  if (loginList) loginList.innerHTML = '';
+  if (sideList) sideList.innerHTML = '';
+
+  top5.forEach((item, index) => {
+    let rankBadge = "";
+    let rankClass = "";
+    if (index === 0) { rankBadge = "🥇 1위"; rankClass = "rank-1"; }
+    else if (index === 1) { rankBadge = "🥈 2위"; rankClass = "rank-2"; }
+    else if (index === 2) { rankBadge = "🥉 3위"; rankClass = "rank-3"; }
+    else if (index === 3) { rankBadge = "🏅 4위"; rankClass = ""; }
+    else { rankBadge = "🏅 5위"; rankClass = ""; }
+
+    const itemHtml = `
+      <div class="rank-item ${rankClass}">
+        <div class="rank-pos">${rankBadge}</div>
+        <div class="rank-user">${item.name} (${item.id})</div>
+        <div class="rank-score">${item.score}점</div>
+      </div>
+    `;
+
+    if (loginList) loginList.innerHTML += itemHtml;
+    if (sideList) sideList.innerHTML += itemHtml;
+  });
+}
+
 function startQuiz() {
   ensureAudioReady();
   const idInput = document.getElementById('user-id').value.trim();
@@ -1032,6 +1160,7 @@ function startQuiz() {
   document.getElementById('user-display-badge').innerText = `도전자: ${currentUser.name} (${currentUser.id})`;
   document.getElementById('card-user-name').innerText = `${currentUser.name} (${currentUser.id})`;
 
+  renderAllLeaderboards();
   startFullQuiz();
 }
 
@@ -1126,12 +1255,10 @@ function startTimer() {
     txt.innerText = `${timeLeft}초`;
     bar.style.width = `${(timeLeft / 30) * 100}%`;
 
-    // 심장 박동음
     if (timeLeft > 5) {
       playHeartbeatSound();
     }
 
-    // 5초 전 째깍음
     if (timeLeft <= 5 && timeLeft > 0) {
       bar.className = 'timer-bar danger';
       playTickSound();
@@ -1293,14 +1420,14 @@ function showResult() {
   if (score >= 90) {
     playApplauseAndChime();
     fireConfetti();
-    msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
+    msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 울렸습니다! 8월 31일 실전에서도 1등 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
     playApplauseAndChime();
     msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>수료증이 발급되었습니다! 아래 버튼으로 저장하세요.`;
     msg.style.color = "#fbbf24";
   } else {
-    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 '오답만 다시 풀기'를 눌러 만점에 도전하세요.`;
+    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 '오답만 다시 풀기'를 눌러 1위에 도전하세요.`;
     msg.style.color = "#f87171";
   }
 
@@ -1312,6 +1439,7 @@ function showResult() {
     document.getElementById('cert-score').innerText = `${score}점 (${score === 100 ? '만점' : '우수'})`;
   }
 
+  // Save student record & Update Rank
   if (!currentUser.isAdmin) {
     saveStudentRecord(currentUser.id, currentUser.name, score, wrongQuestions.length);
   }
@@ -1328,8 +1456,32 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
   const now = new Date();
   const dateStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
   
-  records.push({ id, name, score: finalScore, wrongCount, date: dateStr });
+  // Update or insert
+  const existingIdx = records.findIndex(r => r.id === id && r.name === name);
+  if (existingIdx >= 0) {
+    if (finalScore > records[existingIdx].score) {
+      records[existingIdx].score = finalScore;
+      records[existingIdx].wrongCount = wrongCount;
+      records[existingIdx].date = dateStr;
+    }
+  } else {
+    records.push({ id, name, score: finalScore, wrongCount, date: dateStr });
+  }
+
   localStorage.setItem('goldbell_students', JSON.stringify(records));
+  renderAllLeaderboards();
+
+  // Calculate Rank
+  records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
+  const myRank = records.findIndex(r => r.id === id && r.name === name) + 1;
+  const rankBadge = document.getElementById('result-rank-badge');
+  if (myRank <= 3) {
+    rankBadge.innerHTML = `👑 대단합니다! 전체 [${myRank}위] 명예의 전당 입성! 🎉`;
+    rankBadge.style.color = "#fbbf24";
+  } else {
+    rankBadge.innerHTML = `🏅 현재 전체 [${myRank}위] 입니다! 1위에 도전해보세요!`;
+    rankBadge.style.color = "#60a5fa";
+  }
 }
 
 function showAdminDashboard() {
@@ -1363,7 +1515,8 @@ function switchAdminTab(tab) {
 
 function renderStudentTable() {
   const tbody = document.getElementById('student-score-tbody');
-  const records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
   tbody.innerHTML = '';
 
   if (records.length === 0) {
@@ -1371,10 +1524,15 @@ function renderStudentTable() {
     return;
   }
 
-  records.forEach((r) => {
+  records.forEach((r, idx) => {
+    let rankText = `${idx + 1}위`;
+    if (idx === 0) rankText = "🥇 1위";
+    else if (idx === 1) rankText = "🥈 2위";
+    else if (idx === 2) rankText = "🥉 3위";
+
     tbody.innerHTML += `
       <tr>
-        <td><b>${r.id}</b></td>
+        <td><b>${rankText}</b> (${r.id})</td>
         <td>${r.name}</td>
         <td style="color:${r.score >= 80 ? '#34d399' : '#fbbf24'}; font-weight:800;">${r.score}점</td>
         <td style="color:#f87171;">${r.wrongCount}개</td>
@@ -1385,21 +1543,23 @@ function renderStudentTable() {
 }
 
 function exportToCSV() {
-  const records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
+
   if (records.length === 0) {
     alert("다운로드할 응시 기록이 없습니다.");
     return;
   }
 
-  let csvContent = "\uFEFF학번,이름,점수,오답수,응시일시\n";
-  records.forEach(r => {
-    csvContent += `"${r.id}","${r.name}",${r.score},${r.wrongCount},"${r.date}"\n`;
+  let csvContent = "\uFEFF순위,학번,이름,점수,오답수,응시일시\n";
+  records.forEach((r, idx) => {
+    csvContent += `"${idx + 1}위","${r.id}","${r.name}",${r.score},${r.wrongCount},"${r.date}"\n`;
   });
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.setAttribute("download", `안전골든벨_학생응시기록_${new Date().toISOString().slice(0,10)}.csv`);
+  link.setAttribute("download", `안전골든벨_전체순위기록_${new Date().toISOString().slice(0,10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -1408,6 +1568,7 @@ function exportToCSV() {
 function clearStudentRecords() {
   if (confirm("정말로 모든 학생 응시 기록을 초기화하시겠습니까?")) {
     localStorage.removeItem('goldbell_students');
+    initLeaderboardData();
     renderStudentTable();
   }
 }
@@ -1418,6 +1579,7 @@ function enterQuizAsAdmin() {
   document.getElementById('user-display-badge').className = 'badge badge-admin';
   document.getElementById('user-display-badge').innerText = `👑 관리자: 변귀섭 (2500)`;
   document.getElementById('card-user-name').innerText = `변귀섭 관리자`;
+  renderAllLeaderboards();
   startFullQuiz();
 }
 
@@ -1428,6 +1590,7 @@ function logoutAdmin() {
   document.getElementById('admin-area').style.display = 'none';
   document.getElementById('main-area').style.display = 'none';
   document.getElementById('login-area').style.display = 'block';
+  renderAllLeaderboards();
 }
 
 function downloadCertificate() {
@@ -1491,6 +1654,11 @@ function downloadCertificate() {
   link.href = canvas.toDataURL('image/png');
   link.click();
 }
+
+// Window load init
+window.addEventListener('DOMContentLoaded', () => {
+  initLeaderboardData();
+});
 </script>
 </body>
 </html>
