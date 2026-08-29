@@ -13,6 +13,7 @@
       --blue: #3b82f6;
       --green: #10b981;
       --red: #ef4444;
+      --purple: #8b5cf6;
       --text: #f8fafc;
       --text-dim: #94a3b8;
     }
@@ -28,7 +29,7 @@
     }
     .app-container {
       width: 100%;
-      max-width: 640px;
+      max-width: 680px;
       background: var(--card-bg);
       border-radius: 20px;
       padding: 28px;
@@ -48,6 +49,7 @@
       letter-spacing: 0.5px;
       margin-bottom: 8px;
     }
+    .badge-admin { background: rgba(139, 92, 246, 0.25); color: #c4b5fd; border: 1px solid #8b5cf6; }
     .badge-user { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid #3b82f6; }
     .badge-stage1 { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
     .badge-stage2 { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
@@ -285,6 +287,66 @@
       cursor: pointer;
       margin-top: 16px;
     }
+
+    /* Admin Dashboard Screen */
+    .admin-panel {
+      display: none;
+    }
+    .admin-header {
+      background: #0f172a;
+      border: 1px solid #8b5cf6;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .admin-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #c4b5fd;
+    }
+    .answer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 6px;
+      margin-bottom: 20px;
+    }
+    .answer-item {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .answer-item b { color: var(--gold); }
+    .answer-item .ans-badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid #10b981;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .admin-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-test { background: var(--blue); color: white; }
+    .btn-logout { background: #475569; color: white; }
   </style>
 </head>
 <body>
@@ -295,19 +357,35 @@
   <div id="login-area" class="login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 8px;">서울지역 직업계고 안전골든벨</h2>
-    <p class="login-desc">도전자 정보를 입력하고 골든벨에 도전하세요!</p>
+    <p class="login-desc">학번과 이름을 입력하고 골든벨에 도전하세요!</p>
 
     <div class="form-group">
-      <label class="form-label" for="user-id">📌 학번 (예: 2503, 3513)</label>
-      <input type="text" id="user-id" class="login-input" placeholder="학번 4자리를 입력하세요" maxlength="10" autofocus>
+      <label class="form-label" for="user-id">📌 학번 (학생: 2503 등 / 관리자: 2500)</label>
+      <input type="text" id="user-id" class="login-input" placeholder="학번을 입력하세요" maxlength="10" autofocus>
     </div>
 
     <div class="form-group">
-      <label class="form-label" for="user-name">👤 이름 (예: 김찬영, 홍길동)</label>
-      <input type="text" id="user-name" class="login-input" placeholder="이름을 입력하세요" maxlength="10" onkeypress="if(event.keyCode==13) startQuiz()">
+      <label class="form-label" for="user-name">👤 이름 또는 암호 (학생: 이름 / 관리자: 암호)</label>
+      <input type="text" id="user-name" class="login-input" placeholder="이름(또는 관리자 암호)을 입력하세요" maxlength="20" onkeypress="if(event.keyCode==13) startQuiz()">
     </div>
 
     <button class="start-btn" onclick="startQuiz()">🏆 골든벨 도전 시작하기 ➔</button>
+  </div>
+
+  <!-- Admin Dashboard Screen -->
+  <div id="admin-area" class="admin-panel">
+    <div class="admin-header">
+      <div class="badge badge-admin">👑 최고 관리자 모드 (인증됨)</div>
+      <div class="admin-title">안전골든벨 20문항 전체 정답 족보</div>
+      <div style="font-size: 13px; color: var(--text-dim); margin-top: 4px;">관리자 계정: 2500 (변귀섭 선생님)</div>
+    </div>
+
+    <div class="answer-list" id="admin-answers-list"></div>
+
+    <div class="admin-actions">
+      <button class="admin-btn btn-test" onclick="enterQuizAsAdmin()">▶ 퀴즈 직접 테스트하기</button>
+      <button class="admin-btn btn-logout" onclick="logoutAdmin()">🚪 관리자 로그아웃</button>
+    </div>
   </div>
 
   <!-- Main Quiz Area -->
@@ -513,7 +591,7 @@ const quizData = [
   }
 ];
 
-let currentUser = { id: "", name: "" };
+let currentUser = { id: "", name: "", isAdmin: false };
 let currentIdx = 0;
 let score = 0;
 let answered = false;
@@ -523,18 +601,70 @@ function startQuiz() {
   const nameInput = document.getElementById('user-name').value.trim();
 
   if (!idInput || !nameInput) {
-    alert("학번과 이름을 모두 입력해주세요! (예: 2503 김찬영)");
+    alert("학번과 이름(또는 암호)을 입력해주세요!");
     return;
   }
 
+  // 관리자 인증 체크 (학번: 2500, 암호: cntfed)
+  if (idInput === "2500" && nameInput === "cntfed") {
+    currentUser.id = "2500";
+    currentUser.name = "변귀섭 관리자";
+    currentUser.isAdmin = true;
+    showAdminDashboard();
+    return;
+  }
+
+  // 일반 학생 로그인
   currentUser.id = idInput;
   currentUser.name = nameInput;
+  currentUser.isAdmin = false;
 
   document.getElementById('login-area').style.display = 'none';
   document.getElementById('main-area').style.display = 'block';
   document.getElementById('user-display-badge').innerText = `도전자: ${currentUser.name} (${currentUser.id})`;
 
   initQuiz();
+}
+
+function showAdminDashboard() {
+  document.getElementById('login-area').style.display = 'none';
+  document.getElementById('admin-area').style.display = 'block';
+
+  const list = document.getElementById('admin-answers-list');
+  list.innerHTML = '';
+
+  quizData.forEach((q, idx) => {
+    const item = document.createElement('div');
+    item.className = 'answer-item';
+    let correctStr = "";
+    if (q.type === 'ox') correctStr = q.answer;
+    else if (q.type === 'choice') correctStr = `${q.answer + 1}번 (${q.choices[q.answer]})`;
+    else correctStr = q.answers[0];
+
+    item.innerHTML = `
+      <div><b>Q${idx + 1}.</b> ${q.q}</div>
+      <div class="ans-badge">정답: ${correctStr}</div>
+      <div style="color:#94a3b8; font-size:12px; margin-top:4px;">해설: ${q.exp}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function enterQuizAsAdmin() {
+  document.getElementById('admin-area').style.display = 'none';
+  document.getElementById('main-area').style.display = 'block';
+  document.getElementById('user-display-badge').className = 'badge badge-admin';
+  document.getElementById('user-display-badge').innerText = `👑 관리자: 변귀섭 (2500)`;
+  initQuiz();
+}
+
+function logoutAdmin() {
+  currentUser = { id: "", name: "", isAdmin: false };
+  document.getElementById('user-id').value = '';
+  document.getElementById('user-name').value = '';
+  document.getElementById('admin-area').style.display = 'none';
+  document.getElementById('main-area').style.display = 'none';
+  document.getElementById('login-area').style.display = 'block';
 }
 
 function initQuiz() {
@@ -668,18 +798,21 @@ function showResult() {
   document.getElementById('result-area').style.display = 'block';
   document.getElementById('progress-bar').style.width = '100%';
   
-  document.getElementById('result-user-info').innerText = `도전자: ${currentUser.name} (${currentUser.id})`;
+  document.getElementById('result-user-info').innerText = currentUser.isAdmin 
+    ? `👑 관리자: 변귀섭 (2500)`
+    : `도전자: ${currentUser.name} (${currentUser.id})`;
+    
   document.getElementById('final-score').innerText = score;
   const msg = document.getElementById('result-msg');
   
   if (score >= 90) {
-    msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name} 학생!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
+    msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
-    msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name} 학생!</b><br>틀린 문제 해설을 한 번 더 복습하고 실전에 도전하세요!`;
+    msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>틀린 문제 해설을 한 번 더 복습하고 실전에 도전하세요!`;
     msg.style.color = "#fbbf24";
   } else {
-    msg.innerHTML = `💪 <b>${currentUser.name} 학생, 조금만 더 연습해 보세요!</b><br>아래 다시 풀기 버튼을 눌러 핵심 개념을 완벽히 마스터하세요.`;
+    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 다시 풀기 버튼을 눌러 핵심 개념을 완벽히 마스터하세요.`;
     msg.style.color = "#f87171";
   }
 }
