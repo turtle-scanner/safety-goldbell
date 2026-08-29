@@ -39,9 +39,7 @@
       align-items: start;
     }
     @media (max-width: 860px) {
-      .app-layout {
-        grid-template-columns: 1fr;
-      }
+      .app-layout { grid-template-columns: 1fr; }
     }
     .quiz-card {
       background: var(--card-bg);
@@ -58,27 +56,31 @@
       border: 1px solid #334155;
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
-    .sound-toggle {
+    .top-controls {
       position: absolute;
-      top: 20px;
+      top: 18px;
       right: 20px;
+      display: flex;
+      gap: 8px;
+    }
+    .ctrl-btn {
       background: #334155;
       border: 1px solid #475569;
       color: var(--gold);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 16px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 4px;
     }
-    .sound-toggle:hover { background: #475569; }
+    .ctrl-btn:hover { background: #475569; }
     .header {
       text-align: center;
-      margin-bottom: 20px;
-      margin-top: 6px;
+      margin-bottom: 16px;
+      margin-top: 4px;
     }
     .badge {
       display: inline-block;
@@ -99,6 +101,38 @@
       font-weight: 800;
       color: var(--gold-light);
     }
+
+    /* Timer Bar */
+    .timer-container {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .timer-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--gold);
+      min-width: 70px;
+    }
+    .timer-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: #334155;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .timer-bar {
+      height: 100%;
+      background: var(--gold);
+      width: 100%;
+      transition: width 1s linear, background-color 0.3s;
+    }
+    .timer-bar.danger { background: var(--red); }
     
     /* Login Box */
     .login-box {
@@ -133,21 +167,6 @@
       font-weight: 800;
       cursor: pointer;
       margin-top: 8px;
-    }
-
-    /* Progress Bar */
-    .progress-bar-container {
-      background: #334155;
-      height: 7px;
-      border-radius: 999px;
-      overflow: hidden;
-      margin: 12px 0;
-    }
-    .progress-bar {
-      height: 100%;
-      background: linear-gradient(90deg, var(--gold), var(--green));
-      width: 0%;
-      transition: width 0.3s ease;
     }
 
     /* Question Screen */
@@ -264,9 +283,7 @@
     .color-wrong { color: #f87171; }
     .color-total { color: var(--gold-light); }
 
-    .stage-section {
-      margin-bottom: 14px;
-    }
+    .stage-section { margin-bottom: 14px; }
     .stage-label {
       font-size: 12px;
       font-weight: 700;
@@ -297,18 +314,10 @@
       color: var(--gold-light);
       box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
     }
-    .omr-cell.correct {
-      border-color: #10b981;
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-    }
-    .omr-cell.wrong {
-      border-color: #ef4444;
-      background: rgba(239, 68, 68, 0.2);
-      color: #f87171;
-    }
+    .omr-cell.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .omr-cell.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.2); color: #f87171; }
 
-    /* Result Screen */
+    /* Result & Certificate */
     .result-screen {
       display: none;
       text-align: center;
@@ -316,8 +325,8 @@
     }
     .user-result-badge { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 10px; }
     .score-circle {
-      width: 120px;
-      height: 120px;
+      width: 110px;
+      height: 110px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--gold), #d97706);
       color: #0f172a;
@@ -325,22 +334,69 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 0 auto 16px;
-      font-size: 28px;
+      margin: 0 auto 14px;
+      font-size: 26px;
       font-weight: 900;
       box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
     }
-    .score-circle span { font-size: 12px; font-weight: 700; }
-    .restart-btn {
-      background: var(--gold);
-      color: #0f172a;
-      border: none;
-      padding: 13px 26px;
+    .score-circle span { font-size: 11px; font-weight: 700; }
+    
+    .result-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .action-btn {
+      padding: 13px;
       border-radius: 10px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
+      border: none;
       cursor: pointer;
-      margin-top: 14px;
+    }
+    .btn-wrong-only { background: #ef4444; color: white; }
+    .btn-cert { background: var(--green); color: #0f172a; }
+    .btn-all-restart { background: var(--gold); color: #0f172a; grid-column: span 2; }
+
+    /* Certificate Box */
+    .certificate-card {
+      display: none;
+      background: #ffffff;
+      color: #1e293b;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 16px 0;
+      border: 6px double #d97706;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .cert-title { font-size: 22px; font-weight: 900; color: #b45309; margin-bottom: 6px; letter-spacing: 1px; }
+    .cert-subtitle { font-size: 13px; color: #64748b; font-weight: 700; margin-bottom: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
+    .cert-body { font-size: 14px; line-height: 1.6; color: #334155; margin-bottom: 16px; text-align: left; }
+    .cert-seal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+    }
+    .seal-stamp {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #dc2626;
+      border-radius: 50%;
+      color: #dc2626;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 900;
+      font-size: 12px;
+      transform: rotate(-10deg);
     }
 
     /* Admin Panel */
@@ -354,6 +410,27 @@
       text-align: center;
     }
     .admin-title { font-size: 18px; font-weight: 800; color: #c4b5fd; }
+    .admin-tab-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .admin-tab-btn {
+      flex: 1;
+      background: #334155;
+      color: var(--text);
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .admin-tab-btn.active {
+      background: var(--purple);
+      color: white;
+    }
+    .admin-sub-view { display: none; }
+    .admin-sub-view.active { display: block; }
     .answer-list {
       display: flex;
       flex-direction: column;
@@ -382,9 +459,25 @@
       font-weight: 700;
       margin-top: 4px;
     }
-    .admin-actions { display: flex; gap: 10px; }
-    .admin-btn { flex: 1; padding: 12px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; font-size: 14px; }
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      background: #0f172a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .student-table th, .student-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #334155;
+      text-align: center;
+    }
+    .student-table th { background: #1e293b; color: var(--gold); font-weight: 700; }
+    .admin-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .admin-btn { flex: 1; padding: 11px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; font-size: 13px; }
     .btn-test { background: var(--blue); color: white; }
+    .btn-export { background: var(--green); color: #0f172a; }
+    .btn-clear { background: #ef4444; color: white; }
     .btn-logout { background: #475569; color: white; }
   </style>
 </head>
@@ -415,13 +508,43 @@
   <div id="admin-area" class="quiz-card admin-panel">
     <div class="admin-header">
       <div class="badge badge-admin">👑 최고 관리자 모드 (인증됨)</div>
-      <div class="admin-title">안전골든벨 20문항 전체 정답 족보</div>
+      <div class="admin-title">안전골든벨 마스터 관리 대시보드</div>
       <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">관리자 계정: 2500 (변귀섭 선생님)</div>
     </div>
 
-    <div class="answer-list" id="admin-answers-list"></div>
+    <div class="admin-tab-nav">
+      <button id="tab-btn-ans" class="admin-tab-btn active" onclick="switchAdminTab('ans')">📋 20문항 정답 족보</button>
+      <button id="tab-btn-stat" class="admin-tab-btn" onclick="switchAdminTab('stat')">📊 학생 응시 기록 현황</button>
+    </div>
 
-    <div class="admin-actions">
+    <!-- Tab 1: Answers List -->
+    <div id="admin-view-ans" class="admin-sub-view active">
+      <div class="answer-list" id="admin-answers-list"></div>
+    </div>
+
+    <!-- Tab 2: Student Stats & CSV Export -->
+    <div id="admin-view-stat" class="admin-sub-view">
+      <div style="max-height:360px; overflow-y:auto; margin-bottom:12px;">
+        <table class="student-table">
+          <thead>
+            <tr>
+              <th>학번</th>
+              <th>이름</th>
+              <th>점수</th>
+              <th>오답수</th>
+              <th>응시일시</th>
+            </tr>
+          </thead>
+          <tbody id="student-score-tbody"></tbody>
+        </table>
+      </div>
+      <div class="admin-actions">
+        <button class="admin-btn btn-export" onclick="exportToCSV()">📥 엑셀(CSV) 다운로드</button>
+        <button class="admin-btn btn-clear" onclick="clearStudentRecords()">🗑️ 기록 초기화</button>
+      </div>
+    </div>
+
+    <div class="admin-actions" style="margin-top: 16px; border-top:1px solid #334155; padding-top:14px;">
       <button class="admin-btn btn-test" onclick="enterQuizAsAdmin()">▶ 퀴즈 직접 테스트하기</button>
       <button class="admin-btn btn-logout" onclick="logoutAdmin()">🚪 관리자 로그아웃</button>
     </div>
@@ -433,14 +556,22 @@
       
       <!-- Left: Quiz Card -->
       <div class="quiz-card">
-        <button id="sound-btn" class="sound-toggle" onclick="toggleSound()">🔊 사운드 ON</button>
+        <div class="top-controls">
+          <button id="shuffle-btn" class="ctrl-btn" onclick="toggleShuffle()">🔀 셔플: OFF</button>
+          <button id="sound-btn" class="ctrl-btn" onclick="toggleSound()">🔊 사운드 ON</button>
+        </div>
         
         <div class="header">
           <div id="user-display-badge" class="badge badge-user" style="margin-right: 4px;">도전자: 홍길동 (2522)</div>
           <div id="stage-badge" class="badge badge-stage1">1단계: OX 퀴즈</div>
           <div class="title" style="font-size: 18px; margin-top: 2px;">🔔 안전골든벨 실전 테스트</div>
-          <div class="progress-bar-container">
-            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <!-- 30s Countdown Timer -->
+        <div class="timer-container">
+          <div id="timer-text" class="timer-label">⏱️ 30초</div>
+          <div class="timer-bar-wrap">
+            <div id="timer-bar" class="timer-bar"></div>
           </div>
         </div>
 
@@ -460,9 +591,9 @@
           <button id="next-btn" class="next-btn" onclick="nextQuestion()">다음 문제로 ➔</button>
         </div>
 
-        <!-- Result Box -->
+        <!-- Result Box & Certificate -->
         <div id="result-area" class="result-screen">
-          <h2 style="font-size: 22px; color: var(--gold-light); margin-bottom: 6px;">🎉 골든벨 도전 완료!</h2>
+          <h2 style="font-size: 22px; color: var(--gold-light); margin-bottom: 4px;">🎉 골든벨 도전 완료!</h2>
           <div id="result-user-info" class="user-result-badge">2522 홍길동 도전자</div>
           
           <div class="score-circle">
@@ -470,9 +601,30 @@
             <span>/ 100점</span>
           </div>
 
-          <div id="result-msg" style="font-size: 15px; font-weight: 600; margin-bottom: 16px; line-height: 1.5;"></div>
+          <div id="result-msg" style="font-size: 15px; font-weight: 600; margin-bottom: 14px; line-height: 1.5;"></div>
+
+          <!-- Official Certificate Card -->
+          <div id="cert-card" class="certificate-card">
+            <div class="cert-title">안 전 골 든 벨 수 료 증</div>
+            <div class="cert-subtitle">2026 서울지역 직업계고 산업안전보건 골든벨</div>
+            <div class="cert-body">
+              <b>학&nbsp;&nbsp;&nbsp;&nbsp;번:</b> <span id="cert-user-id">2503</span><br>
+              <b>성&nbsp;&nbsp;&nbsp;&nbsp;명:</b> <span id="cert-user-name">김찬영</span><br>
+              <b>최종점수:</b> <span id="cert-score" style="color:#dc2626; font-weight:900;">100점 (만점)</span><br><br>
+              위 학생은 2026 서울지역 직업계고 안전골든벨 교육과정을 성실히 이수하고 우수한 성적으로 수료하였음을 증명합니다.
+            </div>
+            <div class="cert-seal">
+              <span>발급일자: 2026. 08. 31.</span>
+              <span>한국산업안전보건공단 / 로봇전기과</span>
+              <div class="seal-stamp">안전<br>인증</div>
+            </div>
+          </div>
           
-          <button class="restart-btn" onclick="restartQuiz()">🔄 처음부터 다시 풀기</button>
+          <div class="result-btn-grid">
+            <button id="btn-wrong-retry" class="action-btn btn-wrong-only" onclick="startWrongOnlyQuiz()">❌ 오답만 다시 풀기</button>
+            <button class="action-btn btn-cert" onclick="downloadCertificate()">📜 인증서 이미지 저장</button>
+            <button class="action-btn btn-all-restart" onclick="restartQuiz()">🔄 처음부터 다시 풀기</button>
+          </div>
         </div>
       </div>
 
@@ -483,7 +635,6 @@
           <span id="card-user-name" style="font-size:12px; color:var(--text-dim);">홍길동</span>
         </div>
 
-        <!-- Summary -->
         <div class="score-summary">
           <div class="summary-item">
             <div id="sum-correct" class="num color-correct">0</div>
@@ -499,7 +650,6 @@
           </div>
         </div>
 
-        <!-- Stage 1: OX -->
         <div class="stage-section">
           <div class="stage-label">
             <span>1️⃣ 예선전: OX 퀴즈</span>
@@ -508,7 +658,6 @@
           <div class="omr-grid" id="omr-stage1"></div>
         </div>
 
-        <!-- Stage 2: Choice -->
         <div class="stage-section">
           <div class="stage-label">
             <span>2️⃣ 본선전: 4지선다형</span>
@@ -517,13 +666,12 @@
           <div class="omr-grid" id="omr-stage2"></div>
         </div>
 
-        <!-- Stage 3: Text -->
         <div class="stage-section">
           <div class="stage-label">
             <span>3️⃣ 결선전: 주관식 단답형</span>
             <span>(11~20번)</span>
           </div>
-          <div class="omr-grid" id="omr-stage3" style="grid-template-columns: repeat(5, 1fr);"></div>
+          <div class="omr-grid" id="omr-stage3"></div>
         </div>
 
       </div>
@@ -533,10 +681,14 @@
 
 </div>
 
+<!-- Hidden Canvas for Certificate Download -->
+<canvas id="cert-canvas" width="700" height="480" style="display:none;"></canvas>
+
 <script>
 // Web Audio API Sound Synthesizer
 let audioCtx = null;
 let soundEnabled = true;
+let isShuffle = false;
 
 function initAudio() {
   if (!audioCtx) {
@@ -560,7 +712,14 @@ function toggleSound() {
   }
 }
 
-// 1. 맞출 때: 딩동댕 멜로디 (도-미-솔-도)
+function toggleShuffle() {
+  isShuffle = !isShuffle;
+  const btn = document.getElementById('shuffle-btn');
+  btn.innerText = isShuffle ? "🔀 셔플: ON" : "🔀 셔플: OFF";
+  btn.style.color = isShuffle ? "var(--green)" : "var(--gold)";
+}
+
+// Sound 1: Ding Dong Dang Melody
 function playCorrectSound() {
   if (!soundEnabled) return;
   initAudio();
@@ -569,18 +728,18 @@ function playCorrectSound() {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.1));
-    gain.gain.setValueAtTime(0, audioCtx.currentTime + (idx * 0.1));
-    gain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + (idx * 0.1) + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (idx * 0.1) + 0.35);
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.09));
+    gain.gain.setValueAtTime(0, audioCtx.currentTime + (idx * 0.09));
+    gain.gain.linearRampToValueAtTime(0.25, audioCtx.currentTime + (idx * 0.09) + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (idx * 0.09) + 0.32);
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-    osc.start(audioCtx.currentTime + (idx * 0.1));
-    osc.stop(audioCtx.currentTime + (idx * 0.1) + 0.4);
+    osc.start(audioCtx.currentTime + (idx * 0.09));
+    osc.stop(audioCtx.currentTime + (idx * 0.09) + 0.35);
   });
 }
 
-// 2. 틀릴 때: 와장창 접시 깨지는 파열음
+// Sound 2: Glass Crash Plate Smash
 function playWrongSound() {
   if (!soundEnabled) return;
   initAudio();
@@ -598,7 +757,7 @@ function playWrongSound() {
     osc.start(now);
     osc.stop(now + 0.4);
   });
-  const bufferSize = audioCtx.sampleRate * 0.4;
+  const bufferSize = audioCtx.sampleRate * 0.35;
   const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   const data = buffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
@@ -608,48 +767,68 @@ function playWrongSound() {
   filter.type = 'highpass';
   filter.frequency.setValueAtTime(1500, now);
   const noiseGain = audioCtx.createGain();
-  noiseGain.gain.setValueAtTime(0.4, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+  noiseGain.gain.setValueAtTime(0.35, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
   noise.connect(filter);
   filter.connect(noiseGain);
   noiseGain.connect(audioCtx.destination);
   noise.start(now);
-  noise.stop(now + 0.45);
+  noise.stop(now + 0.4);
 }
 
-const quizData = [
+// Sound 3: Tick Tock Countdown Sound
+function playTickSound() {
+  if (!soundEnabled) return;
+  initAudio();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 0.06);
+}
+
+const rawQuizData = [
   // 1단계: OX (1~5)
-  { stage: 1, type: "ox", q: "소화기를 사용할 때는 바람을 마주 보고(맞바람) 뿌려야 한다?", answer: "X", exp: "소화기는 반드시 바람을 등지고 비로 쓸듯이 골고루 방사해야 합니다." },
-  { stage: 1, type: "ox", q: "성인 심폐소생술(CPR) 시 인공호흡이 어렵거나 꺼려지면 가슴압박만 지속해도 된다?", answer: "O", exp: "인공호흡을 못 하더라도 119가 올 때까지 가슴압박만 지속(Hands-Only CPR)하는 것이 매우 효과적입니다." },
-  { stage: 1, type: "ox", q: "회전하는 기계(밀링, 선반, 드릴 등)를 다룰 때는 손 보호를 위해 면장갑을 착용해야 한다?", answer: "X", exp: "장갑이 회전체에 말려 들어가는 '끼임(협착) 사고'가 발생하므로 회전체 작업 시 장갑 착용은 절대 금지(맨손 작업)입니다." },
-  { stage: 1, type: "ox", q: "산업안전보건표지 중 '파란색 원형'은 특정 행동을 지시하는 지시표지(보호구 착용 등)이다?", answer: "O", exp: "파란색 원형은 보안경, 안전모, 안전화 등 '보호구 착용 지시표지'를 나타냅니다." },
-  { stage: 1, type: "ox", q: "전기가 흐르고 있는 전기 화재(C급 화재) 진압 시 물을 뿌려서 진화한다?", answer: "X", exp: "물을 뿌리면 감전 위험이 있으므로, 분말 소화기(ABC 소화기)나 이산화탄소(CO2) 소화기를 써야 합니다." },
+  { id: 1, stage: 1, type: "ox", q: "소화기를 사용할 때는 바람을 마주 보고(맞바람) 뿌려야 한다?", answer: "X", exp: "소화기는 반드시 바람을 등지고 비로 쓸듯이 골고루 방사해야 합니다." },
+  { id: 2, stage: 1, type: "ox", q: "성인 심폐소생술(CPR) 시 인공호흡이 어렵거나 꺼려지면 가슴압박만 지속해도 된다?", answer: "O", exp: "인공호흡을 못 하더라도 119가 올 때까지 가슴압박만 지속(Hands-Only CPR)하는 것이 매우 효과적입니다." },
+  { id: 3, stage: 1, type: "ox", q: "회전하는 기계(밀링, 선반, 드릴 등)를 다룰 때는 손 보호를 위해 면장갑을 착용해야 한다?", answer: "X", exp: "장갑이 회전체에 말려 들어가는 '끼임(협착) 사고'가 발생하므로 회전체 작업 시 장갑 착용은 절대 금지(맨손 작업)입니다." },
+  { id: 4, stage: 1, type: "ox", q: "산업안전보건표지 중 '파란색 원형'은 특정 행동을 지시하는 지시표지(보호구 착용 등)이다?", answer: "O", exp: "파란색 원형은 보안경, 안전모, 안전화 등 '보호구 착용 지시표지'를 나타냅니다." },
+  { id: 5, stage: 1, type: "ox", q: "전기가 흐르고 있는 전기 화재(C급 화재) 진압 시 물을 뿌려서 진화한다?", answer: "X", exp: "물을 뿌리면 감전 위험이 있으므로, 분말 소화기(ABC 소화기)나 이산화탄소(CO2) 소화기를 써야 합니다." },
 
   // 2단계: 4지선다 (6~10)
-  { stage: 2, type: "choice", q: "화학물질의 명칭, 유해성, 취급 주의사항, 응급조치 요령이 적힌 '화학물질 설명서'의 영문 약칭은?", choices: ["KOSHA", "ISO", "MSDS", "OSHA"], answer: 2, exp: "정답은 MSDS(물질안전보건자료, Material Safety Data Sheet)입니다." },
-  { stage: 2, type: "choice", q: "화재의 종류 중 '주방(식용유 등) 화재'를 분류하는 등급 기호는?", choices: ["A급 화재", "B급 화재", "C급 화재", "K급 화재"], answer: 3, exp: "주방 화재는 Kitchen의 앞 글자를 딴 K급 화재입니다. (A급:일반, B급:유류·가스, C급:전기)" },
-  { stage: 2, type: "choice", q: "인간의 부주의 현상 중 '다른 생각이나 걱정에 정신이 팔려 현재 작업을 놓치는 현상'은?", choices: ["의식의 단절", "의식의 우회", "의식의 협착", "의식의 과잉"], answer: 1, exp: "다른 일에 마음이 쏠려 주의가 벗어나는 현상을 '의식의 우회'라고 합니다." },
-  { stage: 2, type: "choice", q: "산업안전보건법상 밀폐공간의 '적정 산소농도 기준 범위'로 올바른 것은?", choices: ["10% ~ 15%", "15% ~ 20%", "18% 이상 ~ 23.5% 미만", "25% 이상"], answer: 2, exp: "밀폐공간의 적정 산소 농도는 18% 이상 23.5% 미만입니다. 18% 미만은 산소결핍증 위험이 있습니다." },
-  { stage: 2, type: "choice", q: "높이 몇 미터 이상의 추락 위험 장소에서 작업 시 안전대(추락방지대)를 의무 착용해야 하는가?", choices: ["1m 이상", "2m 이상", "3m 이상", "4m 이상"], answer: 1, exp: "산업안전보건기준에 관한 규칙상 높이 2m 이상 고소작업 시 안전대 착용이 의무입니다." },
+  { id: 6, stage: 2, type: "choice", q: "화학물질의 명칭, 유해성, 취급 주의사항, 응급조치 요령이 적힌 '화학물질 설명서'의 영문 약칭은?", choices: ["KOSHA", "ISO", "MSDS", "OSHA"], answer: 2, exp: "정답은 MSDS(물질안전보건자료, Material Safety Data Sheet)입니다." },
+  { id: 7, stage: 2, type: "choice", q: "화재의 종류 중 '주방(식용유 등) 화재'를 분류하는 등급 기호는?", choices: ["A급 화재", "B급 화재", "C급 화재", "K급 화재"], answer: 3, exp: "주방 화재는 Kitchen의 앞 글자를 딴 K급 화재입니다. (A급:일반, B급:유류·가스, C급:전기)" },
+  { id: 8, stage: 2, type: "choice", q: "인간의 부주의 현상 중 '다른 생각이나 걱정에 정신이 팔려 현재 작업을 놓치는 현상'은?", choices: ["의식의 단절", "의식의 우회", "의식의 협착", "의식의 과잉"], answer: 1, exp: "다른 일에 마음이 쏠려 주의가 벗어나는 현상을 '의식의 우회'라고 합니다." },
+  { id: 9, stage: 2, type: "choice", q: "산업안전보건법상 밀폐공간의 '적정 산소농도 기준 범위'로 올바른 것은?", choices: ["10% ~ 15%", "15% ~ 20%", "18% 이상 ~ 23.5% 미만", "25% 이상"], answer: 2, exp: "밀폐공간의 적정 산소 농도는 18% 이상 23.5% 미만입니다. 18% 미만은 산소결핍증 위험이 있습니다." },
+  { id: 10, stage: 2, type: "choice", q: "높이 몇 미터 이상의 추락 위험 장소에서 작업 시 안전대(추락방지대)를 의무 착용해야 하는가?", choices: ["1m 이상", "2m 이상", "3m 이상", "4m 이상"], answer: 1, exp: "산업안전보건기준에 관한 규칙상 높이 2m 이상 고소작업 시 안전대 착용이 의무입니다." },
 
   // 3단계: 주관식 단답형 (11~20)
-  { stage: 3, type: "text", q: "1건의 대형사고(중대재해) 전에 29건의 경상해와 300건의 무상해 사고(아차사고)가 발생한다는 통계 법칙은?", answers: ["하인리히", "하인리히법칙", "하인리히 법칙"], exp: "정답은 '하인리히 법칙(1:29:300 법칙)'입니다." },
-  { stage: 3, type: "text", q: "성인 심폐소생술(CPR) 시 '가슴압박'과 '인공호흡'의 공식 비율은? (예: OO : O)", answers: ["30:2", "30 : 2", "30대2", "30 대 2"], exp: "정답은 가슴압박 30회 : 인공호흡 2회인 '30:2'입니다." },
-  { stage: 3, type: "text", q: "심정지 환자 발생 시 뇌손상을 막기 위한 응급처치 골든타임은 몇 분 이내인가? (숫자만 입력)", answers: ["4", "4분"], exp: "심정지 후 4분이 지나면 뇌세포 괴사가 시작되므로 골든타임은 4분입니다." },
-  { stage: 3, type: "text", q: "성인 심폐소생술 시 1분당 가슴압박 권장 횟수는 몇 회에서 몇 회 사이인가? (예: 100~120)", answers: ["100~120", "100-120", "100~120회", "100-120회", "100에서120"], exp: "정답은 분당 '100~120회' 속도입니다." },
-  { stage: 3, type: "text", q: "심정지 환자에게 전기 충격을 주어 심장 박동을 회복시키는 장비(자동심장충격기)의 영문 약어는?", answers: ["AED", "aed"], exp: "정답은 'AED(Automated External Defibrillator)'입니다." },
-  { stage: 3, type: "text", q: "산업재해 발생의 급박한 위험이 있을 때, 근로자 스스로 작업을 중단하고 대피할 수 있는 권리는?", answers: ["작업중지권", "작업 중지권"], exp: "정답은 근로자의 정당한 권리인 '작업중지권'입니다." },
-  { stage: 3, type: "text", q: "분진을 막는 것은 방진마스크이다. 유독가스나 유기용제 증기를 차단하기 위해 착용하는 마스크는?", answers: ["방독마스크", "방독 마스크"], exp: "정답은 '방독마스크'입니다." },
-  { stage: 3, type: "text", q: "낙하·비래(A), 추락(B)뿐만 아니라 '전기 감전(E)'까지 방지할 수 있는 안전모의 기호 등급은? (알파벳 조합)", answers: ["ABE", "abe", "ABE형", "abe형"], exp: "전기 절연 성능을 가진 안전모 등급은 'ABE형'입니다." },
-  { stage: 3, type: "text", q: "불이 났을 때 공기 중의 '산소를 차단'하여 불을 끄는 소화 원리를 무엇이라 하는가? (O O 소화)", answers: ["질식소화", "질식 소화"], exp: "산소 공급을 막아 불을 끄는 것을 '질식소화'라고 합니다." },
-  { stage: 3, type: "text", q: "사업장에서 중대재해 발생 시 사업주 및 경영책임자의 안전의무 위반을 처벌하기 위해 제정된 법률은?", answers: ["중대재해처벌법", "중대재해 처벌법", "중대재해처벌 등에 관한 법률"], exp: "정답은 '중대재해처벌법'입니다." }
+  { id: 11, stage: 3, type: "text", q: "1건의 대형사고(중대재해) 전에 29건의 경상해와 300건의 무상해 사고(아차사고)가 발생한다는 통계 법칙은?", answers: ["하인리히", "하인리히법칙", "하인리히 법칙"], exp: "정답은 '하인리히 법칙(1:29:300 법칙)'입니다." },
+  { id: 12, stage: 3, type: "text", q: "성인 심폐소생술(CPR) 시 '가슴압박'과 '인공호흡'의 공식 비율은? (예: OO : O)", answers: ["30:2", "30 : 2", "30대2", "30 대 2"], exp: "정답은 가슴압박 30회 : 인공호흡 2회인 '30:2'입니다." },
+  { id: 13, stage: 3, type: "text", q: "심정지 환자 발생 시 뇌손상을 막기 위한 응급처치 골든타임은 몇 분 이내인가? (숫자만 입력)", answers: ["4", "4분"], exp: "심정지 후 4분이 지나면 뇌세포 괴사가 시작되므로 골든타임은 4분입니다." },
+  { id: 14, stage: 3, type: "text", q: "성인 심폐소생술 시 1분당 가슴압박 권장 횟수는 몇 회에서 몇 회 사이인가? (예: 100~120)", answers: ["100~120", "100-120", "100~120회", "100-120회", "100에서120"], exp: "정답은 분당 '100~120회' 속도입니다." },
+  { id: 15, stage: 3, type: "text", q: "심정지 환자에게 전기 충격을 주어 심장 박동을 회복시키는 장비(자동심장충격기)의 영문 약어는?", answers: ["AED", "aed"], exp: "정답은 'AED(Automated External Defibrillator)'입니다." },
+  { id: 16, stage: 3, type: "text", q: "산업재해 발생의 급박한 위험이 있을 때, 근로자 스스로 작업을 중단하고 대피할 수 있는 권리는?", answers: ["작업중지권", "작업 중지권"], exp: "정답은 근로자의 정당한 권리인 '작업중지권'입니다." },
+  { id: 17, stage: 3, type: "text", q: "분진을 막는 것은 방진마스크이다. 유독가스나 유기용제 증기를 차단하기 위해 착용하는 마스크는?", answers: ["방독마스크", "방독 마스크"], exp: "정답은 '방독마스크'입니다." },
+  { id: 18, stage: 3, type: "text", q: "낙하·비래(A), 추락(B)뿐만 아니라 '전기 감전(E)'까지 방지할 수 있는 안전모의 기호 등급은? (알파벳 조합)", answers: ["ABE", "abe", "ABE형", "abe형"], exp: "전기 절연 성능을 가진 안전모 등급은 'ABE형'입니다." },
+  { id: 19, stage: 3, type: "text", q: "불이 났을 때 공기 중의 '산소를 차단'하여 불을 끄는 소화 원리를 무엇이라 하는가? (O O 소화)", answers: ["질식소화", "질식 소화"], exp: "산소 공급을 막아 불을 끄는 것을 '질식소화'라고 합니다." },
+  { id: 20, stage: 3, type: "text", q: "사업장에서 중대재해 발생 시 사업주 및 경영책임자의 안전의무 위반을 처벌하기 위해 제정된 법률은?", answers: ["중대재해처벌법", "중대재해 처벌법", "중대재해처벌 등에 관한 법률"], exp: "정답은 '중대재해처벌법'입니다." }
 ];
 
+let activeQuizList = [];
 let currentUser = { id: "", name: "", isAdmin: false };
 let currentIdx = 0;
 let score = 0;
 let answered = false;
-let userResults = new Array(quizData.length).fill(null); // null: 미풀이, true: 정답, false: 오답
+let userResults = [];
+let wrongQuestions = [];
+let timerInterval = null;
+let timeLeft = 30;
 
 function startQuiz() {
   initAudio();
@@ -679,58 +858,37 @@ function startQuiz() {
   document.getElementById('user-display-badge').innerText = `도전자: ${currentUser.name} (${currentUser.id})`;
   document.getElementById('card-user-name').innerText = `${currentUser.name} (${currentUser.id})`;
 
+  startFullQuiz();
+}
+
+function startFullQuiz() {
+  activeQuizList = JSON.parse(JSON.stringify(rawQuizData));
+  if (isShuffle) {
+    activeQuizList.sort(() => Math.random() - 0.5);
+  }
   initQuiz();
 }
 
-function showAdminDashboard() {
-  document.getElementById('login-area').style.display = 'none';
-  document.getElementById('admin-area').style.display = 'block';
-
-  const list = document.getElementById('admin-answers-list');
-  list.innerHTML = '';
-
-  quizData.forEach((q, idx) => {
-    const item = document.createElement('div');
-    item.className = 'answer-item';
-    let correctStr = "";
-    if (q.type === 'ox') correctStr = q.answer;
-    else if (q.type === 'choice') correctStr = `${q.answer + 1}번 (${q.choices[q.answer]})`;
-    else correctStr = q.answers[0];
-
-    item.innerHTML = `
-      <div><b>Q${idx + 1}.</b> ${q.q}</div>
-      <div class="ans-badge">정답: ${correctStr}</div>
-      <div style="color:#94a3b8; font-size:12px; margin-top:4px;">해설: ${q.exp}</div>
-    `;
-    list.appendChild(item);
-  });
-}
-
-function enterQuizAsAdmin() {
-  document.getElementById('admin-area').style.display = 'none';
-  document.getElementById('main-area').style.display = 'block';
-  document.getElementById('user-display-badge').className = 'badge badge-admin';
-  document.getElementById('user-display-badge').innerText = `👑 관리자: 변귀섭 (2500)`;
-  document.getElementById('card-user-name').innerText = `변귀섭 관리자`;
+function startWrongOnlyQuiz() {
+  if (wrongQuestions.length === 0) {
+    alert("틀린 문제가 없습니다! 만점입니다!");
+    return;
+  }
+  activeQuizList = JSON.parse(JSON.stringify(wrongQuestions));
+  document.getElementById('quiz-area').style.display = 'block';
+  document.getElementById('result-area').style.display = 'none';
   initQuiz();
-}
-
-function logoutAdmin() {
-  currentUser = { id: "", name: "", isAdmin: false };
-  document.getElementById('user-id').value = '';
-  document.getElementById('user-name').value = '';
-  document.getElementById('admin-area').style.display = 'none';
-  document.getElementById('main-area').style.display = 'none';
-  document.getElementById('login-area').style.display = 'block';
 }
 
 function initQuiz() {
   currentIdx = 0;
   score = 0;
   answered = false;
-  userResults = new Array(quizData.length).fill(null);
+  userResults = new Array(activeQuizList.length).fill(null);
+  wrongQuestions = [];
   document.getElementById('quiz-area').style.display = 'block';
   document.getElementById('result-area').style.display = 'none';
+  document.getElementById('cert-card').style.display = 'none';
   renderScorecardGrids();
   updateScorecard();
   loadQuestion();
@@ -742,15 +900,12 @@ function renderScorecardGrids() {
   const g3 = document.getElementById('omr-stage3');
   g1.innerHTML = ''; g2.innerHTML = ''; g3.innerHTML = '';
 
-  for (let i = 0; i < 5; i++) {
-    g1.innerHTML += `<div id="omr-cell-${i}" class="omr-cell">Q${i+1}</div>`;
-  }
-  for (let i = 5; i < 10; i++) {
-    g2.innerHTML += `<div id="omr-cell-${i}" class="omr-cell">Q${i+1}</div>`;
-  }
-  for (let i = 10; i < 20; i++) {
-    g3.innerHTML += `<div id="omr-cell-${i}" class="omr-cell">Q${i+1}</div>`;
-  }
+  activeQuizList.forEach((q, idx) => {
+    const html = `<div id="omr-cell-${idx}" class="omr-cell">Q${idx+1}</div>`;
+    if (q.stage === 1) g1.innerHTML += html;
+    else if (q.stage === 2) g2.innerHTML += html;
+    else g3.innerHTML += html;
+  });
 }
 
 function updateScorecard() {
@@ -783,12 +938,40 @@ function updateScorecard() {
   document.getElementById('sum-score').innerText = score;
 }
 
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 30;
+  const bar = document.getElementById('timer-bar');
+  const txt = document.getElementById('timer-text');
+  bar.className = 'timer-bar';
+  bar.style.width = '100%';
+  txt.innerText = `⏱️ ${timeLeft}초`;
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    txt.innerText = `⏱️ ${timeLeft}초`;
+    bar.style.width = `${(timeLeft / 30) * 100}%`;
+
+    if (timeLeft <= 5 && timeLeft > 0) {
+      bar.className = 'timer-bar danger';
+      playTickSound();
+    }
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeout();
+    }
+  }, 1000);
+}
+
+function handleTimeout() {
+  if (answered) return;
+  checkAnswer("__TIMEOUT__");
+}
+
 function loadQuestion() {
   answered = false;
-  const q = quizData[currentIdx];
-  
-  const progressPercent = ((currentIdx) / quizData.length) * 100;
-  document.getElementById('progress-bar').style.width = progressPercent + '%';
+  const q = activeQuizList[currentIdx];
 
   const badge = document.getElementById('stage-badge');
   if (q.stage === 1) {
@@ -802,7 +985,7 @@ function loadQuestion() {
     badge.innerText = '3단계: 결선전 (주관식 단답형)';
   }
 
-  document.getElementById('q-number').innerText = `문제 ${currentIdx + 1} / ${quizData.length}`;
+  document.getElementById('q-number').innerText = `문제 ${currentIdx + 1} / ${activeQuizList.length}`;
   document.getElementById('q-text').innerText = q.q;
 
   document.getElementById('feedback-box').style.display = 'none';
@@ -842,6 +1025,7 @@ function loadQuestion() {
   }
 
   updateScorecard();
+  startTimer();
 }
 
 function submitTextAnswer() {
@@ -858,10 +1042,13 @@ function submitTextAnswer() {
 function checkAnswer(userAns) {
   if (answered) return;
   answered = true;
-  const q = quizData[currentIdx];
+  clearInterval(timerInterval);
+  const q = activeQuizList[currentIdx];
   let isCorrect = false;
 
-  if (q.type === 'ox') {
+  if (userAns === "__TIMEOUT__") {
+    isCorrect = false;
+  } else if (q.type === 'ox') {
     isCorrect = (userAns === q.answer);
   } else if (q.type === 'choice') {
     isCorrect = (userAns === q.answer);
@@ -876,15 +1063,20 @@ function checkAnswer(userAns) {
   const feedbackTitle = document.getElementById('feedback-title');
   const feedbackDesc = document.getElementById('feedback-desc');
 
+  const pointsPerQuestion = Math.round(100 / activeQuizList.length);
+
   if (isCorrect) {
-    score += 5;
+    score += pointsPerQuestion;
     playCorrectSound();
     feedbackBox.className = 'feedback-box feedback-correct';
     feedbackTitle.innerHTML = '🎉 정답입니다! 딩동댕 🔔';
   } else {
+    wrongQuestions.push(q);
     playWrongSound();
     feedbackBox.className = 'feedback-box feedback-wrong';
-    feedbackTitle.innerHTML = `❌ 아쉽습니다! 땡 (접시 와장창!) 💥`;
+    feedbackTitle.innerHTML = (userAns === "__TIMEOUT__") 
+      ? `⏱️ 시간 초과! 땡 (접시 와장창!) 💥`
+      : `❌ 아쉽습니다! 땡 (접시 와장창!) 💥`;
   }
 
   feedbackDesc.innerHTML = `<b>[정답 해설]</b> ${q.exp}`;
@@ -896,7 +1088,7 @@ function checkAnswer(userAns) {
 
 function nextQuestion() {
   currentIdx++;
-  if (currentIdx < quizData.length) {
+  if (currentIdx < activeQuizList.length) {
     loadQuestion();
   } else {
     showResult();
@@ -904,10 +1096,12 @@ function nextQuestion() {
 }
 
 function showResult() {
+  clearInterval(timerInterval);
   document.getElementById('quiz-area').style.display = 'none';
   document.getElementById('result-area').style.display = 'block';
-  document.getElementById('progress-bar').style.width = '100%';
   
+  if (score > 100) score = 100;
+
   document.getElementById('result-user-info').innerText = currentUser.isAdmin 
     ? `👑 관리자: 변귀섭 (2500)`
     : `도전자: ${currentUser.name} (${currentUser.id})`;
@@ -920,18 +1114,212 @@ function showResult() {
     msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
-    msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>오른쪽 성적표에서 ❌표시된 문제를 복습하세요!`;
+    msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>수료증이 발급되었습니다! 아래 버튼으로 저장하세요.`;
     msg.style.color = "#fbbf24";
   } else {
-    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 다시 풀기 버튼을 눌러 만점에 도전하세요.`;
+    msg.innerHTML = `💪 <b>${currentUser.name}, 조금만 더 연습해 보세요!</b><br>아래 '오답만 다시 풀기'를 눌러 만점에 도전하세요.`;
     msg.style.color = "#f87171";
+  }
+
+  // Certificate Display
+  if (score >= 70) {
+    const cert = document.getElementById('cert-card');
+    cert.style.display = 'block';
+    document.getElementById('cert-user-id').innerText = currentUser.id;
+    document.getElementById('cert-user-name').innerText = currentUser.name;
+    document.getElementById('cert-score').innerText = `${score}점 (${score === 100 ? '만점' : '우수'})`;
+  }
+
+  // Save student record to localStorage
+  if (!currentUser.isAdmin) {
+    saveStudentRecord(currentUser.id, currentUser.name, score, wrongQuestions.length);
   }
 
   updateScorecard();
 }
 
 function restartQuiz() {
-  initQuiz();
+  startFullQuiz();
+}
+
+// LocalStorage Student Records Management
+function saveStudentRecord(id, name, finalScore, wrongCount) {
+  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+  
+  records.push({ id, name, score: finalScore, wrongCount, date: dateStr });
+  localStorage.setItem('goldbell_students', JSON.stringify(records));
+}
+
+// Admin Dashboard & CSV Export
+function showAdminDashboard() {
+  document.getElementById('login-area').style.display = 'none';
+  document.getElementById('admin-area').style.display = 'block';
+
+  // Render Answers
+  const list = document.getElementById('admin-answers-list');
+  list.innerHTML = '';
+  rawQuizData.forEach((q, idx) => {
+    const item = document.createElement('div');
+    item.className = 'answer-item';
+    let correctStr = (q.type === 'ox') ? q.answer : (q.type === 'choice' ? `${q.answer + 1}번 (${q.choices[q.answer]})` : q.answers[0]);
+    item.innerHTML = `
+      <div><b>Q${idx + 1}.</b> ${q.q}</div>
+      <div class="ans-badge">정답: ${correctStr}</div>
+      <div style="color:#94a3b8; font-size:12px; margin-top:4px;">해설: ${q.exp}</div>
+    `;
+    list.appendChild(item);
+  });
+
+  renderStudentTable();
+}
+
+function switchAdminTab(tab) {
+  document.getElementById('tab-btn-ans').className = (tab === 'ans') ? 'admin-tab-btn active' : 'admin-tab-btn';
+  document.getElementById('tab-btn-stat').className = (tab === 'stat') ? 'admin-tab-btn active' : 'admin-tab-btn';
+  document.getElementById('admin-view-ans').className = (tab === 'ans') ? 'admin-sub-view active' : 'admin-sub-view';
+  document.getElementById('admin-view-stat').className = (tab === 'stat') ? 'admin-sub-view active' : 'admin-sub-view';
+  if (tab === 'stat') renderStudentTable();
+}
+
+function renderStudentTable() {
+  const tbody = document.getElementById('student-score-tbody');
+  const records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  tbody.innerHTML = '';
+
+  if (records.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="color:#64748b; padding:20px;">아직 응시한 학생 기록이 없습니다.</td></tr>`;
+    return;
+  }
+
+  records.forEach((r) => {
+    tbody.innerHTML += `
+      <tr>
+        <td><b>${r.id}</b></td>
+        <td>${r.name}</td>
+        <td style="color:${r.score >= 80 ? '#34d399' : '#fbbf24'}; font-weight:800;">${r.score}점</td>
+        <td style="color:#f87171;">${r.wrongCount}개</td>
+        <td style="color:#94a3b8; font-size:11px;">${r.date}</td>
+      </tr>
+    `;
+  });
+}
+
+function exportToCSV() {
+  const records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  if (records.length === 0) {
+    alert("다운로드할 응시 기록이 없습니다.");
+    return;
+  }
+
+  let csvContent = "\uFEFF학번,이름,점수,오답수,응시일시\n";
+  records.forEach(r => {
+    csvContent += `"${r.id}","${r.name}",${r.score},${r.wrongCount},"${r.date}"\n`;
+  });
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute("download", `안전골든벨_학생응시기록_${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function clearStudentRecords() {
+  if (confirm("정말로 모든 학생 응시 기록을 초기화하시겠습니까?")) {
+    localStorage.removeItem('goldbell_students');
+    renderStudentTable();
+  }
+}
+
+function enterQuizAsAdmin() {
+  document.getElementById('admin-area').style.display = 'none';
+  document.getElementById('main-area').style.display = 'block';
+  document.getElementById('user-display-badge').className = 'badge badge-admin';
+  document.getElementById('user-display-badge').innerText = `👑 관리자: 변귀섭 (2500)`;
+  document.getElementById('card-user-name').innerText = `변귀섭 관리자`;
+  startFullQuiz();
+}
+
+function logoutAdmin() {
+  currentUser = { id: "", name: "", isAdmin: false };
+  document.getElementById('user-id').value = '';
+  document.getElementById('user-name').value = '';
+  document.getElementById('admin-area').style.display = 'none';
+  document.getElementById('main-area').style.display = 'none';
+  document.getElementById('login-area').style.display = 'block';
+}
+
+// Certificate Image Download (Canvas Drawing)
+function downloadCertificate() {
+  const canvas = document.getElementById('cert-canvas');
+  const ctx = canvas.getContext('2d');
+
+  // Background
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Border
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = '#d97706';
+  ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#f59e0b';
+  ctx.strokeRect(25, 25, canvas.width - 50, canvas.height - 50);
+
+  // Title
+  ctx.fillStyle = '#b45309';
+  ctx.font = 'bold 30px Pretendard, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('안 전 골 든 벨 수 료 증', canvas.width / 2, 80);
+
+  ctx.fillStyle = '#64748b';
+  ctx.font = 'bold 15px Pretendard, sans-serif';
+  ctx.fillText('2026 서울지역 직업계고 산업안전보건 골든벨', canvas.width / 2, 115);
+
+  // Content
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#1e293b';
+  ctx.font = 'bold 17px Pretendard, sans-serif';
+  ctx.fillText(`학    번 :  ${currentUser.id}`, 70, 180);
+  ctx.fillText(`성    명 :  ${currentUser.name}`, 70, 215);
+  ctx.fillText(`최종점수 :  ${score}점 (${score === 100 ? '만점' : '우수'})`, 70, 250);
+
+  ctx.font = '15px Pretendard, sans-serif';
+  ctx.fillStyle = '#334155';
+  ctx.fillText('위 학생은 2026 서울지역 직업계고 안전골든벨 교육과정을', 70, 310);
+  ctx.fillText('성실히 이수하고 우수한 성적으로 수료하였음을 증명합니다.', 70, 340);
+
+  // Seal & Date
+  ctx.font = '14px Pretendard, sans-serif';
+  ctx.fillStyle = '#64748b';
+  ctx.fillText('발급일자: 2026. 08. 31.', 70, 420);
+  ctx.textAlign = 'right';
+  ctx.fillText('한국산업안전보건공단 / 로봇전기과', canvas.width - 70, 420);
+
+  // Red Stamp
+  ctx.save();
+  ctx.translate(canvas.width - 130, 350);
+  ctx.rotate(-10 * Math.PI / 180);
+  ctx.strokeStyle = '#dc2626';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(0, 0, 32, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.fillStyle = '#dc2626';
+  ctx.font = 'bold 13px Pretendard, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('안 전', 0, -4);
+  ctx.fillText('인 증', 0, 15);
+  ctx.restore();
+
+  // Download Action
+  const link = document.createElement('a');
+  link.download = `안전골든벨_수료증_${currentUser.id}_${currentUser.name}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
 }
 </script>
 </body>
