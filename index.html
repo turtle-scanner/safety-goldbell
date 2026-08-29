@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🔔 2026 서울지역 직업계고 안전골든벨 (원격 실시간 집계)</title>
+  <title>🔔 2026 서울지역 직업계고 안전골든벨 (로봇전기과 대표전용)</title>
   <style>
     :root {
       --bg-color: #070b14;
@@ -302,7 +302,7 @@
       align-items: center;
       gap: 4px;
     }
-    .rank-1 { color: #fbbf24; border-color: rgba(245, 158, 11, 0.5); background: rgba(245, 158, 11, 0.1); }
+    .rank-1 { color: #fbbf24; border-color: rgba(245, 158, 11, 0.5); background: rgba(245, 158, 11, 0.15); }
     .rank-2 { color: #e2e8f0; border-color: rgba(226, 232, 240, 0.4); }
     .rank-3 { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
     .rank-user { font-weight: 700; flex: 1; margin-left: 8px; }
@@ -680,7 +680,7 @@
 
     <button class="start-btn" onclick="startQuiz()">🏆 긴장감 100% 골든벨 시작하기 ➔</button>
 
-    <!-- Top 5 Leaderboard (0 Score Reset) -->
+    <!-- Top 5 Leaderboard -->
     <div class="ranking-box">
       <div class="ranking-title">
         <span>🏆 실시간 명예의 전당 (1위 ~ 5위)</span>
@@ -771,7 +771,7 @@
         </div>
         
         <div class="header">
-          <div id="user-display-badge" class="badge badge-user" style="margin-right: 4px;">도전자: 김찬영 (2503)</div>
+          <div id="user-display-badge" class="badge badge-user" style="margin-right: 4px;">도전자: 오준혁 (2508)</div>
           <div id="stage-badge" class="badge badge-stage1">1단계: OX 퀴즈</div>
           <div class="title" style="font-size: 19px; margin-top: 2px;">🔔 안전골든벨 실전 테스트</div>
         </div>
@@ -806,11 +806,11 @@
         <!-- Result Box & Certificate & Rank Badge -->
         <div id="result-area" class="result-screen">
           <h2 style="font-size: 22px; color: var(--gold-light); margin-bottom: 4px;">🎉 골든벨 도전 완료!</h2>
-          <div id="result-user-info" class="user-result-badge">2503 김찬영 도전자</div>
+          <div id="result-user-info" class="user-result-badge">2508 오준혁 도전자</div>
           <div id="result-rank-badge" class="rank-alert-banner">👑 현재 랭킹 1위 달성!</div>
           
           <div class="score-circle">
-            <div id="final-score">100</div>
+            <div id="final-score">65</div>
             <span>/ 100점</span>
           </div>
 
@@ -822,9 +822,9 @@
             <div class="cert-subtitle">2026 서울지역 직업계고 산업안전보건 골든벨</div>
             <div class="cert-body">
               <b>소&nbsp;&nbsp;&nbsp;&nbsp;속:</b> 로봇전기과<br>
-              <b>학&nbsp;&nbsp;&nbsp;&nbsp;번:</b> <span id="cert-user-id">2503</span><br>
-              <b>성&nbsp;&nbsp;&nbsp;&nbsp;명:</b> <span id="cert-user-name">김찬영</span><br>
-              <b>최종점수:</b> <span id="cert-score" style="color:#dc2626; font-weight:900;">100점 (만점)</span><br><br>
+              <b>학&nbsp;&nbsp;&nbsp;&nbsp;번:</b> <span id="cert-user-id">2508</span><br>
+              <b>성&nbsp;&nbsp;&nbsp;&nbsp;명:</b> <span id="cert-user-name">오준혁</span><br>
+              <b>최종점수:</b> <span id="cert-score" style="color:#dc2626; font-weight:900;">65점</span><br><br>
               위 학생은 2026 서울지역 직업계고 안전골든벨 교육과정을 성실히 이수하고 우수한 성적으로 수료하였음을 증명합니다.
             </div>
             <div class="cert-seal">
@@ -846,7 +846,7 @@
       <div class="scorecard-panel">
         <div class="panel-title">
           <span>📊 실시간 OMR 성적표</span>
-          <span id="card-user-name" style="font-size:12px; color:var(--text-dim);">김찬영</span>
+          <span id="card-user-name" style="font-size:12px; color:var(--text-dim);">오준혁</span>
         </div>
 
         <div class="score-summary">
@@ -910,20 +910,21 @@
 const today = new Date();
 const DEADLINE_TIME = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0, 0).getTime();
 
-// 로봇전기과 공식 6인 명단
+// 로봇전기과 공식 6인 명단 (오준혁 65점 실시간 반영 상태)
 const OFFICIAL_ROBOT_STUDENTS = [
+  { id: "2508", name: "오준혁", score: 65, wrongCount: 7, date: "2026.8.29 12:13" },
   { id: "2503", name: "김찬영", score: 0, wrongCount: 0, date: "대기 중" },
   { id: "2054", name: "김해진", score: 0, wrongCount: 0, date: "대기 중" },
   { id: "2506", name: "박하빈", score: 0, wrongCount: 0, date: "대기 중" },
-  { id: "2508", name: "오준혁", score: 0, wrongCount: 0, date: "대기 중" },
   { id: "2512", name: "장승우", score: 0, wrongCount: 0, date: "대기 중" },
   { id: "2517", name: "허준수", score: 0, wrongCount: 0, date: "대기 중" }
 ];
 
-const STORAGE_KEY = "goldbell_robot_cloud_sync_v2";
+const STORAGE_KEY = "goldbell_robot_cloud_sync_v3";
 
-// 초고속 클라우드 REST DB 엔드포인트
-const CLOUD_API_URL = "https://safety-goldbell-2026-default-rtdb.firebaseio.com/robot_scores.json";
+// 초고속 클라우드 REST API 객체 ID (실시간 연동)
+const CLOUD_OBJECT_ID = "ff8081819ff5b11001a04b858ccd58fa";
+const CLOUD_API_URL = `https://api.restful-api.dev/objects/${CLOUD_OBJECT_ID}`;
 
 function isPastDeadline() {
   return Date.now() >= DEADLINE_TIME;
@@ -994,7 +995,6 @@ function showAdminFromClosed() {
   }
 }
 
-// 로컬 + 클라우드 하이브리드 레코드 관리
 function getRobotRecords() {
   let records = localStorage.getItem(STORAGE_KEY);
   if (!records) {
@@ -1004,17 +1004,17 @@ function getRobotRecords() {
   return JSON.parse(records);
 }
 
-// 클라우드 서버에서 실시간 성적 가져오기 (비동기 동기화)
+// 클라우드 서버에서 실시간 성적 가져오기
 async function fetchCloudScoresAndRender() {
   try {
     const res = await fetch(CLOUD_API_URL, { cache: "no-store" });
     if (res.ok) {
-      const cloudData = await res.json();
-      if (cloudData && typeof cloudData === 'object') {
+      const jsonRes = await res.json();
+      if (jsonRes && jsonRes.data && typeof jsonRes.data === 'object') {
         let localRecords = getRobotRecords();
         OFFICIAL_ROBOT_STUDENTS.forEach(student => {
-          if (cloudData[student.id]) {
-            const cItem = cloudData[student.id];
+          if (jsonRes.data[student.id]) {
+            const cItem = jsonRes.data[student.id];
             const lIdx = localRecords.findIndex(r => r.id === student.id);
             if (lIdx >= 0) {
               if (cItem.score >= localRecords[lIdx].score) {
@@ -1038,11 +1038,17 @@ async function fetchCloudScoresAndRender() {
 // 클라우드 서버로 성적 즉시 전송
 async function uploadScoreToCloud(id, name, score, wrongCount, dateStr) {
   try {
-    const payload = { id, name, score, wrongCount, date: dateStr };
-    await fetch(`https://safety-goldbell-2026-default-rtdb.firebaseio.com/robot_scores/${id}.json`, {
-      method: "PUT",
+    let localRecords = getRobotRecords();
+    let cloudMap = {};
+    localRecords.forEach(r => {
+      cloudMap[r.id] = { id: r.id, name: r.name, score: r.score, wrongCount: r.wrongCount, date: r.date };
+    });
+    cloudMap[id] = { id, name, score, wrongCount, date: dateStr };
+
+    await fetch(CLOUD_API_URL, {
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ data: cloudMap })
     });
   } catch(err) {
     console.log("Cloud upload error (fallback to local)", err);
@@ -1672,12 +1678,12 @@ function showResult() {
     msg.style.color = "#f87171";
   }
 
-  if (score >= 70) {
+  if (score >= 60) {
     const cert = document.getElementById('cert-card');
     cert.style.display = 'block';
     document.getElementById('cert-user-id').innerText = currentUser.id;
     document.getElementById('cert-user-name').innerText = currentUser.name;
-    document.getElementById('cert-score').innerText = `${score}점 (${score === 100 ? '만점' : '우수'})`;
+    document.getElementById('cert-score').innerText = `${score}점`;
   }
 
   if (!currentUser.isAdmin) {
@@ -1711,7 +1717,7 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
   renderAllLeaderboards();
 
-  // 2. 원격 클라우드 DB 즉시 전송 (선생님 화면으로 전송)
+  // 2. 원격 클라우드 DB 즉시 전송
   uploadScoreToCloud(id, name, finalScore, wrongCount, dateStr);
 
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
@@ -1798,11 +1804,9 @@ function exportToCSV() {
 }
 
 async function clearStudentRecords() {
-  if (confirm("정말로 모든 로봇전기과 학생들의 원격 클라우드 점수를 0점으로 초기화하시겠습니까?")) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(OFFICIAL_ROBOT_STUDENTS));
-    try {
-      await fetch(CLOUD_API_URL, { method: "DELETE" });
-    } catch(e) {}
+  if (confirm("정말로 모든 로봇전기과 학생들의 점수를 0점으로 초기화하시겠습니까?")) {
+    const zeroList = OFFICIAL_ROBOT_STUDENTS.map(s => ({ ...s, score: 0, wrongCount: 0, date: "대기 중" }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(zeroList));
     renderAllLeaderboards();
     renderStudentTable();
   }
@@ -1862,7 +1866,7 @@ function downloadCertificate() {
   ctx.fillText(`소    속 :  로봇전기과`, 70, 175);
   ctx.fillText(`학    번 :  ${currentUser.id}`, 70, 208);
   ctx.fillText(`성    명 :  ${currentUser.name}`, 70, 241);
-  ctx.fillText(`최종점수 :  ${score}점 (${score === 100 ? '만점' : '우수'})`, 70, 274);
+  ctx.fillText(`최종점수 :  ${score}점`, 70, 274);
 
   ctx.font = '15px Pretendard, sans-serif';
   ctx.fillStyle = '#334155';
@@ -1901,7 +1905,6 @@ window.addEventListener('DOMContentLoaded', () => {
   setInterval(updateDeadlineCounter, 1000);
   checkAndApplyLock();
   fetchCloudScoresAndRender();
-  // 5초마다 원격 클라우드 최신 성적 자동 폴링 동기화
   setInterval(fetchCloudScoresAndRender, 5000);
 });
 </script>
