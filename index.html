@@ -112,6 +112,22 @@
       text-shadow: 0 0 15px var(--gold-glow);
     }
 
+    /* Deadline Banner */
+    .deadline-banner {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
     /* Tension Heartbeat Timer Bar */
     .timer-container {
       background: #090d16;
@@ -175,7 +191,7 @@
       10%, 30% { transform: rotate(-12deg); }
       20%, 40% { transform: rotate(12deg); }
     }
-    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 16px; line-height: 1.5; }
+    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 14px; line-height: 1.5; }
     
     .whitelist-info-badge {
       display: inline-block;
@@ -186,7 +202,7 @@
       border-radius: 20px;
       font-size: 13px;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .form-group { text-align: left; margin-bottom: 14px; }
@@ -514,6 +530,16 @@
       transform: rotate(-10deg);
     }
 
+    /* Lock Screen (After 22:00) */
+    .closed-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+    }
+    .closed-icon { font-size: 56px; margin-bottom: 12px; }
+    .closed-title { font-size: 24px; font-weight: 900; color: #ef4444; margin-bottom: 8px; }
+    .closed-desc { font-size: 15px; color: var(--text-dim); line-height: 1.6; margin-bottom: 20px; }
+
     /* Admin Panel */
     .admin-panel { display: none; }
     .admin-header {
@@ -605,11 +631,17 @@
 
 <div class="main-wrapper">
   
-  <!-- 0. Login Screen with Fresh 0-Score Leaderboard -->
+  <!-- 0. Login Screen with Deadline Notice -->
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
     <div class="whitelist-info-badge">⚡ 로봇전기과 출전 대표 선수 전용</div>
+    
+    <!-- Deadline Counter Banner -->
+    <div class="deadline-banner" id="deadline-banner-text">
+      ⏳ 응시 마감: 오늘 밤 10:00 정각 (남은 시간: 계산 중...)
+    </div>
+
     <p class="login-desc">배정된 학번과 이름을 입력하고 실전 골든벨에 도전하세요!</p>
 
     <div class="form-group">
@@ -631,6 +663,29 @@
         <span style="font-size:12px; color:var(--text-dim);">로봇전기과 대표 순위</span>
       </div>
       <div class="rank-list" id="login-ranking-list"></div>
+    </div>
+  </div>
+
+  <!-- Closed / Locked Screen (After 22:00) -->
+  <div id="closed-area" class="quiz-card closed-screen">
+    <div class="closed-icon">⛔</div>
+    <div class="closed-title">골든벨 응시가 마감되었습니다!</div>
+    <div class="closed-desc">
+      2026 서울지역 직업계고 안전골든벨 연습이<br>
+      <b>오늘 밤 10:00 정각</b>을 기해 종료되었습니다.<br>
+      응시해 주신 모든 학생 여러분 수고 많으셨습니다!
+    </div>
+    
+    <div class="ranking-box" style="margin-bottom: 20px;">
+      <div class="ranking-title">
+        <span>👑 최종 명예의 전당 (최종 랭킹)</span>
+      </div>
+      <div class="rank-list" id="closed-ranking-list"></div>
+    </div>
+
+    <div style="border-top: 1px solid #1e293b; padding-top: 16px;">
+      <p style="font-size:12px; color:var(--text-dim); margin-bottom:8px;">선생님(관리자)이신가요?</p>
+      <button class="ctrl-btn" style="margin:0 auto; padding:8px 16px;" onclick="showAdminFromClosed()">👑 관리자 모드 로그인</button>
     </div>
   </div>
 
@@ -825,7 +880,11 @@
 <canvas id="cert-canvas" width="700" height="480" style="display:none;"></canvas>
 
 <script>
-// 로봇전기과 공식 6인 명단 (0점 기본 초기화)
+// 오늘 밤 10시 (22:00:00) 마감 타임스탬프 설정
+const today = new Date();
+const DEADLINE_TIME = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 22, 0, 0).getTime();
+
+// 로봇전기과 공식 6인 명단
 const OFFICIAL_ROBOT_STUDENTS = [
   { id: "2503", name: "김찬영", score: 0, wrongCount: 0, date: "대기 중" },
   { id: "2054", name: "김해진", score: 0, wrongCount: 0, date: "대기 중" },
@@ -837,7 +896,75 @@ const OFFICIAL_ROBOT_STUDENTS = [
 
 const STORAGE_KEY = "goldbell_robot_zero_official_v1";
 
-// 이전 더미 데이터 강제 삭제 및 0점 초기화 세팅
+function isPastDeadline() {
+  return Date.now() >= DEADLINE_TIME;
+}
+
+function updateDeadlineCounter() {
+  const banner = document.getElementById('deadline-banner-text');
+  if (!banner) return;
+
+  const now = Date.now();
+  const diff = DEADLINE_TIME - now;
+
+  if (diff <= 0) {
+    banner.innerHTML = "⛔ <b>오늘 밤 10시 마감되었습니다.</b>";
+    banner.style.background = "rgba(239, 68, 68, 0.3)";
+    banner.style.color = "#f87171";
+    checkAndApplyLock();
+    return;
+  }
+
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+  banner.innerHTML = `⏳ <b>응시 마감: 오늘 밤 10:00</b> (남은 시간: ${hours}시간 ${mins}분 ${secs}초)`;
+}
+
+function checkAndApplyLock() {
+  if (isPastDeadline() && (!currentUser || !currentUser.isAdmin)) {
+    document.getElementById('login-area').style.display = 'none';
+    document.getElementById('main-area').style.display = 'none';
+    document.getElementById('closed-area').style.display = 'block';
+    renderClosedLeaderboard();
+  }
+}
+
+function renderClosedLeaderboard() {
+  let records = getRobotRecords();
+  records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
+  const list = document.getElementById('closed-ranking-list');
+  if (!list) return;
+  list.innerHTML = '';
+
+  records.slice(0, 5).forEach((item, index) => {
+    let rankBadge = (index === 0) ? "🥇 1위" : (index === 1 ? "🥈 2위" : (index === 2 ? "🥉 3위" : `🏅 ${index + 1}위`));
+    let rankClass = (index === 0) ? "rank-1" : (index === 1 ? "rank-2" : (index === 2 ? "rank-3" : ""));
+    const scoreDisplay = (item.score === 0) ? `<span class="rank-score-zero">0점 (미응시)</span>` : `<span class="rank-score">${item.score}점</span>`;
+    list.innerHTML += `
+      <div class="rank-item ${rankClass}">
+        <div class="rank-pos">${rankBadge}</div>
+        <div class="rank-user">${item.name} (${item.id})</div>
+        <div>${scoreDisplay}</div>
+      </div>
+    `;
+  });
+}
+
+function showAdminFromClosed() {
+  const pwd = prompt("관리자 암호를 입력하세요 (2500 변귀섭 선생님):");
+  if (pwd === "cntfed") {
+    currentUser.id = "2500";
+    currentUser.name = "변귀섭 관리자";
+    currentUser.isAdmin = true;
+    document.getElementById('closed-area').style.display = 'none';
+    showAdminDashboard();
+  } else if (pwd !== null) {
+    alert("암호가 일치하지 않습니다.");
+  }
+}
+
 function getRobotRecords() {
   let records = localStorage.getItem(STORAGE_KEY);
   if (!records) {
@@ -1118,7 +1245,6 @@ let wrongQuestions = [];
 let timerInterval = null;
 let timeLeft = 30;
 
-// 6인 전원 0점 초기 상태 렌더링
 function renderAllLeaderboards() {
   let records = getRobotRecords();
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
@@ -1167,7 +1293,7 @@ function startQuiz() {
     return;
   }
 
-  // 관리자
+  // 1. 관리자 인증 (마감과 상관없이 24시간 언제든 접속 가능)
   if (idInput === "2500" && nameInput === "cntfed") {
     currentUser.id = "2500";
     currentUser.name = "변귀섭 관리자";
@@ -1176,7 +1302,14 @@ function startQuiz() {
     return;
   }
 
-  // 6인 화이트리스트 검증
+  // 2. 밤 10시 마감 체크 (학생 접속 차단)
+  if (isPastDeadline()) {
+    alert("⛔ 2026 안전골든벨 연습 응시가 오늘 밤 10시 정각에 마감되었습니다.");
+    checkAndApplyLock();
+    return;
+  }
+
+  // 3. 6인 화이트리스트 검증
   const matchedStudent = OFFICIAL_ROBOT_STUDENTS.find(s => s.id === idInput && s.name === nameInput);
 
   if (!matchedStudent) {
@@ -1609,8 +1742,13 @@ function logoutAdmin() {
   document.getElementById('user-name').value = '';
   document.getElementById('admin-area').style.display = 'none';
   document.getElementById('main-area').style.display = 'none';
-  document.getElementById('login-area').style.display = 'block';
-  renderAllLeaderboards();
+  if (isPastDeadline()) {
+    document.getElementById('closed-area').style.display = 'block';
+    renderClosedLeaderboard();
+  } else {
+    document.getElementById('login-area').style.display = 'block';
+    renderAllLeaderboards();
+  }
 }
 
 function downloadCertificate() {
@@ -1677,6 +1815,9 @@ function downloadCertificate() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  updateDeadlineCounter();
+  setInterval(updateDeadlineCounter, 1000);
+  checkAndApplyLock();
   renderAllLeaderboards();
 });
 </script>
