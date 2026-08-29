@@ -6,7 +6,7 @@
   <title>🔔 서울지역 직업계고 안전골든벨 퀴즈앱</title>
   <style>
     :root {
-      --bg-color: #0f172a;
+      --bg-color: #0b0f19;
       --card-bg: #1e293b;
       --panel-bg: #0f172a;
       --gold: #f59e0b;
@@ -27,10 +27,14 @@
       justify-content: center;
       align-items: center;
       padding: 16px;
+      overflow-x: hidden;
+      position: relative;
     }
     .main-wrapper {
       width: 100%;
       max-width: 980px;
+      position: relative;
+      z-index: 10;
     }
     .app-layout {
       display: grid;
@@ -45,7 +49,7 @@
       background: var(--card-bg);
       border-radius: 20px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.6);
       border: 1px solid #334155;
       position: relative;
     }
@@ -75,8 +79,9 @@
       display: flex;
       align-items: center;
       gap: 4px;
+      transition: all 0.2s;
     }
-    .ctrl-btn:hover { background: #475569; }
+    .ctrl-btn:hover { background: #475569; transform: scale(1.05); }
     .header {
       text-align: center;
       margin-bottom: 16px;
@@ -102,37 +107,56 @@
       color: var(--gold-light);
     }
 
-    /* Timer Bar */
+    /* Tension Heartbeat Timer Bar */
     .timer-container {
       background: #0f172a;
       border: 1px solid #334155;
       border-radius: 12px;
-      padding: 8px 14px;
+      padding: 10px 14px;
       margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 10px;
+      position: relative;
     }
     .timer-label {
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 14px;
+      font-weight: 900;
       color: var(--gold);
-      min-width: 70px;
+      min-width: 80px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .heart-icon {
+      display: inline-block;
+      animation: heartbeat 1s infinite;
+      color: #ef4444;
+    }
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      15% { transform: scale(1.3); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.2); }
+      60% { transform: scale(1); }
     }
     .timer-bar-wrap {
       flex: 1;
-      height: 8px;
+      height: 10px;
       background: #334155;
       border-radius: 999px;
       overflow: hidden;
     }
     .timer-bar {
       height: 100%;
-      background: var(--gold);
+      background: linear-gradient(90deg, var(--gold), #ea580c);
       width: 100%;
-      transition: width 1s linear, background-color 0.3s;
+      transition: width 1s linear, background 0.3s;
     }
-    .timer-bar.danger { background: var(--red); }
+    .timer-bar.danger {
+      background: linear-gradient(90deg, #ef4444, #b91c1c);
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+    }
     
     /* Login Box */
     .login-box {
@@ -141,7 +165,12 @@
       text-align: center;
       padding: 20px 0;
     }
-    .login-icon { font-size: 44px; margin-bottom: 8px; }
+    .login-icon { font-size: 48px; margin-bottom: 8px; animation: ring 2s infinite ease-in-out; }
+    @keyframes ring {
+      0%, 100% { transform: rotate(0); }
+      10%, 30% { transform: rotate(-12deg); }
+      20%, 40% { transform: rotate(12deg); }
+    }
     .login-desc { color: var(--text-dim); font-size: 14px; margin-bottom: 20px; }
     .form-group { text-align: left; margin-bottom: 14px; }
     .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
@@ -161,13 +190,16 @@
       background: linear-gradient(135deg, var(--gold), #d97706);
       color: #0f172a;
       border: none;
-      padding: 15px;
+      padding: 16px;
       border-radius: 12px;
-      font-size: 16px;
-      font-weight: 800;
+      font-size: 17px;
+      font-weight: 900;
       cursor: pointer;
       margin-top: 8px;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+      transition: all 0.2s;
     }
+    .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6); }
 
     /* Question Screen */
     .question-box {
@@ -176,6 +208,7 @@
       padding: 18px;
       margin-bottom: 16px;
       border: 1px solid #334155;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
     }
     .q-number { font-size: 13px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
     .q-text { font-size: 16px; line-height: 1.5; font-weight: 600; word-break: keep-all; }
@@ -193,8 +226,9 @@
       font-weight: 600;
       cursor: pointer;
       text-align: left;
+      transition: all 0.15s;
     }
-    .choice-btn:hover { background: #475569; }
+    .choice-btn:hover { background: #475569; transform: translateY(-2px); }
     .ox-btn { text-align: center; font-size: 28px; font-weight: 900; padding: 16px; }
     .btn-o { color: #34d399; border-color: rgba(52, 211, 153, 0.4); }
     .btn-x { color: #f87171; border-color: rgba(248, 113, 113, 0.4); }
@@ -217,40 +251,41 @@
       color: #0f172a;
       border: none;
       border-radius: 10px;
-      padding: 0 18px;
+      padding: 0 20px;
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
     }
 
     /* Feedback */
     .feedback-box {
       display: none;
-      padding: 14px;
-      border-radius: 10px;
+      padding: 16px;
+      border-radius: 12px;
       margin-bottom: 14px;
       font-size: 14px;
       line-height: 1.5;
-      animation: popIn 0.25s ease;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     @keyframes popIn {
-      0% { transform: scale(0.96); opacity: 0; }
+      0% { transform: scale(0.92); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
-    .feedback-correct { background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; }
-    .feedback-wrong { background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; }
-    .explanation { margin-top: 4px; color: var(--text-dim); font-size: 13px; }
+    .feedback-correct { background: rgba(16, 185, 129, 0.2); border: 2px solid #10b981; color: #34d399; }
+    .feedback-wrong { background: rgba(239, 68, 68, 0.2); border: 2px solid #ef4444; color: #f87171; }
+    .explanation { margin-top: 6px; color: var(--text-dim); font-size: 13px; }
     .next-btn {
       display: none;
       width: 100%;
       background: var(--blue);
       color: white;
       border: none;
-      padding: 13px;
+      padding: 14px;
       border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 800;
       cursor: pointer;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
     }
     .next-btn:hover { background: #2563eb; }
 
@@ -425,10 +460,7 @@
       font-weight: 700;
       cursor: pointer;
     }
-    .admin-tab-btn.active {
-      background: var(--purple);
-      color: white;
-    }
+    .admin-tab-btn.active { background: var(--purple); color: white; }
     .admin-sub-view { display: none; }
     .admin-sub-view.active { display: block; }
     .answer-list {
@@ -479,9 +511,22 @@
     .btn-export { background: var(--green); color: #0f172a; }
     .btn-clear { background: #ef4444; color: white; }
     .btn-logout { background: #475569; color: white; }
+
+    /* Full-Screen Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
   </style>
 </head>
-<body>
+<body onclick="unlockAudioOnce()">
+
+<canvas id="confetti-canvas"></canvas>
 
 <div class="main-wrapper">
   
@@ -489,7 +534,7 @@
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
-    <p class="login-desc">학번과 이름을 입력하고 골든벨에 도전하세요!</p>
+    <p class="login-desc">학번과 이름을 입력하고 실전 골든벨에 도전하세요!</p>
 
     <div class="form-group">
       <label class="form-label" for="user-id">📌 학번 (예: 2599)</label>
@@ -501,7 +546,7 @@
       <input type="text" id="user-name" class="login-input" placeholder="이름을 입력하세요 (예: 홍길동, 이순신)" maxlength="20" onkeypress="if(event.keyCode==13) startQuiz()">
     </div>
 
-    <button class="start-btn" onclick="startQuiz()">🏆 골든벨 도전 시작하기 ➔</button>
+    <button class="start-btn" onclick="startQuiz()">🏆 긴장감 100% 골든벨 시작하기 ➔</button>
   </div>
 
   <!-- Admin Dashboard Screen -->
@@ -517,12 +562,10 @@
       <button id="tab-btn-stat" class="admin-tab-btn" onclick="switchAdminTab('stat')">📊 학생 응시 기록 현황</button>
     </div>
 
-    <!-- Tab 1: Answers List -->
     <div id="admin-view-ans" class="admin-sub-view active">
       <div class="answer-list" id="admin-answers-list"></div>
     </div>
 
-    <!-- Tab 2: Student Stats & CSV Export -->
     <div id="admin-view-stat" class="admin-sub-view">
       <div style="max-height:360px; overflow-y:auto; margin-bottom:12px;">
         <table class="student-table">
@@ -558,7 +601,7 @@
       <div class="quiz-card">
         <div class="top-controls">
           <button id="shuffle-btn" class="ctrl-btn" onclick="toggleShuffle()">🔀 셔플: OFF</button>
-          <button id="sound-btn" class="ctrl-btn" onclick="toggleSound()">🔊 사운드 ON</button>
+          <button id="sound-btn" class="ctrl-btn" onclick="toggleSound()">🔊 사운드 테스트</button>
         </div>
         
         <div class="header">
@@ -567,9 +610,12 @@
           <div class="title" style="font-size: 18px; margin-top: 2px;">🔔 안전골든벨 실전 테스트</div>
         </div>
 
-        <!-- 30s Countdown Timer -->
+        <!-- 30s Heartbeat Countdown Timer -->
         <div class="timer-container">
-          <div id="timer-text" class="timer-label">⏱️ 30초</div>
+          <div id="timer-text" class="timer-label">
+            <span class="heart-icon">💓</span>
+            <span id="timer-sec-text">30초</span>
+          </div>
           <div class="timer-bar-wrap">
             <div id="timer-bar" class="timer-bar"></div>
           </div>
@@ -584,7 +630,7 @@
           <div id="answers-container"></div>
 
           <div id="feedback-box" class="feedback-box">
-            <div id="feedback-title" style="font-weight:700;"></div>
+            <div id="feedback-title" style="font-weight:800; font-size:16px;"></div>
             <div id="feedback-desc" class="explanation"></div>
           </div>
 
@@ -603,7 +649,7 @@
 
           <div id="result-msg" style="font-size: 15px; font-weight: 600; margin-bottom: 14px; line-height: 1.5;"></div>
 
-          <!-- Official Certificate Card -->
+          <!-- Certificate Card -->
           <div id="cert-card" class="certificate-card">
             <div class="cert-title">안 전 골 든 벨 수 료 증</div>
             <div class="cert-subtitle">2026 서울지역 직업계고 산업안전보건 골든벨</div>
@@ -681,31 +727,38 @@
 
 </div>
 
-<!-- Hidden Canvas for Certificate Download -->
 <canvas id="cert-canvas" width="700" height="480" style="display:none;"></canvas>
 
 <script>
-// Web Audio API Sound Synthesizer
+// High-Impact Web Audio Engine (박수갈채 + 심장박동 긴장감 + 접시파열음)
 let audioCtx = null;
 let soundEnabled = true;
 let isShuffle = false;
 
-function initAudio() {
+function ensureAudioReady() {
   if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
   }
-  if (audioCtx.state === 'suspended') {
+  if (audioCtx && audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
 }
 
+function unlockAudioOnce() {
+  ensureAudioReady();
+}
+
 function toggleSound() {
+  ensureAudioReady();
   soundEnabled = !soundEnabled;
   const btn = document.getElementById('sound-btn');
   if (soundEnabled) {
     btn.innerText = "🔊 사운드 ON";
     btn.style.color = "var(--gold)";
-    playCorrectSound();
+    playApplauseAndChime();
   } else {
     btn.innerText = "🔇 사운드 OFF";
     btn.style.color = "var(--text-dim)";
@@ -719,77 +772,197 @@ function toggleShuffle() {
   btn.style.color = isShuffle ? "var(--green)" : "var(--gold)";
 }
 
-// Sound 1: Ding Dong Dang Melody
-function playCorrectSound() {
+// 1. 심장 박동 긴장감 비트 (Heartbeat Pulse)
+function playHeartbeatSound() {
   if (!soundEnabled) return;
-  initAudio();
-  const notes = [523.25, 659.25, 783.99, 1046.50];
-  notes.forEach((freq, idx) => {
+  ensureAudioReady();
+  if (!audioCtx) return;
+
+  const now = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(95, now);
+  osc.frequency.exponentialRampToValueAtTime(45, now + 0.15);
+
+  gain.gain.setValueAtTime(0.3, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start(now);
+  osc.stop(now + 0.16);
+}
+
+// 2. [핵심] 맞췄을 때: 딩동댕 멜로디 + 우렁찬 박수갈채 (Applause & Cheers)!
+function playApplauseAndChime() {
+  if (!soundEnabled) return;
+  ensureAudioReady();
+  if (!audioCtx) return;
+
+  const now = audioCtx.currentTime;
+
+  // A. 승리의 골든벨 멜로디 (도-미-솔-도)
+  const melody = [523.25, 659.25, 783.99, 1046.50];
+  melody.forEach((freq, i) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime + (idx * 0.09));
-    gain.gain.setValueAtTime(0, audioCtx.currentTime + (idx * 0.09));
-    gain.gain.linearRampToValueAtTime(0.25, audioCtx.currentTime + (idx * 0.09) + 0.02);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (idx * 0.09) + 0.32);
+    osc.frequency.setValueAtTime(freq, now + (i * 0.08));
+
+    gain.gain.setValueAtTime(0, now + (i * 0.08));
+    gain.gain.linearRampToValueAtTime(0.35, now + (i * 0.08) + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.08) + 0.35);
+
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-    osc.start(audioCtx.currentTime + (idx * 0.09));
-    osc.stop(audioCtx.currentTime + (idx * 0.09) + 0.35);
+    osc.start(now + (i * 0.08));
+    osc.stop(now + (i * 0.08) + 0.4);
   });
+
+  // B. 우렁찬 박수갈채 사운드 (45개 이상의 개별 박수 버스트 합성)
+  for (let i = 0; i < 45; i++) {
+    const clapDelay = now + 0.1 + (Math.random() * 1.2);
+    const clapDuration = 0.04 + (Math.random() * 0.04);
+
+    const bufferSize = Math.floor(audioCtx.sampleRate * clapDuration);
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let j = 0; j < bufferSize; j++) {
+      data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.3));
+    }
+
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(1000 + Math.random() * 1500, clapDelay);
+    filter.Q.setValueAtTime(1.5, clapDelay);
+
+    const clapGain = audioCtx.createGain();
+    clapGain.gain.setValueAtTime(0.25 + Math.random() * 0.25, clapDelay);
+    clapGain.gain.exponentialRampToValueAtTime(0.001, clapDelay + clapDuration);
+
+    noise.connect(filter);
+    filter.connect(clapGain);
+    clapGain.connect(audioCtx.destination);
+
+    noise.start(clapDelay);
+    noise.stop(clapDelay + clapDuration);
+  }
 }
 
-// Sound 2: Glass Crash Plate Smash
+// 3. 틀렸을 때: 와장창 접시 깨지는 파열음
 function playWrongSound() {
   if (!soundEnabled) return;
-  initAudio();
+  ensureAudioReady();
+  if (!audioCtx) return;
+
   const now = audioCtx.currentTime;
-  [2400, 3100, 4800, 6200].forEach((freq) => {
+
+  [2200, 3200, 4600, 5800].forEach((freq) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(freq, now);
-    osc.frequency.exponentialRampToValueAtTime(freq * 0.4, now + 0.35);
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc.frequency.exponentialRampToValueAtTime(freq * 0.3, now + 0.4);
+
+    gain.gain.setValueAtTime(0.4, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
-    osc.stop(now + 0.4);
+    osc.stop(now + 0.45);
   });
-  const bufferSize = audioCtx.sampleRate * 0.35;
+
+  const bufferSize = audioCtx.sampleRate * 0.4;
   const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   const data = buffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+  
   const noise = audioCtx.createBufferSource();
   noise.buffer = buffer;
+
   const filter = audioCtx.createBiquadFilter();
   filter.type = 'highpass';
-  filter.frequency.setValueAtTime(1500, now);
+  filter.frequency.setValueAtTime(1200, now);
+
   const noiseGain = audioCtx.createGain();
-  noiseGain.gain.setValueAtTime(0.35, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+  noiseGain.gain.setValueAtTime(0.6, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+
   noise.connect(filter);
   filter.connect(noiseGain);
   noiseGain.connect(audioCtx.destination);
+
   noise.start(now);
-  noise.stop(now + 0.4);
+  noise.stop(now + 0.45);
 }
 
-// Sound 3: Tick Tock Countdown Sound
+// 4. 긴박한 5초 카운트다운 째깍
 function playTickSound() {
   if (!soundEnabled) return;
-  initAudio();
+  ensureAudioReady();
+  if (!audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
   osc.type = 'sine';
-  osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-  gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+  osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
   gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
   osc.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start();
   osc.stop(audioCtx.currentTime + 0.06);
+}
+
+// Confetti 폭죽 효과
+function fireConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particles = [];
+  const colors = ['#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6', '#ec4899'];
+
+  for (let i = 0; i < 100; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      r: Math.random() * 6 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 16,
+      vy: (Math.random() - 0.7) * 18,
+      gravity: 0.4,
+      opacity: 1
+    });
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.opacity -= 0.015;
+      if (p.opacity > 0) {
+        alive = true;
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+    if (alive) requestAnimationFrame(render);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  render();
 }
 
 const rawQuizData = [
@@ -831,7 +1004,7 @@ let timerInterval = null;
 let timeLeft = 30;
 
 function startQuiz() {
-  initAudio();
+  ensureAudioReady();
   const idInput = document.getElementById('user-id').value.trim();
   const nameInput = document.getElementById('user-name').value.trim();
 
@@ -840,7 +1013,7 @@ function startQuiz() {
     return;
   }
 
-  // 관리자 인증 체크 (2500 / cntfed)
+  // 관리자 모드
   if (idInput === "2500" && nameInput === "cntfed") {
     currentUser.id = "2500";
     currentUser.name = "변귀섭 관리자";
@@ -942,16 +1115,22 @@ function startTimer() {
   clearInterval(timerInterval);
   timeLeft = 30;
   const bar = document.getElementById('timer-bar');
-  const txt = document.getElementById('timer-text');
+  const txt = document.getElementById('timer-sec-text');
   bar.className = 'timer-bar';
   bar.style.width = '100%';
-  txt.innerText = `⏱️ ${timeLeft}초`;
+  txt.innerText = `${timeLeft}초`;
 
   timerInterval = setInterval(() => {
     timeLeft--;
-    txt.innerText = `⏱️ ${timeLeft}초`;
+    txt.innerText = `${timeLeft}초`;
     bar.style.width = `${(timeLeft / 30) * 100}%`;
 
+    // 1초마다 긴장감 넘치는 심장 박동음
+    if (timeLeft > 5) {
+      playHeartbeatSound();
+    }
+
+    // 마지막 5초 카운트다운 긴박한 째깍음
     if (timeLeft <= 5 && timeLeft > 0) {
       bar.className = 'timer-bar danger';
       playTickSound();
@@ -1067,12 +1246,13 @@ function checkAnswer(userAns) {
 
   if (isCorrect) {
     score += pointsPerQuestion;
-    playCorrectSound();
+    playApplauseAndChime(); // 👏 우렁찬 박수갈채 + 골든벨 딩동댕!
+    fireConfetti(); // 🎊 오색종이 폭죽 발사!
     feedbackBox.className = 'feedback-box feedback-correct';
-    feedbackTitle.innerHTML = '🎉 정답입니다! 딩동댕 🔔';
+    feedbackTitle.innerHTML = '🎉 정답입니다! 짝짝짝짝~ 딩동댕! 👏🔔';
   } else {
     wrongQuestions.push(q);
-    playWrongSound();
+    playWrongSound(); // 💥 접시 와장창 파열음!
     feedbackBox.className = 'feedback-box feedback-wrong';
     feedbackTitle.innerHTML = (userAns === "__TIMEOUT__") 
       ? `⏱️ 시간 초과! 땡 (접시 와장창!) 💥`
@@ -1110,10 +1290,12 @@ function showResult() {
   const msg = document.getElementById('result-msg');
   
   if (score >= 90) {
-    playCorrectSound();
+    playApplauseAndChime();
+    fireConfetti();
     msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 완벽하게 울렸습니다! 8월 31일 실전에서도 만점 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
+    playApplauseAndChime();
     msg.innerHTML = `👏 <b>우수한 성적입니다, ${currentUser.name}!</b><br>수료증이 발급되었습니다! 아래 버튼으로 저장하세요.`;
     msg.style.color = "#fbbf24";
   } else {
@@ -1121,7 +1303,6 @@ function showResult() {
     msg.style.color = "#f87171";
   }
 
-  // Certificate Display
   if (score >= 70) {
     const cert = document.getElementById('cert-card');
     cert.style.display = 'block';
@@ -1130,7 +1311,6 @@ function showResult() {
     document.getElementById('cert-score').innerText = `${score}점 (${score === 100 ? '만점' : '우수'})`;
   }
 
-  // Save student record to localStorage
   if (!currentUser.isAdmin) {
     saveStudentRecord(currentUser.id, currentUser.name, score, wrongQuestions.length);
   }
@@ -1142,7 +1322,6 @@ function restartQuiz() {
   startFullQuiz();
 }
 
-// LocalStorage Student Records Management
 function saveStudentRecord(id, name, finalScore, wrongCount) {
   let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
   const now = new Date();
@@ -1152,12 +1331,10 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
   localStorage.setItem('goldbell_students', JSON.stringify(records));
 }
 
-// Admin Dashboard & CSV Export
 function showAdminDashboard() {
   document.getElementById('login-area').style.display = 'none';
   document.getElementById('admin-area').style.display = 'block';
 
-  // Render Answers
   const list = document.getElementById('admin-answers-list');
   list.innerHTML = '';
   rawQuizData.forEach((q, idx) => {
@@ -1252,16 +1429,13 @@ function logoutAdmin() {
   document.getElementById('login-area').style.display = 'block';
 }
 
-// Certificate Image Download (Canvas Drawing)
 function downloadCertificate() {
   const canvas = document.getElementById('cert-canvas');
   const ctx = canvas.getContext('2d');
 
-  // Background
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Border
   ctx.lineWidth = 10;
   ctx.strokeStyle = '#d97706';
   ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
@@ -1269,7 +1443,6 @@ function downloadCertificate() {
   ctx.strokeStyle = '#f59e0b';
   ctx.strokeRect(25, 25, canvas.width - 50, canvas.height - 50);
 
-  // Title
   ctx.fillStyle = '#b45309';
   ctx.font = 'bold 30px Pretendard, sans-serif';
   ctx.textAlign = 'center';
@@ -1279,7 +1452,6 @@ function downloadCertificate() {
   ctx.font = 'bold 15px Pretendard, sans-serif';
   ctx.fillText('2026 서울지역 직업계고 산업안전보건 골든벨', canvas.width / 2, 115);
 
-  // Content
   ctx.textAlign = 'left';
   ctx.fillStyle = '#1e293b';
   ctx.font = 'bold 17px Pretendard, sans-serif';
@@ -1292,14 +1464,12 @@ function downloadCertificate() {
   ctx.fillText('위 학생은 2026 서울지역 직업계고 안전골든벨 교육과정을', 70, 310);
   ctx.fillText('성실히 이수하고 우수한 성적으로 수료하였음을 증명합니다.', 70, 340);
 
-  // Seal & Date
   ctx.font = '14px Pretendard, sans-serif';
   ctx.fillStyle = '#64748b';
   ctx.fillText('발급일자: 2026. 08. 31.', 70, 420);
   ctx.textAlign = 'right';
   ctx.fillText('한국산업안전보건공단 / 로봇전기과', canvas.width - 70, 420);
 
-  // Red Stamp
   ctx.save();
   ctx.translate(canvas.width - 130, 350);
   ctx.rotate(-10 * Math.PI / 180);
@@ -1315,7 +1485,6 @@ function downloadCertificate() {
   ctx.fillText('인 증', 0, 15);
   ctx.restore();
 
-  // Download Action
   const link = document.createElement('a');
   link.download = `안전골든벨_수료증_${currentUser.id}_${currentUser.name}.png`;
   link.href = canvas.toDataURL('image/png');
