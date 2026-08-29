@@ -268,14 +268,7 @@
     .rank-3 { color: #f97316; border-color: rgba(249, 115, 22, 0.4); }
     .rank-user { font-weight: 700; flex: 1; margin-left: 8px; }
     .rank-score { font-weight: 900; color: var(--gold-light); }
-    .rank-empty {
-      text-align: center;
-      padding: 20px;
-      color: #94a3b8;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1.5;
-    }
+    .rank-score-zero { color: #64748b; font-weight: 700; }
 
     /* Question Box */
     .question-box {
@@ -612,7 +605,7 @@
 
 <div class="main-wrapper">
   
-  <!-- 0. Login Screen with Fresh Real-Time Leaderboard -->
+  <!-- 0. Login Screen with Fresh 0-Score Leaderboard -->
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
@@ -631,15 +624,13 @@
 
     <button class="start-btn" onclick="startQuiz()">🏆 긴장감 100% 골든벨 시작하기 ➔</button>
 
-    <!-- Top 5 Leaderboard (Login Screen) -->
+    <!-- Top 5 Leaderboard (0 Score Reset) -->
     <div class="ranking-box">
       <div class="ranking-title">
         <span>🏆 실시간 명예의 전당 (1위 ~ 5위)</span>
         <span style="font-size:12px; color:var(--text-dim);">로봇전기과 대표 순위</span>
       </div>
-      <div class="rank-list" id="login-ranking-list">
-        <div class="rank-empty">아직 응시한 선수가 없습니다.<br>첫 번째 1위의 주인공이 되어보세요! 🏆</div>
-      </div>
+      <div class="rank-list" id="login-ranking-list"></div>
     </div>
   </div>
 
@@ -677,7 +668,7 @@
       </div>
       <div class="admin-actions">
         <button class="admin-btn btn-export" onclick="exportToCSV()">📥 엑셀(CSV) 다운로드</button>
-        <button class="admin-btn btn-clear" onclick="clearStudentRecords()">🗑️ 기록 초기화</button>
+        <button class="admin-btn btn-clear" onclick="clearStudentRecords()">🗑️ 0점으로 전체 초기화</button>
       </div>
     </div>
 
@@ -821,9 +812,7 @@
           <div class="ranking-title" style="font-size:13px; margin-bottom:8px;">
             <span>🏆 실시간 순위 TOP 5</span>
           </div>
-          <div class="rank-list" id="sidebar-ranking-list" style="gap:6px;">
-            <div class="rank-empty" style="padding:10px;">기록 없음</div>
-          </div>
+          <div class="rank-list" id="sidebar-ranking-list" style="gap:6px;"></div>
         </div>
 
       </div>
@@ -836,23 +825,27 @@
 <canvas id="cert-canvas" width="700" height="480" style="display:none;"></canvas>
 
 <script>
-// 로봇전기과 공식 6인 명단
-const ALLOWED_STUDENTS = [
-  { id: "2503", name: "김찬영" },
-  { id: "2054", name: "김해진" },
-  { id: "2506", name: "박하빈" },
-  { id: "2508", name: "오준혁" },
-  { id: "2512", name: "장승우" },
-  { id: "2517", name: "허준수" }
+// 로봇전기과 공식 6인 명단 (0점 기본 초기화)
+const OFFICIAL_ROBOT_STUDENTS = [
+  { id: "2503", name: "김찬영", score: 0, wrongCount: 0, date: "대기 중" },
+  { id: "2054", name: "김해진", score: 0, wrongCount: 0, date: "대기 중" },
+  { id: "2506", name: "박하빈", score: 0, wrongCount: 0, date: "대기 중" },
+  { id: "2508", name: "오준혁", score: 0, wrongCount: 0, date: "대기 중" },
+  { id: "2512", name: "장승우", score: 0, wrongCount: 0, date: "대기 중" },
+  { id: "2517", name: "허준수", score: 0, wrongCount: 0, date: "대기 중" }
 ];
 
-// 새로운 클린 스토리지 키 (이전 더미 데이터 완전 격리)
-const STORAGE_KEY = "goldbell_robot_official_records_2026";
+const STORAGE_KEY = "goldbell_robot_zero_official_v1";
 
-// 이전 더미 데이터 브라우저에서 강제 삭제
-try {
-  localStorage.removeItem("goldbell_students");
-} catch(e) {}
+// 이전 더미 데이터 강제 삭제 및 0점 초기화 세팅
+function getRobotRecords() {
+  let records = localStorage.getItem(STORAGE_KEY);
+  if (!records) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(OFFICIAL_ROBOT_STUDENTS));
+    return JSON.parse(JSON.stringify(OFFICIAL_ROBOT_STUDENTS));
+  }
+  return JSON.parse(records);
+}
 
 // High-Impact Web Audio Engine
 let audioCtx = null;
@@ -1125,22 +1118,18 @@ let wrongQuestions = [];
 let timerInterval = null;
 let timeLeft = 30;
 
+// 6인 전원 0점 초기 상태 렌더링
 function renderAllLeaderboards() {
-  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  let records = getRobotRecords();
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
 
   const loginList = document.getElementById('login-ranking-list');
   const sideList = document.getElementById('sidebar-ranking-list');
 
-  if (records.length === 0) {
-    if (loginList) loginList.innerHTML = `<div class="rank-empty">아직 응시한 선수가 없습니다.<br>첫 번째 1위의 주인공이 되어보세요! 🏆</div>`;
-    if (sideList) sideList.innerHTML = `<div class="rank-empty" style="padding:10px;">기록 없음</div>`;
-    return;
-  }
-
-  const top5 = records.slice(0, 5);
   if (loginList) loginList.innerHTML = '';
   if (sideList) sideList.innerHTML = '';
+
+  const top5 = records.slice(0, 5);
 
   top5.forEach((item, index) => {
     let rankBadge = "";
@@ -1151,11 +1140,15 @@ function renderAllLeaderboards() {
     else if (index === 3) { rankBadge = "🏅 4위"; rankClass = ""; }
     else { rankBadge = "🏅 5위"; rankClass = ""; }
 
+    const scoreDisplay = (item.score === 0) 
+      ? `<span class="rank-score-zero">0점 (대기)</span>` 
+      : `<span class="rank-score">${item.score}점</span>`;
+
     const itemHtml = `
       <div class="rank-item ${rankClass}">
         <div class="rank-pos">${rankBadge}</div>
         <div class="rank-user">${item.name} (${item.id})</div>
-        <div class="rank-score">${item.score}점</div>
+        <div>${scoreDisplay}</div>
       </div>
     `;
 
@@ -1184,7 +1177,7 @@ function startQuiz() {
   }
 
   // 6인 화이트리스트 검증
-  const matchedStudent = ALLOWED_STUDENTS.find(s => s.id === idInput && s.name === nameInput);
+  const matchedStudent = OFFICIAL_ROBOT_STUDENTS.find(s => s.id === idInput && s.name === nameInput);
 
   if (!matchedStudent) {
     alert(`⚠️ 접속 권한이 없습니다!\n\n로봇전기과 대표 출전 선수(6명)의 학번과 이름을 정확히 입력해주세요.\n(출전 선수: 김찬영, 김해진, 박하빈, 오준혁, 장승우, 허준수)`);
@@ -1491,13 +1484,13 @@ function restartQuiz() {
 }
 
 function saveStudentRecord(id, name, finalScore, wrongCount) {
-  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  let records = getRobotRecords();
   const now = new Date();
   const dateStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
   
   const existingIdx = records.findIndex(r => r.id === id && r.name === name);
   if (existingIdx >= 0) {
-    if (finalScore > records[existingIdx].score) {
+    if (finalScore >= records[existingIdx].score) {
       records[existingIdx].score = finalScore;
       records[existingIdx].wrongCount = wrongCount;
       records[existingIdx].date = dateStr;
@@ -1552,14 +1545,9 @@ function switchAdminTab(tab) {
 
 function renderStudentTable() {
   const tbody = document.getElementById('student-score-tbody');
-  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  let records = getRobotRecords();
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
   tbody.innerHTML = '';
-
-  if (records.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" style="color:#64748b; padding:20px;">아직 응시한 학생 기록이 없습니다.</td></tr>`;
-    return;
-  }
 
   records.forEach((r, idx) => {
     let rankText = `${idx + 1}위`;
@@ -1571,7 +1559,7 @@ function renderStudentTable() {
       <tr>
         <td><b>${rankText}</b> (${r.id})</td>
         <td>${r.name}</td>
-        <td style="color:${r.score >= 80 ? '#34d399' : '#fbbf24'}; font-weight:800;">${r.score}점</td>
+        <td style="color:${r.score >= 80 ? '#34d399' : (r.score > 0 ? '#fbbf24' : '#94a3b8')}; font-weight:800;">${r.score}점</td>
         <td style="color:#f87171;">${r.wrongCount}개</td>
         <td style="color:#94a3b8; font-size:11px;">${r.date}</td>
       </tr>
@@ -1580,13 +1568,8 @@ function renderStudentTable() {
 }
 
 function exportToCSV() {
-  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  let records = getRobotRecords();
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
-
-  if (records.length === 0) {
-    alert("다운로드할 응시 기록이 없습니다.");
-    return;
-  }
 
   let csvContent = "\uFEFF순위,학번,이름,점수,오답수,응시일시\n";
   records.forEach((r, idx) => {
@@ -1603,8 +1586,8 @@ function exportToCSV() {
 }
 
 function clearStudentRecords() {
-  if (confirm("정말로 모든 학생 응시 기록을 초기화하시겠습니까?")) {
-    localStorage.removeItem(STORAGE_KEY);
+  if (confirm("정말로 모든 로봇전기과 학생들의 점수를 0점으로 초기화하시겠습니까?")) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(OFFICIAL_ROBOT_STUDENTS));
     renderAllLeaderboards();
     renderStudentTable();
   }
