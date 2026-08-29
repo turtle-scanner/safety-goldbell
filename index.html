@@ -175,7 +175,7 @@
       10%, 30% { transform: rotate(-12deg); }
       20%, 40% { transform: rotate(12deg); }
     }
-    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 20px; line-height: 1.5; }
+    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 16px; line-height: 1.5; }
     
     .whitelist-info-badge {
       display: inline-block;
@@ -186,7 +186,7 @@
       border-radius: 20px;
       font-size: 13px;
       font-weight: 700;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .form-group { text-align: left; margin-bottom: 14px; }
@@ -270,9 +270,10 @@
     .rank-score { font-weight: 900; color: var(--gold-light); }
     .rank-empty {
       text-align: center;
-      padding: 18px;
-      color: #64748b;
-      font-size: 13px;
+      padding: 20px;
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 600;
       line-height: 1.5;
     }
 
@@ -611,7 +612,7 @@
 
 <div class="main-wrapper">
   
-  <!-- 0. Login Screen with Whitelist Verification -->
+  <!-- 0. Login Screen with Fresh Real-Time Leaderboard -->
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
@@ -637,7 +638,7 @@
         <span style="font-size:12px; color:var(--text-dim);">로봇전기과 대표 순위</span>
       </div>
       <div class="rank-list" id="login-ranking-list">
-        <div class="rank-empty">아직 응시자가 없습니다. 1위의 주인공이 되어보세요! 🏆</div>
+        <div class="rank-empty">아직 응시한 선수가 없습니다.<br>첫 번째 1위의 주인공이 되어보세요! 🏆</div>
       </div>
     </div>
   </div>
@@ -835,7 +836,7 @@
 <canvas id="cert-canvas" width="700" height="480" style="display:none;"></canvas>
 
 <script>
-// 로봇전기과 공식 출전 6인 화이트리스트 명단 (엄격한 로그인 검증)
+// 로봇전기과 공식 6인 명단
 const ALLOWED_STUDENTS = [
   { id: "2503", name: "김찬영" },
   { id: "2054", name: "김해진" },
@@ -844,6 +845,14 @@ const ALLOWED_STUDENTS = [
   { id: "2512", name: "장승우" },
   { id: "2517", name: "허준수" }
 ];
+
+// 새로운 클린 스토리지 키 (이전 더미 데이터 완전 격리)
+const STORAGE_KEY = "goldbell_robot_official_records_2026";
+
+// 이전 더미 데이터 브라우저에서 강제 삭제
+try {
+  localStorage.removeItem("goldbell_students");
+} catch(e) {}
 
 // High-Impact Web Audio Engine
 let audioCtx = null;
@@ -1117,14 +1126,14 @@ let timerInterval = null;
 let timeLeft = 30;
 
 function renderAllLeaderboards() {
-  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
 
   const loginList = document.getElementById('login-ranking-list');
   const sideList = document.getElementById('sidebar-ranking-list');
 
   if (records.length === 0) {
-    if (loginList) loginList.innerHTML = `<div class="rank-empty">아직 응시자가 없습니다. 1위의 주인공이 되어보세요! 🏆</div>`;
+    if (loginList) loginList.innerHTML = `<div class="rank-empty">아직 응시한 선수가 없습니다.<br>첫 번째 1위의 주인공이 되어보세요! 🏆</div>`;
     if (sideList) sideList.innerHTML = `<div class="rank-empty" style="padding:10px;">기록 없음</div>`;
     return;
   }
@@ -1165,7 +1174,7 @@ function startQuiz() {
     return;
   }
 
-  // 1. 관리자 인증 (2500 / cntfed)
+  // 관리자
   if (idInput === "2500" && nameInput === "cntfed") {
     currentUser.id = "2500";
     currentUser.name = "변귀섭 관리자";
@@ -1174,7 +1183,7 @@ function startQuiz() {
     return;
   }
 
-  // 2. 로봇전기과 6인 화이트리스트 엄격 검증
+  // 6인 화이트리스트 검증
   const matchedStudent = ALLOWED_STUDENTS.find(s => s.id === idInput && s.name === nameInput);
 
   if (!matchedStudent) {
@@ -1482,7 +1491,7 @@ function restartQuiz() {
 }
 
 function saveStudentRecord(id, name, finalScore, wrongCount) {
-  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
   const now = new Date();
   const dateStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
   
@@ -1497,7 +1506,7 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
     records.push({ id, name, score: finalScore, wrongCount, date: dateStr });
   }
 
-  localStorage.setItem('goldbell_students', JSON.stringify(records));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
   renderAllLeaderboards();
 
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
@@ -1543,7 +1552,7 @@ function switchAdminTab(tab) {
 
 function renderStudentTable() {
   const tbody = document.getElementById('student-score-tbody');
-  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
   tbody.innerHTML = '';
 
@@ -1571,7 +1580,7 @@ function renderStudentTable() {
 }
 
 function exportToCSV() {
-  let records = JSON.parse(localStorage.getItem('goldbell_students') || '[]');
+  let records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
 
   if (records.length === 0) {
@@ -1595,7 +1604,7 @@ function exportToCSV() {
 
 function clearStudentRecords() {
   if (confirm("정말로 모든 학생 응시 기록을 초기화하시겠습니까?")) {
-    localStorage.removeItem('goldbell_students');
+    localStorage.removeItem(STORAGE_KEY);
     renderAllLeaderboards();
     renderStudentTable();
   }
