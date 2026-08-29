@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🔔 2026 서울지역 직업계고 안전골든벨 (로봇전기과 대표전용)</title>
+  <title>🔔 2026 서울지역 직업계고 안전골든벨 (원격 실시간 집계)</title>
   <style>
     :root {
       --bg-color: #070b14;
@@ -112,6 +112,29 @@
       text-shadow: 0 0 15px var(--gold-glow);
     }
 
+    /* Live Cloud Sync Indicator */
+    .sync-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #34d399;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
     /* Deadline Banner */
     .deadline-banner {
       background: rgba(239, 68, 68, 0.15);
@@ -191,7 +214,7 @@
       10%, 30% { transform: rotate(-12deg); }
       20%, 40% { transform: rotate(12deg); }
     }
-    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 14px; line-height: 1.5; }
+    .login-desc { color: var(--text-dim); font-size: 15px; margin-bottom: 12px; line-height: 1.5; }
     
     .whitelist-info-badge {
       display: inline-block;
@@ -609,7 +632,7 @@
     .student-table th { background: #131d31; color: var(--gold); font-weight: 700; }
     .admin-actions { display: flex; gap: 8px; margin-top: 12px; }
     .admin-btn { flex: 1; padding: 11px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; font-size: 13px; }
-    .btn-test { background: var(--blue); color: white; }
+    .btn-refresh { background: #3b82f6; color: white; }
     .btn-export { background: var(--green); color: #070b14; }
     .btn-clear { background: #ef4444; color: white; }
     .btn-logout { background: #334155; color: white; }
@@ -631,11 +654,12 @@
 
 <div class="main-wrapper">
   
-  <!-- 0. Login Screen with Deadline Notice -->
+  <!-- 0. Login Screen with Cloud Sync Status -->
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
-    <h2 class="title" style="margin-bottom: 6px;">서울지역 직업계고 안전골든벨</h2>
-    <div class="whitelist-info-badge">⚡ 로봇전기과 출전 대표 선수 전용</div>
+    <h2 class="title" style="margin-bottom: 2px;">서울지역 직업계고 안전골든벨</h2>
+    <div class="sync-status"><span class="sync-dot"></span> 원격 클라우드 실시간 자동 집계 연결됨</div><br>
+    <div class="whitelist-info-badge" style="margin-top: 6px;">⚡ 로봇전기과 출전 대표 선수 전용</div>
     
     <!-- Deadline Counter Banner -->
     <div class="deadline-banner" id="deadline-banner-text">
@@ -695,11 +719,12 @@
       <div class="badge badge-admin">👑 최고 관리자 모드 (인증됨)</div>
       <div class="admin-title">안전골든벨 마스터 관리 대시보드</div>
       <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">관리자 계정: 2500 (변귀섭 선생님)</div>
+      <div class="sync-status" style="justify-content:center; margin-top:6px;"><span class="sync-dot"></span> 원격 6명 학생 성적 실시간 동기화 ON</div>
     </div>
 
     <div class="admin-tab-nav">
       <button id="tab-btn-ans" class="admin-tab-btn active" onclick="switchAdminTab('ans')">📋 20문항 정답 족보</button>
-      <button id="tab-btn-stat" class="admin-tab-btn" onclick="switchAdminTab('stat')">📊 학생 응시 기록 현황</button>
+      <button id="tab-btn-stat" class="admin-tab-btn" onclick="switchAdminTab('stat')">📊 학생 응시 기록 현황 (원격 실시간)</button>
     </div>
 
     <div id="admin-view-ans" class="admin-sub-view active">
@@ -711,7 +736,7 @@
         <table class="student-table">
           <thead>
             <tr>
-              <th>학번</th>
+              <th>순위 (학번)</th>
               <th>이름</th>
               <th>점수</th>
               <th>오답수</th>
@@ -722,13 +747,14 @@
         </table>
       </div>
       <div class="admin-actions">
+        <button class="admin-btn btn-refresh" onclick="fetchCloudScoresAndRender()">🔄 최신 성적 새로고침</button>
         <button class="admin-btn btn-export" onclick="exportToCSV()">📥 엑셀(CSV) 다운로드</button>
         <button class="admin-btn btn-clear" onclick="clearStudentRecords()">🗑️ 0점으로 전체 초기화</button>
       </div>
     </div>
 
     <div class="admin-actions" style="margin-top: 16px; border-top:1px solid #1e293b; padding-top:14px;">
-      <button class="admin-btn btn-test" onclick="enterQuizAsAdmin()">▶ 퀴즈 직접 테스트하기</button>
+      <button class="admin-btn btn-refresh" onclick="enterQuizAsAdmin()">▶ 퀴즈 직접 테스트하기</button>
       <button class="admin-btn btn-logout" onclick="logoutAdmin()">🚪 관리자 로그아웃</button>
     </div>
   </div>
@@ -894,7 +920,10 @@ const OFFICIAL_ROBOT_STUDENTS = [
   { id: "2517", name: "허준수", score: 0, wrongCount: 0, date: "대기 중" }
 ];
 
-const STORAGE_KEY = "goldbell_robot_zero_official_v1";
+const STORAGE_KEY = "goldbell_robot_cloud_sync_v2";
+
+// 초고속 클라우드 REST DB 엔드포인트
+const CLOUD_API_URL = "https://safety-goldbell-2026-default-rtdb.firebaseio.com/robot_scores.json";
 
 function isPastDeadline() {
   return Date.now() >= DEADLINE_TIME;
@@ -965,6 +994,7 @@ function showAdminFromClosed() {
   }
 }
 
+// 로컬 + 클라우드 하이브리드 레코드 관리
 function getRobotRecords() {
   let records = localStorage.getItem(STORAGE_KEY);
   if (!records) {
@@ -972,6 +1002,51 @@ function getRobotRecords() {
     return JSON.parse(JSON.stringify(OFFICIAL_ROBOT_STUDENTS));
   }
   return JSON.parse(records);
+}
+
+// 클라우드 서버에서 실시간 성적 가져오기 (비동기 동기화)
+async function fetchCloudScoresAndRender() {
+  try {
+    const res = await fetch(CLOUD_API_URL, { cache: "no-store" });
+    if (res.ok) {
+      const cloudData = await res.json();
+      if (cloudData && typeof cloudData === 'object') {
+        let localRecords = getRobotRecords();
+        OFFICIAL_ROBOT_STUDENTS.forEach(student => {
+          if (cloudData[student.id]) {
+            const cItem = cloudData[student.id];
+            const lIdx = localRecords.findIndex(r => r.id === student.id);
+            if (lIdx >= 0) {
+              if (cItem.score >= localRecords[lIdx].score) {
+                localRecords[lIdx].score = cItem.score;
+                localRecords[lIdx].wrongCount = cItem.wrongCount;
+                localRecords[lIdx].date = cItem.date;
+              }
+            }
+          }
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(localRecords));
+      }
+    }
+  } catch(err) {
+    console.log("Cloud sync note: offline fallback", err);
+  }
+  renderAllLeaderboards();
+  if (currentUser.isAdmin) renderStudentTable();
+}
+
+// 클라우드 서버로 성적 즉시 전송
+async function uploadScoreToCloud(id, name, score, wrongCount, dateStr) {
+  try {
+    const payload = { id, name, score, wrongCount, date: dateStr };
+    await fetch(`https://safety-goldbell-2026-default-rtdb.firebaseio.com/robot_scores/${id}.json`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } catch(err) {
+    console.log("Cloud upload error (fallback to local)", err);
+  }
 }
 
 // High-Impact Web Audio Engine
@@ -1293,7 +1368,7 @@ function startQuiz() {
     return;
   }
 
-  // 1. 관리자 인증 (마감과 상관없이 24시간 언제든 접속 가능)
+  // 1. 관리자 인증 (24시간 접속 가능)
   if (idInput === "2500" && nameInput === "cntfed") {
     currentUser.id = "2500";
     currentUser.name = "변귀섭 관리자";
@@ -1302,7 +1377,7 @@ function startQuiz() {
     return;
   }
 
-  // 2. 밤 10시 마감 체크 (학생 접속 차단)
+  // 2. 밤 10시 마감 체크
   if (isPastDeadline()) {
     alert("⛔ 2026 안전골든벨 연습 응시가 오늘 밤 10시 정각에 마감되었습니다.");
     checkAndApplyLock();
@@ -1632,8 +1707,12 @@ function saveStudentRecord(id, name, finalScore, wrongCount) {
     records.push({ id, name, score: finalScore, wrongCount, date: dateStr });
   }
 
+  // 1. 로컬 저장
   localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
   renderAllLeaderboards();
+
+  // 2. 원격 클라우드 DB 즉시 전송 (선생님 화면으로 전송)
+  uploadScoreToCloud(id, name, finalScore, wrongCount, dateStr);
 
   records.sort((a, b) => b.score - a.score || a.wrongCount - b.wrongCount);
   const myRank = records.findIndex(r => r.id === id && r.name === name) + 1;
@@ -1665,7 +1744,7 @@ function showAdminDashboard() {
     list.appendChild(item);
   });
 
-  renderStudentTable();
+  fetchCloudScoresAndRender();
 }
 
 function switchAdminTab(tab) {
@@ -1673,7 +1752,7 @@ function switchAdminTab(tab) {
   document.getElementById('tab-btn-stat').className = (tab === 'stat') ? 'admin-tab-btn active' : 'admin-tab-btn';
   document.getElementById('admin-view-ans').className = (tab === 'ans') ? 'admin-sub-view active' : 'admin-sub-view';
   document.getElementById('admin-view-stat').className = (tab === 'stat') ? 'admin-sub-view active' : 'admin-sub-view';
-  if (tab === 'stat') renderStudentTable();
+  if (tab === 'stat') fetchCloudScoresAndRender();
 }
 
 function renderStudentTable() {
@@ -1712,15 +1791,18 @@ function exportToCSV() {
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.setAttribute("download", `안전골든벨_로봇전기과_순위기록_${new Date().toISOString().slice(0,10)}.csv`);
+  link.setAttribute("download", `안전골든벨_로봇전기과_실시간원격성적_${new Date().toISOString().slice(0,10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
-function clearStudentRecords() {
-  if (confirm("정말로 모든 로봇전기과 학생들의 점수를 0점으로 초기화하시겠습니까?")) {
+async function clearStudentRecords() {
+  if (confirm("정말로 모든 로봇전기과 학생들의 원격 클라우드 점수를 0점으로 초기화하시겠습니까?")) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(OFFICIAL_ROBOT_STUDENTS));
+    try {
+      await fetch(CLOUD_API_URL, { method: "DELETE" });
+    } catch(e) {}
     renderAllLeaderboards();
     renderStudentTable();
   }
@@ -1818,7 +1900,9 @@ window.addEventListener('DOMContentLoaded', () => {
   updateDeadlineCounter();
   setInterval(updateDeadlineCounter, 1000);
   checkAndApplyLock();
-  renderAllLeaderboards();
+  fetchCloudScoresAndRender();
+  // 5초마다 원격 클라우드 최신 성적 자동 폴링 동기화
+  setInterval(fetchCloudScoresAndRender, 5000);
 });
 </script>
 </body>
