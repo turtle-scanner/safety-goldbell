@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>🔔 2026 서울지역 직업계고 안전골든벨 (로봇전기과 대표전용)</title>
+  <title>🔔 2026 서울지역 직업계고 안전골든벨 (로봇전기과 대표전용 - 35문항 마스터)</title>
   <style>
     :root {
       --bg-color: #070b14;
@@ -36,13 +36,13 @@
     }
     .main-wrapper {
       width: 100%;
-      max-width: 1020px;
+      max-width: 1060px;
       position: relative;
       z-index: 10;
     }
     .app-layout {
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 340px;
       gap: 20px;
       align-items: start;
     }
@@ -438,15 +438,15 @@
     .omr-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
+      gap: 4px;
     }
     .omr-cell {
       background: #090d16;
       border: 1px solid #1e293b;
-      border-radius: 8px;
-      padding: 5px 0;
+      border-radius: 6px;
+      padding: 4px 0;
       text-align: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       color: var(--text-dim);
       transition: all 0.2s;
@@ -658,7 +658,7 @@
   <div id="login-area" class="quiz-card login-box">
     <div class="login-icon">🔔</div>
     <h2 class="title" style="margin-bottom: 2px;">서울지역 직업계고 안전골든벨</h2>
-    <div class="sync-status"><span class="sync-dot"></span> 원격 클라우드 실시간 자동 집계 연결됨</div><br>
+    <div class="sync-status"><span class="sync-dot"></span> 원격 클라우드 실시간 자동 집계 연결됨 (35문항 풀세트)</div><br>
     <div class="whitelist-info-badge" style="margin-top: 6px;">⚡ 로봇전기과 출전 대표 선수 전용</div>
     
     <!-- Deadline Counter Banner -->
@@ -666,7 +666,7 @@
       ⏳ 응시 마감: 오늘 밤 10:00 정각 (남은 시간: 계산 중...)
     </div>
 
-    <p class="login-desc">배정된 학번과 이름을 입력하고 실전 골든벨에 도전하세요!</p>
+    <p class="login-desc">배정된 학번과 이름을 입력하고 35문항 실전 골든벨에 도전하세요!</p>
 
     <div class="form-group">
       <label class="form-label" for="user-id">📌 학번 (예: 2503)</label>
@@ -678,7 +678,7 @@
       <input type="text" id="user-name" class="login-input" placeholder="이름을 입력하세요 (예: 김찬영)" maxlength="20" onkeypress="if(event.keyCode==13) startQuiz()">
     </div>
 
-    <button class="start-btn" onclick="startQuiz()">🏆 긴장감 100% 골든벨 시작하기 ➔</button>
+    <button class="start-btn" onclick="startQuiz()">🏆 긴장감 100% 골든벨 시작하기 (총 35문항) ➔</button>
 
     <!-- Top 5 Leaderboard -->
     <div class="ranking-box">
@@ -717,13 +717,13 @@
   <div id="admin-area" class="quiz-card admin-panel">
     <div class="admin-header">
       <div class="badge badge-admin">👑 최고 관리자 모드 (인증됨)</div>
-      <div class="admin-title">안전골든벨 마스터 관리 대시보드</div>
+      <div class="admin-title">안전골든벨 마스터 관리 대시보드 (총 35문항)</div>
       <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">관리자 계정: 2500 (변귀섭 선생님)</div>
       <div class="sync-status" style="justify-content:center; margin-top:6px;"><span class="sync-dot"></span> 원격 6명 학생 성적 실시간 동기화 ON</div>
     </div>
 
     <div class="admin-tab-nav">
-      <button id="tab-btn-ans" class="admin-tab-btn active" onclick="switchAdminTab('ans')">📋 20문항 정답 족보</button>
+      <button id="tab-btn-ans" class="admin-tab-btn active" onclick="switchAdminTab('ans')">📋 35문항 정답 족보</button>
       <button id="tab-btn-stat" class="admin-tab-btn" onclick="switchAdminTab('stat')">📊 학생 응시 기록 현황 (원격 실시간)</button>
     </div>
 
@@ -754,7 +754,7 @@
     </div>
 
     <div class="admin-actions" style="margin-top: 16px; border-top:1px solid #1e293b; padding-top:14px;">
-      <button class="admin-btn btn-refresh" onclick="enterQuizAsAdmin()">▶ 퀴즈 직접 테스트하기</button>
+      <button class="admin-btn btn-refresh" onclick="enterQuizAsAdmin()">▶ 퀴즈 직접 테스트하기 (35문항)</button>
       <button class="admin-btn btn-logout" onclick="logoutAdmin()">🚪 관리자 로그아웃</button>
     </div>
   </div>
@@ -773,7 +773,7 @@
         <div class="header">
           <div id="user-display-badge" class="badge badge-user" style="margin-right: 4px;">도전자: 오준혁 (2508)</div>
           <div id="stage-badge" class="badge badge-stage1">1단계: OX 퀴즈</div>
-          <div class="title" style="font-size: 19px; margin-top: 2px;">🔔 안전골든벨 실전 테스트</div>
+          <div class="title" style="font-size: 19px; margin-top: 2px;">🔔 안전골든벨 실전 테스트 (35문항)</div>
         </div>
 
         <!-- 30s Heartbeat Countdown Timer -->
@@ -789,7 +789,7 @@
 
         <div id="quiz-area">
           <div class="question-box">
-            <div id="q-number" class="q-number">문제 1 / 20</div>
+            <div id="q-number" class="q-number">문제 1 / 35</div>
             <div id="q-text" class="q-text">문제가 여기에 표시됩니다.</div>
           </div>
 
@@ -824,8 +824,8 @@
               <b>소&nbsp;&nbsp;&nbsp;&nbsp;속:</b> 로봇전기과<br>
               <b>학&nbsp;&nbsp;&nbsp;&nbsp;번:</b> <span id="cert-user-id">2508</span><br>
               <b>성&nbsp;&nbsp;&nbsp;&nbsp;명:</b> <span id="cert-user-name">오준혁</span><br>
-              <b>최종점수:</b> <span id="cert-score" style="color:#dc2626; font-weight:900;">65점</span><br><br>
-              위 학생은 2026 서울지역 직업계고 안전골든벨 교육과정을 성실히 이수하고 우수한 성적으로 수료하였음을 증명합니다.
+              <b>최종점수:</b> <span id="cert-score" style="color:#dc2626; font-weight:900;">100점</span><br><br>
+              위 학생은 2026 서울지역 직업계고 안전골든벨 교육과정(35문항)을 성실히 이수하고 우수한 성적으로 수료하였음을 증명합니다.
             </div>
             <div class="cert-seal">
               <span>발급일자: 2026. 08. 31.</span>
@@ -867,7 +867,7 @@
         <div class="stage-section">
           <div class="stage-label">
             <span>1️⃣ 예선전: OX 퀴즈</span>
-            <span>(1~5번)</span>
+            <span>(1~10번)</span>
           </div>
           <div class="omr-grid" id="omr-stage1"></div>
         </div>
@@ -875,7 +875,7 @@
         <div class="stage-section">
           <div class="stage-label">
             <span>2️⃣ 본선전: 4지선다형</span>
-            <span>(6~10번)</span>
+            <span>(11~20번)</span>
           </div>
           <div class="omr-grid" id="omr-stage2"></div>
         </div>
@@ -883,7 +883,7 @@
         <div class="stage-section">
           <div class="stage-label">
             <span>3️⃣ 결선전: 주관식 단답형</span>
-            <span>(11~20번)</span>
+            <span>(21~35번)</span>
           </div>
           <div class="omr-grid" id="omr-stage3"></div>
         </div>
@@ -920,7 +920,7 @@ const OFFICIAL_ROBOT_STUDENTS = [
   { id: "2517", name: "허준수", score: 0, wrongCount: 0, date: "대기 중" }
 ];
 
-const STORAGE_KEY = "goldbell_robot_cloud_sync_v3";
+const STORAGE_KEY = "goldbell_robot_cloud_sync_v4_35q";
 
 // 초고속 클라우드 REST API 객체 ID (실시간 연동)
 const CLOUD_OBJECT_ID = "ff8081819ff5b11001a04b858ccd58fa";
@@ -1055,7 +1055,7 @@ async function uploadScoreToCloud(id, name, score, wrongCount, dateStr) {
   }
 }
 
-// High-Impact Web Audio Engine
+// Web Audio Engine
 let audioCtx = null;
 let soundEnabled = true;
 let isShuffle = false;
@@ -1063,18 +1063,12 @@ let isShuffle = false;
 function ensureAudioReady() {
   if (!audioCtx) {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (AudioContextClass) {
-      audioCtx = new AudioContextClass();
-    }
+    if (AudioContextClass) audioCtx = new AudioContextClass();
   }
-  if (audioCtx && audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
+  if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 }
 
-function unlockAudioOnce() {
-  ensureAudioReady();
-}
+function unlockAudioOnce() { ensureAudioReady(); }
 
 function toggleSound() {
   ensureAudioReady();
@@ -1097,135 +1091,87 @@ function toggleShuffle() {
   btn.style.color = isShuffle ? "var(--green)" : "var(--gold)";
 }
 
-// 1. 심장 박동 긴장감 비트
 function playHeartbeatSound() {
   if (!soundEnabled) return;
   ensureAudioReady();
   if (!audioCtx) return;
-
   const now = audioCtx.currentTime;
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-
   osc.type = 'sine';
   osc.frequency.setValueAtTime(95, now);
   osc.frequency.exponentialRampToValueAtTime(45, now + 0.15);
-
   gain.gain.setValueAtTime(0.3, now);
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-
   osc.connect(gain);
   gain.connect(audioCtx.destination);
   osc.start(now);
   osc.stop(now + 0.16);
 }
 
-// 2. 맞췄을 때: 딩동댕 멜로디 + 우렁찬 박수갈채 (Applause)
 function playApplauseAndChime() {
   if (!soundEnabled) return;
   ensureAudioReady();
   if (!audioCtx) return;
-
   const now = audioCtx.currentTime;
-
   const melody = [523.25, 659.25, 783.99, 1046.50];
   melody.forEach((freq, i) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(freq, now + (i * 0.08));
-
     gain.gain.setValueAtTime(0, now + (i * 0.08));
     gain.gain.linearRampToValueAtTime(0.4, now + (i * 0.08) + 0.02);
     gain.gain.exponentialRampToValueAtTime(0.001, now + (i * 0.08) + 0.35);
-
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now + (i * 0.08));
     osc.stop(now + (i * 0.08) + 0.4);
   });
-
-  for (let i = 0; i < 45; i++) {
+  for (let i = 0; i < 40; i++) {
     const clapDelay = now + 0.1 + (Math.random() * 1.2);
     const clapDuration = 0.04 + (Math.random() * 0.04);
-
     const bufferSize = Math.floor(audioCtx.sampleRate * clapDuration);
     const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
     const data = buffer.getChannelData(0);
-    for (let j = 0; j < bufferSize; j++) {
-      data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.3));
-    }
-
+    for (let j = 0; j < bufferSize; j++) data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.3));
     const noise = audioCtx.createBufferSource();
     noise.buffer = buffer;
-
     const filter = audioCtx.createBiquadFilter();
     filter.type = 'bandpass';
     filter.frequency.setValueAtTime(1000 + Math.random() * 1500, clapDelay);
     filter.Q.setValueAtTime(1.5, clapDelay);
-
     const clapGain = audioCtx.createGain();
     clapGain.gain.setValueAtTime(0.3 + Math.random() * 0.25, clapDelay);
     clapGain.gain.exponentialRampToValueAtTime(0.001, clapDelay + clapDuration);
-
     noise.connect(filter);
     filter.connect(clapGain);
     clapGain.connect(audioCtx.destination);
-
     noise.start(clapDelay);
     noise.stop(clapDelay + clapDuration);
   }
 }
 
-// 3. 틀렸을 때: 와장창 접시 깨지는 파열음
 function playWrongSound() {
   if (!soundEnabled) return;
   ensureAudioReady();
   if (!audioCtx) return;
-
   const now = audioCtx.currentTime;
-
   [2200, 3200, 4600, 5800].forEach((freq) => {
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(freq, now);
     osc.frequency.exponentialRampToValueAtTime(freq * 0.3, now + 0.4);
-
     gain.gain.setValueAtTime(0.4, now);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
-
     osc.connect(gain);
     gain.connect(audioCtx.destination);
     osc.start(now);
     osc.stop(now + 0.45);
   });
-
-  const bufferSize = audioCtx.sampleRate * 0.4;
-  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-  
-  const noise = audioCtx.createBufferSource();
-  noise.buffer = buffer;
-
-  const filter = audioCtx.createBiquadFilter();
-  filter.type = 'highpass';
-  filter.frequency.setValueAtTime(1200, now);
-
-  const noiseGain = audioCtx.createGain();
-  noiseGain.gain.setValueAtTime(0.6, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
-
-  noise.connect(filter);
-  filter.connect(noiseGain);
-  noiseGain.connect(audioCtx.destination);
-
-  noise.start(now);
-  noise.stop(now + 0.45);
 }
 
-// 4. 카운트다운 5초 째깍
 function playTickSound() {
   if (!soundEnabled) return;
   ensureAudioReady();
@@ -1242,44 +1188,29 @@ function playTickSound() {
   osc.stop(audioCtx.currentTime + 0.06);
 }
 
-// Confetti 폭죽 효과
 function fireConfetti() {
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-
   const particles = [];
   const colors = ['#f59e0b', '#10b981', '#3b82f6', '#ef4444', '#8b5cf6', '#ec4899'];
-
   for (let i = 0; i < 100; i++) {
     particles.push({
-      x: canvas.width / 2,
-      y: canvas.height / 2,
-      r: Math.random() * 6 + 4,
+      x: canvas.width / 2, y: canvas.height / 2, r: Math.random() * 6 + 4,
       color: colors[Math.floor(Math.random() * colors.length)],
-      vx: (Math.random() - 0.5) * 16,
-      vy: (Math.random() - 0.7) * 18,
-      gravity: 0.4,
-      opacity: 1
+      vx: (Math.random() - 0.5) * 16, vy: (Math.random() - 0.7) * 18,
+      gravity: 0.4, opacity: 1
     });
   }
-
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     let alive = false;
     particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += p.gravity;
-      p.opacity -= 0.015;
+      p.x += p.vx; p.y += p.vy; p.vy += p.gravity; p.opacity -= 0.015;
       if (p.opacity > 0) {
-        alive = true;
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.opacity;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fill();
+        alive = true; ctx.fillStyle = p.color; ctx.globalAlpha = p.opacity;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
       }
     });
     if (alive) requestAnimationFrame(render);
@@ -1288,32 +1219,48 @@ function fireConfetti() {
   render();
 }
 
+// 🔔 총 35문항 마스터 골든벨 풀세트
 const rawQuizData = [
-  // 1단계: OX (1~5)
+  // 1단계: 예선전 OX 퀴즈 (1~10번)
   { id: 1, stage: 1, type: "ox", q: "소화기를 사용할 때는 바람을 마주 보고(맞바람) 뿌려야 한다?", answer: "X", exp: "소화기는 반드시 바람을 등지고 비로 쓸듯이 골고루 방사해야 합니다." },
   { id: 2, stage: 1, type: "ox", q: "성인 심폐소생술(CPR) 시 인공호흡이 어렵거나 꺼려지면 가슴압박만 지속해도 된다?", answer: "O", exp: "인공호흡을 못 하더라도 119가 올 때까지 가슴압박만 지속(Hands-Only CPR)하는 것이 매우 효과적입니다." },
   { id: 3, stage: 1, type: "ox", q: "회전하는 기계(밀링, 선반, 드릴 등)를 다룰 때는 손 보호를 위해 면장갑을 착용해야 한다?", answer: "X", exp: "장갑이 회전체에 말려 들어가는 '끼임(협착) 사고'가 발생하므로 회전체 작업 시 장갑 착용은 절대 금지(맨손 작업)입니다." },
   { id: 4, stage: 1, type: "ox", q: "산업안전보건표지 중 '파란색 원형'은 특정 행동을 지시하는 지시표지(보호구 착용 등)이다?", answer: "O", exp: "파란색 원형은 보안경, 안전모, 안전화 등 '보호구 착용 지시표지'를 나타냅니다." },
   { id: 5, stage: 1, type: "ox", q: "전기가 흐르고 있는 전기 화재(C급 화재) 진압 시 물을 뿌려서 진화한다?", answer: "X", exp: "물을 뿌리면 감전 위험이 있으므로, 분말 소화기(ABC 소화기)나 이산화탄소(CO2) 소화기를 써야 합니다." },
+  { id: 6, stage: 1, type: "ox", q: "산업용 로봇 작업 시 불시 작동 사고를 막기 위해 높이 1.8m 이상의 안전울(울타리) 또는 안전매트를 설치해야 한다?", answer: "O", exp: "산업용 로봇 가동 영역에는 방호울 또는 감응식 안전매트, 인터록 설치가 법적 의무입니다." },
+  { id: 7, stage: 1, type: "ox", q: "음식물이 목에 걸려 말을 할 수 있는 '부분 기도폐쇄' 환자에게 즉시 하임리히법(복부 밀쳐올리기)을 실시한다?", answer: "X", exp: "환자가 말을 하거나 기침을 할 수 있을 때는 스스로 기침을 유도해야 하며, 말을 전혀 못 하는 완전 기도폐쇄일 때만 하임리히법을 씁니다." },
+  { id: 8, stage: 1, type: "ox", q: "가연성 가스나 분진 폭발을 막기 위해 정전기를 대지로 안전하게 방출시키는 가장 기본적인 대책은 '접지(Earth)'이다?", answer: "O", exp: "도체에 쌓인 정전기 전하를 대지로 방출시키는 접지는 정전기 폭발을 막는 핵심 대책입니다." },
+  { id: 9, stage: 1, type: "ox", q: "소화기의 압력 게이지 바늘이 '빨간색(좌측)'을 가리키고 있다면 정상 압력 상태이다?", answer: "X", exp: "소화기 압력 게이지의 정상 범위는 '녹색(가운데)'입니다. 빨간색은 압력 저하 불량 상태입니다." },
+  { id: 10, stage: 1, type: "ox", q: "기계 정비·수리 중 불시 가동을 막기 위해 스위치를 자물쇠로 잠그고 경고판을 다는 것을 'LOTO'라 한다?", answer: "O", exp: "LOTO(Lockout/Tagout)는 기계 정비 중 끼임·감전 재해를 예방하는 필수 수칙입니다." },
 
-  // 2단계: 4지선다 (6~10)
-  { id: 6, stage: 2, type: "choice", q: "화학물질의 명칭, 유해성, 취급 주의사항, 응급조치 요령이 적힌 '화학물질 설명서'의 영문 약칭은?", choices: ["KOSHA", "ISO", "MSDS", "OSHA"], answer: 2, exp: "정답은 MSDS(물질안전보건자료, Material Safety Data Sheet)입니다." },
-  { id: 7, stage: 2, type: "choice", q: "화재의 종류 중 '주방(식용유 등) 화재'를 분류하는 등급 기호는?", choices: ["A급 화재", "B급 화재", "C급 화재", "K급 화재"], answer: 3, exp: "주방 화재는 Kitchen의 앞 글자를 딴 K급 화재입니다. (A급:일반, B급:유류·가스, C급:전기)" },
-  { id: 8, stage: 2, type: "choice", q: "인간의 부주의 현상 중 '다른 생각이나 걱정에 정신이 팔려 현재 작업을 놓치는 현상'은?", choices: ["의식의 단절", "의식의 우회", "의식의 협착", "의식의 과잉"], answer: 1, exp: "다른 일에 마음이 쏠려 주의가 벗어나는 현상을 '의식의 우회'라고 합니다." },
-  { id: 9, stage: 2, type: "choice", q: "산업안전보건법상 밀폐공간의 '적정 산소농도 기준 범위'로 올바른 것은?", choices: ["10% ~ 15%", "15% ~ 20%", "18% 이상 ~ 23.5% 미만", "25% 이상"], answer: 2, exp: "밀폐공간의 적정 산소 농도는 18% 이상 23.5% 미만입니다. 18% 미만은 산소결핍증 위험이 있습니다." },
-  { id: 10, stage: 2, type: "choice", q: "높이 몇 미터 이상의 추락 위험 장소에서 작업 시 안전대(추락방지대)를 의무 착용해야 하는가?", choices: ["1m 이상", "2m 이상", "3m 이상", "4m 이상"], answer: 1, exp: "산업안전보건기준에 관한 규칙상 높이 2m 이상 고소작업 시 안전대 착용이 의무입니다." },
+  // 2단계: 본선전 4지선다형 (11~20번)
+  { id: 11, stage: 2, type: "choice", q: "화학물질의 명칭, 유해성, 취급 주의사항, 응급조치 요령이 적힌 '화학물질 설명서'의 영문 약칭은?", choices: ["KOSHA", "ISO", "MSDS", "OSHA"], answer: 2, exp: "정답은 MSDS(물질안전보건자료, Material Safety Data Sheet)입니다." },
+  { id: 12, stage: 2, type: "choice", q: "화재의 종류 중 '주방(식용유 등) 화재'를 분류하는 등급 기호는?", choices: ["A급 화재", "B급 화재", "C급 화재", "K급 화재"], answer: 3, exp: "주방 화재는 Kitchen의 앞 글자를 딴 K급 화재입니다. (A급:일반, B급:유류, C급:전기)" },
+  { id: 13, stage: 2, type: "choice", q: "인간의 부주의 현상 중 '다른 생각이나 걱정에 정신이 팔려 현재 작업을 놓치는 현상'은?", choices: ["의식의 단절", "의식의 우회", "의식의 협착", "의식의 과잉"], answer: 1, exp: "다른 일에 마음이 쏠려 주의가 벗어나는 현상을 '의식의 우회'라고 합니다." },
+  { id: 14, stage: 2, type: "choice", q: "산업안전보건법상 밀폐공간의 '적정 산소농도 기준 범위'로 올바른 것은?", choices: ["10% ~ 15%", "15% ~ 20%", "18% 이상 ~ 23.5% 미만", "25% 이상"], answer: 2, exp: "밀폐공간의 적정 산소 농도는 18% 이상 23.5% 미만입니다. 18% 미만은 산소결핍증 위험이 있습니다." },
+  { id: 15, stage: 2, type: "choice", q: "높이 몇 미터 이상의 추락 위험 장소에서 작업 시 안전대(추락방지대)를 의무 착용해야 하는가?", choices: ["1m 이상", "2m 이상", "3m 이상", "4m 이상"], answer: 1, exp: "산업안전보건기준에 관한 규칙상 높이 2m 이상 고소작업 시 안전대 착용이 의무입니다." },
+  { id: 16, stage: 2, type: "choice", q: "인체 감전 사고를 방지하기 위해 설치하는 '누전차단기(ELB)'의 정격 감도전류와 동작 시간 기준은?", choices: ["15mA 이하, 0.1초 이내", "30mA 이하, 0.03초 이내", "50mA 이하, 0.05초 이내", "100mA 이하, 0.01초 이내"], answer: 1, exp: "감전 방지용 누전차단기는 30mA 이하 누설전류 시 0.03초 이내에 차단되어야 합니다." },
+  { id: 17, stage: 2, type: "choice", q: "여름철 고열 환경에서 체온 조절 중추가 마비되어 땀이 안 나고 체온이 40도 이상 치솟는 가장 위험한 온열질환은?", choices: ["열탈진(일사병)", "열경련", "열사병", "열실신"], answer: 2, exp: "체온 조절 기능이 망가져 땀이 안 나고 혼수에 빠지는 질환은 '열사병(Heat Stroke)'입니다." },
+  { id: 18, stage: 2, type: "choice", q: "맨홀·정화조 등 밀폐공간 질식 사고의 주원인으로, 달걀 썩는 냄새가 나는 유해가스는?", choices: ["메탄가스", "이산화탄소", "황화수소(H2S)", "일산화탄소"], answer: 2, exp: "유기물 부패로 발생하며 달걀 썩는 악취가 나는 유해가스는 '황화수소(H2S)'입니다." },
+  { id: 19, stage: 2, type: "choice", q: "탁상용 연삭기(그라인더) 숫돌 파손 비산을 막기 위한 '연삭기 덮개'의 상부 노출 각도 기준은?", choices: ["90도 이내", "120도 이내", "150도 이내", "180도 이내"], answer: 0, exp: "일반 탁상용 연삭기의 덮개 노출 각도는 90도(또는 125도) 이내여야 합니다." },
+  { id: 20, stage: 2, type: "choice", q: "사업장의 유해·위험 요인을 스스로 찾아내어 위험성을 측정하고 개선 대책을 세우는 안전보건 관리 기법은?", choices: ["작업환경측정", "위험성평가", "안전진단", "공정안전보고서"], answer: 1, exp: "사업장 자기규율 예방체계의 핵심은 '위험성평가(Risk Assessment)'입니다." },
 
-  // 3단계: 주관식 단답형 (11~20)
-  { id: 11, stage: 3, type: "text", q: "1건의 대형사고(중대재해) 전에 29건의 경상해와 300건의 무상해 사고(아차사고)가 발생한다는 통계 법칙은?", answers: ["하인리히", "하인리히법칙", "하인리히 법칙"], exp: "정답은 '하인리히 법칙(1:29:300 법칙)'입니다." },
-  { id: 12, stage: 3, type: "text", q: "성인 심폐소생술(CPR) 시 '가슴압박'과 '인공호흡'의 공식 비율은? (예: OO : O)", answers: ["30:2", "30 : 2", "30대2", "30 대 2"], exp: "정답은 가슴압박 30회 : 인공호흡 2회인 '30:2'입니다." },
-  { id: 13, stage: 3, type: "text", q: "심정지 환자 발생 시 뇌손상을 막기 위한 응급처치 골든타임은 몇 분 이내인가? (숫자만 입력)", answers: ["4", "4분"], exp: "심정지 후 4분이 지나면 뇌세포 괴사가 시작되므로 골든타임은 4분입니다." },
-  { id: 14, stage: 3, type: "text", q: "성인 심폐소생술 시 1분당 가슴압박 권장 횟수는 몇 회에서 몇 회 사이인가? (예: 100~120)", answers: ["100~120", "100-120", "100~120회", "100-120회", "100에서120"], exp: "정답은 분당 '100~120회' 속도입니다." },
-  { id: 15, stage: 3, type: "text", q: "심정지 환자에게 전기 충격을 주어 심장 박동을 회복시키는 장비(자동심장충격기)의 영문 약어는?", answers: ["AED", "aed"], exp: "정답은 'AED(Automated External Defibrillator)'입니다." },
-  { id: 16, stage: 3, type: "text", q: "산업재해 발생의 급박한 위험이 있을 때, 근로자 스스로 작업을 중단하고 대피할 수 있는 권리는?", answers: ["작업중지권", "작업 중지권"], exp: "정답은 근로자의 정당한 권리인 '작업중지권'입니다." },
-  { id: 17, stage: 3, type: "text", q: "분진을 막는 것은 방진마스크이다. 유독가스나 유기용제 증기를 차단하기 위해 착용하는 마스크는?", answers: ["방독마스크", "방독 마스크"], exp: "정답은 '방독마스크'입니다." },
-  { id: 18, stage: 3, type: "text", q: "낙하·비래(A), 추락(B)뿐만 아니라 '전기 감전(E)'까지 방지할 수 있는 안전모의 기호 등급은? (알파벳 조합)", answers: ["ABE", "abe", "ABE형", "abe형"], exp: "전기 절연 성능을 가진 안전모 등급은 'ABE형'입니다." },
-  { id: 19, stage: 3, type: "text", q: "불이 났을 때 공기 중의 '산소를 차단'하여 불을 끄는 소화 원리를 무엇이라 하는가? (O O 소화)", answers: ["질식소화", "질식 소화"], exp: "산소 공급을 막아 불을 끄는 것을 '질식소화'라고 합니다." },
-  { id: 20, stage: 3, type: "text", q: "사업장에서 중대재해 발생 시 사업주 및 경영책임자의 안전의무 위반을 처벌하기 위해 제정된 법률은?", answers: ["중대재해처벌법", "중대재해 처벌법", "중대재해처벌 등에 관한 법률"], exp: "정답은 '중대재해처벌법'입니다." }
+  // 3단계: 결선전 주관식 단답형 (21~35번)
+  { id: 21, stage: 3, type: "text", q: "1건의 대형사고(중대재해) 전에 29건의 경상해와 300건의 무상해 사고(아차사고)가 발생한다는 통계 법칙은?", answers: ["하인리히", "하인리히법칙", "하인리히 법칙"], exp: "정답은 '하인리히 법칙(1:29:300 법칙)'입니다." },
+  { id: 22, stage: 3, type: "text", q: "성인 심폐소생술(CPR) 시 '가슴압박'과 '인공호흡'의 공식 비율은? (예: OO : O)", answers: ["30:2", "30 : 2", "30대2", "30 대 2"], exp: "정답은 가슴압박 30회 : 인공호흡 2회인 '30:2'입니다." },
+  { id: 23, stage: 3, type: "text", q: "심정지 환자 발생 시 뇌손상을 막기 위한 응급처치 골든타임은 몇 분 이내인가? (숫자만 입력)", answers: ["4", "4분"], exp: "심정지 후 4분이 지나면 뇌세포 괴사가 시작되므로 골든타임은 4분입니다." },
+  { id: 24, stage: 3, type: "text", q: "성인 심폐소생술 시 1분당 가슴압박 권장 횟수는 몇 회에서 몇 회 사이인가? (예: 100~120)", answers: ["100~120", "100-120", "100~120회", "100-120회", "100에서120"], exp: "정답은 분당 '100~120회' 속도입니다." },
+  { id: 25, stage: 3, type: "text", q: "심정지 환자에게 전기 충격을 주어 심장 박동을 회복시키는 장비(자동심장충격기)의 영문 약어는?", answers: ["AED", "aed"], exp: "정답은 'AED(Automated External Defibrillator)'입니다." },
+  { id: 26, stage: 3, type: "text", q: "산업재해 발생의 급박한 위험이 있을 때, 근로자 스스로 작업을 중단하고 대피할 수 있는 권리는?", answers: ["작업중지권", "작업 중지권"], exp: "정답은 근로자의 정당한 권리인 '작업중지권'입니다." },
+  { id: 27, stage: 3, type: "text", q: "분진을 막는 것은 방진마스크이다. 유독가스나 유기용제 증기를 차단하기 위해 착용하는 마스크는?", answers: ["방독마스크", "방독 마스크"], exp: "정답은 '방독마스크'입니다." },
+  { id: 28, stage: 3, type: "text", q: "낙하·비래(A), 추락(B)뿐만 아니라 '전기 감전(E)'까지 방지할 수 있는 안전모의 기호 등급은? (알파벳 조합)", answers: ["ABE", "abe", "ABE형", "abe형"], exp: "전기 절연 성능을 가진 안전모 등급은 'ABE형'입니다." },
+  { id: 29, stage: 3, type: "text", q: "불이 났을 때 공기 중의 '산소를 차단'하여 불을 끄는 소화 원리를 무엇이라 하는가? (O O 소화)", answers: ["질식소화", "질식 소화"], exp: "산소 공급을 막아 불을 끄는 것을 '질식소화'라고 합니다." },
+  { id: 30, stage: 3, type: "text", q: "사업장에서 중대재해 발생 시 사업주 및 경영책임자의 안전의무 위반을 처벌하기 위해 제정된 법률은?", answers: ["중대재해처벌법", "중대재해 처벌법", "중대재해처벌 등에 관한 법률"], exp: "정답은 '중대재해처벌법'입니다." },
+  { id: 31, stage: 3, type: "text", q: "작업 시작 전 5~10분간 당일 위험요인과 안전수칙을 공유하는 '작업 전 안전점검회의'의 영문 약어 3글자는?", answers: ["TBM", "tbm"], exp: "정답은 'TBM(Tool Box Meeting)'입니다." },
+  { id: 32, stage: 3, type: "text", q: "기도폐쇄 환자 뒤에서 명치와 배꼽 중간을 안쪽 위로 강하게 밀쳐올려 이물질을 빼내는 응급처치법은?", answers: ["하임리히법", "하임리히", "하임리히 법"], exp: "정답은 '하임리히법(Heimlich Maneuver)'입니다." },
+  { id: 33, stage: 3, type: "text", q: "전기 기계·기구의 누설전류를 땅속으로 흘려보내 인체 감전을 방지하기 위해 연결하는 것은?", answers: ["접지", "접지선", "어스"], exp: "정답은 '접지(Ground/Earth)'입니다." },
+  { id: 34, stage: 3, type: "text", q: "안전모가 추락이나 충격 시 벗겨지지 않도록 턱 밑에 조여 매는 안전모 부속품의 명칭은?", answers: ["턱끈", "턱 끈"], exp: "정답은 '턱끈'입니다." },
+  { id: 35, stage: 3, type: "text", q: "불이 났을 때 물을 뿌려 온도를 발화점 이하로 낮추어 불을 끄는 소화 원리는? (O O 소화)", answers: ["냉각소화", "냉각 소화"], exp: "열을 빼앗아 불을 끄는 것을 '냉각소화'라고 합니다." }
 ];
 
 let activeQuizList = [];
@@ -1339,13 +1286,8 @@ function renderAllLeaderboards() {
   const top5 = records.slice(0, 5);
 
   top5.forEach((item, index) => {
-    let rankBadge = "";
-    let rankClass = "";
-    if (index === 0) { rankBadge = "🥇 1위"; rankClass = "rank-1"; }
-    else if (index === 1) { rankBadge = "🥈 2위"; rankClass = "rank-2"; }
-    else if (index === 2) { rankBadge = "🥉 3위"; rankClass = "rank-3"; }
-    else if (index === 3) { rankBadge = "🏅 4위"; rankClass = ""; }
-    else { rankBadge = "🏅 5위"; rankClass = ""; }
+    let rankBadge = (index === 0) ? "🥇 1위" : (index === 1 ? "🥈 2위" : (index === 2 ? "🥉 3위" : `🏅 ${index + 1}위`));
+    let rankClass = (index === 0) ? "rank-1" : (index === 1 ? "rank-2" : (index === 2 ? "rank-3" : ""));
 
     const scoreDisplay = (item.score === 0) 
       ? `<span class="rank-score-zero">0점 (대기)</span>` 
@@ -1502,15 +1444,11 @@ function startTimer() {
     txt.innerText = `${timeLeft}초`;
     bar.style.width = `${(timeLeft / 30) * 100}%`;
 
-    if (timeLeft > 5) {
-      playHeartbeatSound();
-    }
-
+    if (timeLeft > 5) playHeartbeatSound();
     if (timeLeft <= 5 && timeLeft > 0) {
       bar.className = 'timer-bar danger';
       playTickSound();
     }
-
     if (timeLeft <= 0) {
       clearInterval(timerInterval);
       handleTimeout();
@@ -1571,7 +1509,7 @@ function loadQuestion() {
     const group = document.createElement('div');
     group.className = 'input-group';
     group.innerHTML = `
-      <input type="text" id="text-ans" class="text-input" placeholder="정답을 입력하세요 (예: MSDS)" autofocus onkeypress="if(event.keyCode==13) submitTextAnswer()">
+      <input type="text" id="text-ans" class="text-input" placeholder="정답을 입력하세요 (예: TBM, 하임리히법)" autofocus onkeypress="if(event.keyCode==13) submitTextAnswer()">
       <button class="submit-btn" onclick="submitTextAnswer()">정답 제출</button>
     `;
     container.appendChild(group);
@@ -1667,7 +1605,7 @@ function showResult() {
   if (score >= 90) {
     playApplauseAndChime();
     fireConfetti();
-    msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>골든벨을 울렸습니다! 8월 31일 실전에서도 1등 확정입니다!`;
+    msg.innerHTML = `🏆 <b>축하합니다, ${currentUser.name}!</b><br>35문항 골든벨을 울렸습니다! 8월 31일 실전에서도 1등 확정입니다!`;
     msg.style.color = "#34d399";
   } else if (score >= 70) {
     playApplauseAndChime();
@@ -1797,7 +1735,7 @@ function exportToCSV() {
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.setAttribute("download", `안전골든벨_로봇전기과_실시간원격성적_${new Date().toISOString().slice(0,10)}.csv`);
+  link.setAttribute("download", `안전골든벨_로봇전기과_35문항_성적표_${new Date().toISOString().slice(0,10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -1858,7 +1796,7 @@ function downloadCertificate() {
 
   ctx.fillStyle = '#64748b';
   ctx.font = 'bold 15px Pretendard, sans-serif';
-  ctx.fillText('2026 서울지역 직업계고 산업안전보건 골든벨', canvas.width / 2, 115);
+  ctx.fillText('2026 서울지역 직업계고 산업안전보건 골든벨 (35문항)', canvas.width / 2, 115);
 
   ctx.textAlign = 'left';
   ctx.fillStyle = '#1e293b';
